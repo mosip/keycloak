@@ -1,6 +1,6 @@
 # Keycloak
 Keycloak is an open source software product to allow single sign-on with Identity and Access Management aimed at modern applications and services. As of March 2018 this WildFly community project is under the stewardship of Red Hat who use it as the upstream project for their RH-SSO product.
-
+To know more about Keycloak check out our [Platform Documentation](https://docs.mosip.io/1.2.0/modules/keycloak)
 
 ---
 ### About MOSIP
