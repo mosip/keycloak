@@ -47,6 +47,8 @@
 							<option value="FTM_PROVIDER">FTM Provider</option>
 							<option value="AUTH_PARTNER">Authentication Partner</option>
 							<option value="CREDENTIAL_PARTNER">Credential Partner or ISP</option>
+							<option value="ABIS_PARTNER">ABIS Partner</option>
+							<option value="SDK_PARTNER">SDK Partner</option>
 					</select>
 				</div>
 			</div>
