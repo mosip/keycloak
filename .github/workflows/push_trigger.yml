@@ -8,8 +8,9 @@ on:
       - 1.0.*
       - develop
       - 1.1.*
-      - MOSIP-11719
+      - MOSIP-*
       - 1.2.*
+      - DSD-*
   
 jobs:
   build-kernel-ref-idobjectvalidator:
