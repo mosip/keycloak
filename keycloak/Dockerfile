@@ -1,13 +1,13 @@
 FROM bitnami/keycloak:14.0.0-debian-10-r24
 
-ADD --chown=1001:root ./theme/ ./theme
+ADD --chown=bitnami:root ./theme/ /opt/bitnami/keycloak/themes/
 
-RUN mkdir -p /opt/bitnami/keycloak/themes/mosip /opt/bitnami/keycloak/standalone/deployments
+RUN mkdir -p /opt/bitnami/keycloak/themes/mosip
 
 RUN cp -R ./theme/mosip /opt/bitnami/keycloak/themes/mosip
 
 RUN cp -R ./theme/base /opt/bitnami/keycloak/themes
 
-ADD --chown=1001:root ./standalone/ ./standalone
+ADD --chown=bitnami:root ./standalone/ ./standalone
 
 RUN cp -R ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
