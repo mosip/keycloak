@@ -1,8 +1,6 @@
 FROM bitnami/keycloak:14.0.0-debian-10-r24
 
-ADD --chown=1001:root ./theme/ ./theme
-
-RUN chmod g+rwX /opt/bitnami
+RUN chmod 775 /opt/bitnami
 
 RUN cp -R ./theme/mosip /opt/bitnami/keycloak/themes/mosip
 
