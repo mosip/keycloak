@@ -23,6 +23,7 @@ COPY ./theme/mosip /opt/bitnami/keycloak/themes/mosip
 COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
 
 COPY rootfs /
+RUN chmod g+rwX /opt/bitnami/scripts/keycloak/postunpack.sh
 RUN /opt/bitnami/scripts/keycloak/postunpack.sh
 ENV BITNAMI_APP_NAME="keycloak" \
     BITNAMI_IMAGE_VERSION="14.0.0-debian-10-r24" \
