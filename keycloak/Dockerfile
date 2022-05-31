@@ -15,6 +15,12 @@ RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "keycloak" "14.0.
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "gosu" "1.13.0-0" --checksum fd7257c2736164d02832dbf72e2c1ed9d875bf3e32f0988520796bc503330129
 RUN chmod g+rwX /opt/bitnami
 
+COPY ./theme/base /opt/bitnami/keycloak/themes
+
+COPY ./theme/mosip /opt/bitnami/keycloak/themes/mosip
+
+COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
+
 COPY rootfs /
 RUN /opt/bitnami/scripts/keycloak/postunpack.sh
 ENV BITNAMI_APP_NAME="keycloak" \
