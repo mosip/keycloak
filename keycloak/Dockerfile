@@ -7,7 +7,7 @@ ENV HOME="/" \
     OS_NAME="linux"
 
 COPY prebuildfs /
-chmod +x /usr/sbin/install_packages
+RUN chmod +x /usr/sbin/install_packages
 # Install required system packages and dependencies
 RUN install_packages acl ca-certificates curl gzip libaio1 libc6 procps rsync tar zlib1g
 RUN . /opt/bitnami/scripts/libcomponent.sh && component_unpack "wait-for-port" "1.0.0-3" --checksum 7521d9a4f9e4e182bf32977e234026caa7b03759799868335bccb1edd8f8fd12
