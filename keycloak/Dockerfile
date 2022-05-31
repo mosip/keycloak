@@ -30,5 +30,6 @@ ENV BITNAMI_APP_NAME="keycloak" \
     PATH="/opt/bitnami/common/bin:/opt/bitnami/java/bin:/opt/bitnami/keycloak/bin:$PATH"
 
 USER 1001
+RUN chmod +x /opt/bitnami/scripts/keycloak/entrypoint.sh
 ENTRYPOINT [ "/opt/bitnami/scripts/keycloak/entrypoint.sh" ]
 CMD [ "/opt/bitnami/scripts/keycloak/run.sh" ]
