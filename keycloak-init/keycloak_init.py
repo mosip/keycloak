@@ -157,7 +157,6 @@ def main():
     fp = open(input_yaml, 'rt')
     values = yaml.load(fp, Loader=yaml.FullLoader)
 
-    server_url = server_url + '/auth/' # Full url to access api 
     try:
         print('Create realms ')
         print(server_url)
@@ -174,7 +173,7 @@ def main():
             # Expect secrets passed via env variables. 
             clients = values[realm]['clients']
             for client in clients:
-                secret_env_name = '%s_%s_secret' % (realm, client['name'])
+                secret_env_name = '%s_secret' % client['name']
                 secret_env_name = secret_env_name.replace('-', '_') # Compatible with environment variables
                 secret = os.environ.get(secret_env_name) 
                 if secret is None:  # Env variable not found
