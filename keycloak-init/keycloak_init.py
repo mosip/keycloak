@@ -157,7 +157,6 @@ def main():
     fp = open(input_yaml, 'rt')
     values = yaml.load(fp, Loader=yaml.FullLoader)
 
-    server_url = server_url + '/auth/' # Full url to access api 
     try:
         print('Create realms ')
         print(server_url)
