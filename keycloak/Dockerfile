@@ -28,6 +28,7 @@ COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
 
 COPY rootfs /
 RUN chmod +x /opt/bitnami/scripts/keycloak/postunpack.sh
+RUN chmod +x /opt/bitnami/scripts/java/postunpack.sh
 RUN /opt/bitnami/scripts/java/postunpack.sh
 RUN /opt/bitnami/scripts/keycloak/postunpack.sh
 ENV APP_VERSION="16.1.1" \
