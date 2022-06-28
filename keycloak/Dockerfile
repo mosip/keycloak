@@ -20,7 +20,7 @@ RUN apt-get update && apt-get upgrade -y && \
     rm -r /var/lib/apt/lists /var/cache/apt/archives
 RUN chmod g+rwX /opt/bitnami
 
-rm -r /opt/bitnami/keycloak/themes/base/login/register.ftl
+RUN rm -r /opt/bitnami/keycloak/themes/base/login/register.ftl
 
 COPY ./theme/base /opt/bitnami/keycloak/themes
 
