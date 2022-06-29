@@ -90,12 +90,16 @@ keycloak_validate() {
 #   None
 #########################
 keycloak_configure_database() {
+    # Prepare JDBC Params if set - add '?' at the beginning if the value is not empty and doesn't start with '?'
+    local jdbc_params
+    jdbc_params="$(echo "$KEYCLOAK_JDBC_PARAMS" | sed -E '/^$|^\?+.*$/!s/^/?/')"
+
     info "Configuring database settings"
     debug_execute jboss-cli.sh <<EOF
 embed-server --server-config=${KEYCLOAK_CONF_FILE} --std-out=echo
 batch
 /subsystem=datasources/data-source=KeycloakDS: remove()
-/subsystem=datasources/data-source=KeycloakDS: add(jndi-name=java:jboss/datasources/KeycloakDS,enabled=true,use-java-context=true,use-ccm=true, connection-url=jdbc:postgresql://${KEYCLOAK_DATABASE_HOST}:${KEYCLOAK_DATABASE_PORT}/${KEYCLOAK_DATABASE_NAME}, driver-name=postgresql)
+/subsystem=datasources/data-source=KeycloakDS: add(jndi-name=java:jboss/datasources/KeycloakDS,enabled=true,use-java-context=true,use-ccm=true, connection-url="jdbc:postgresql://${KEYCLOAK_DATABASE_HOST}:${KEYCLOAK_DATABASE_PORT}/${KEYCLOAK_DATABASE_NAME}${jdbc_params}", driver-name=postgresql)
 /subsystem=datasources/data-source=KeycloakDS: write-attribute(name=user-name, value=\${env.KEYCLOAK_DATABASE_USER})
 /subsystem=datasources/data-source=KeycloakDS: write-attribute(name=check-valid-connection-sql, value="SELECT 1")
 /subsystem=datasources/data-source=KeycloakDS: write-attribute(name=background-validation, value=true)
@@ -358,6 +362,7 @@ EOF
 keycloak_initialize() {
     # Clean to avoid issues when running docker restart
     keycloak_clean_from_restart
+
     # Wait for database
     info "Trying to connect to PostgreSQL server $KEYCLOAK_DATABASE_HOST..."
     if ! retry_while "wait-for-port --host $KEYCLOAK_DATABASE_HOST --timeout 10 $KEYCLOAK_DATABASE_PORT" "$KEYCLOAK_INIT_MAX_RETRIES"; then
