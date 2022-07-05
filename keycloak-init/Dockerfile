@@ -27,6 +27,7 @@ RUN apt-get -y update \
 && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user}
 
 COPY requirements.txt .
+COPY config.py .
 RUN pip3 install -r requirements.txt
 
 # change permissions of file inside working dir
