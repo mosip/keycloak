@@ -34,7 +34,6 @@ class KeycloakSession:
             "actionTokenGeneratedByAdminLifespan": 43200,
             "actionTokenGeneratedByUserLifespan": 300,
             "attributes": { "frontendUrl": cfg.frontend_url }
-	}
 }
         try:
             self.keycloak_admin.create_realm(payload, skip_exists=False)
