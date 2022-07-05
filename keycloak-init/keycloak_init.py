@@ -9,6 +9,7 @@ import secrets
 import json
 import yaml
 import traceback
+import config as cfg
 from keycloak import KeycloakAdmin
 from keycloak.exceptions import raise_error_from_response, KeycloakError
 from keycloak.connection import  ConnectionManager
@@ -31,8 +32,10 @@ class KeycloakSession:
             "accessTokenLifespan": 86400,
             "accessTokenLifespanForImplicitFlow": 900,
             "actionTokenGeneratedByAdminLifespan": 43200,
-            "actionTokenGeneratedByUserLifespan": 300
-        }
+            "actionTokenGeneratedByUserLifespan": 300,
+            "attributes": { "frontendUrl": cfg.frontend_url }
+	}
+}
         try:
             self.keycloak_admin.create_realm(payload, skip_exists=False)
         except KeycloakError as e:
