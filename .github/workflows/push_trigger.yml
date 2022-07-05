@@ -9,6 +9,7 @@ on:
       - 1.1.*
       - 1.2.*
       - release*
+      - MOSIP*
   
 jobs:
   build-keycloak:
