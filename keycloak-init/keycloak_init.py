@@ -9,7 +9,6 @@ import secrets
 import json
 import yaml
 import traceback
-import config as cfg
 from keycloak import KeycloakAdmin
 from keycloak.exceptions import raise_error_from_response, KeycloakError
 from keycloak.connection import  ConnectionManager
@@ -22,7 +21,7 @@ class KeycloakSession:
                                             password=pwd,
                                             realm_name=realm,
                                             verify=ssl_verify)
-    def create_realm(self, realm):
+    def create_realm(self, realm, frontend_url=''):
         payload = {
             "realm" : realm,
             "enabled": True,
@@ -33,8 +32,8 @@ class KeycloakSession:
             "accessTokenLifespanForImplicitFlow": 900,
             "actionTokenGeneratedByAdminLifespan": 43200,
             "actionTokenGeneratedByUserLifespan": 300,
-            "attributes": { "frontendUrl": cfg.frontend_url }
-}
+            "attributes": {"frontendUrl": frontend_url}
+        }
         try:
             self.keycloak_admin.create_realm(payload, skip_exists=False)
         except KeycloakError as e:
@@ -135,14 +134,16 @@ class KeycloakSession:
         self.keycloak_admin.realm_name = 'master' # restore
        
 def args_parse(): 
-   parser = argparse.ArgumentParser()
-   parser.add_argument('server_url', type=str, help='Full url to point to the server for auth: Eg. https://iam.xyz.com/auth/.  Note: slash is important')  
-   parser.add_argument('user', type=str, help='Admin user')
-   parser.add_argument('password', type=str, help='Admin password')
-   parser.add_argument('input_yaml', type=str, help='File containing input for roles and clients in YAML format')
-   parser.add_argument('--disable_ssl_verify', help='Disable ssl cert verification while connecting to server', action='store_true')
-   args = parser.parse_args()
-   return args
+    parser = argparse.ArgumentParser()
+    parser.add_argument('server_url', type=str, help='Full url to point to the server for auth: Eg. https://iam.xyz.com/auth/.  Note: slash is important')  
+    parser.add_argument('user', type=str, help='Admin user')
+    parser.add_argument('password', type=str, help='Admin password')
+    parser.add_argument('input_yaml', type=str, help='File containing input for roles and clients in YAML format')
+    parser.add_argument('--disable_ssl_verify', help='Disable ssl cert verification while connecting to server', action='store_true')
+    parser.add_argument('--frontend_url', help='Frontend URL', dest='frontend_url', action='store', default='')
+ 
+    args = parser.parse_args()
+    return args
 
 def main():
 
@@ -166,7 +167,7 @@ def main():
         print(server_url)
         ks = KeycloakSession('master', server_url, user, password, ssl_verify)
         for realm in values:
-            r = ks.create_realm(realm)  # {realm : [role]}
+            r = ks.create_realm(realm, args.frontend_url)  # {realm : [role]}
 
         for realm in values:
             print('Create roles for realm %s' % realm) 
@@ -199,4 +200,3 @@ def main():
 
 if __name__=="__main__":
     main()
-
