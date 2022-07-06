@@ -37,7 +37,6 @@ USER ${container_user_uid}:${container_user_gid}
 
 WORKDIR  /home/${container_user}
 COPY keycloak_init.py .
-COPY config.py .
 
 ENV KEYCLOAK_SERVER_URL=
 ENV KEYCLOAK_ADMIN_USER=user
@@ -46,4 +45,4 @@ ENV INPUT_DIR=/opt/mosip/input
 ENV INPUT_FILE=input.yaml
 ENV FRONTEND_URL=
 
-CMD python3 keycloak_init.py $KEYCLOAK_SERVER_URL $KEYCLOAK_ADMIN_USER $KEYCLOAK_ADMIN_PASSWORD $INPUT_DIR/$INPUT_FILE 
+CMD python3 keycloak_init.py $KEYCLOAK_SERVER_URL $KEYCLOAK_ADMIN_USER $KEYCLOAK_ADMIN_PASSWORD $INPUT_DIR/$INPUT_FILE --frontend_url $FRONTEND_URL
