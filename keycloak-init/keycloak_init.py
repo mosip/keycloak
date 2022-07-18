@@ -10,7 +10,7 @@ import json
 import yaml
 import traceback
 from keycloak import KeycloakAdmin
-from keycloak.exceptions import raise_error_from_response, KeycloakError
+from keycloak.exceptions import raise_error_from_response, KeycloakError, KeycloakGetError
 from keycloak.connection import  ConnectionManager
 from keycloak.urls_patterns import URL_ADMIN_USER_REALM_ROLES
 
@@ -94,6 +94,40 @@ class KeycloakSession:
             raise
         
         self.keycloak_admin.realm_name = 'master' # restore
+
+    def create_mapper(self, realm, client, mapper, skip_exists=False):
+        self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
+        client_id = self.keycloak_admin.get_client_id(client)
+        mapper_url = 'admin/realms/'+realm+'/clients/'+client_id+'/protocol-mappers/models'
+        #print(mapper_url)
+        payload = {
+                        "protocol":"openid-connect",
+                        "config": {
+                            "id.token.claim":"true",
+                            "access.token.claim":"true",
+                            "userinfo.token.claim":"true",
+                            "multivalued":"",
+                            "aggregate.attrs":"",
+                            "user.attribute":mapper['mapper_user_attribute'],
+                            "claim.name":mapper['token_claim_name'],
+                            "jsonType.label":"String"
+                        },
+                        "name":mapper['mapper_name'],
+                        "protocolMapper":"oidc-usermodel-attribute-mapper"
+                  }
+        try:
+            print('\tCreating Mapper %s' % mapper['mapper_name'])
+            data_raw = self.keycloak_admin.connection.raw_post(mapper_url, data=json.dumps(payload))
+            #print(data_raw)
+            return raise_error_from_response(data_raw, KeycloakGetError, skip_exists=skip_exists)
+
+        except KeycloakError as e:
+            if e.response_code == 409:
+                print('\tMapper %s Exists already exists; SKIPPING;' % mapper['mapper_name'])
+
+        except:
+            self.keycloak_admin.realm_name = 'master' # restore
+            raise
 
     def create_user(self, realm, uname, email, fname, lname, password, temp_flag):
         self.keycloak_admin.realm_name = realm
@@ -185,6 +219,12 @@ def main():
                     print('Secret environment variable %s not found, generating' % secret_env_name)
                     secret = secrets.token_urlsafe(16)
                 r = ks.create_client(realm, client['name'], secret, client['saroles'])
+
+                if 'mappers' in client:
+                    mappers = client['mappers']
+                    print("Creating mappers for %s client " % client['name'])
+                    for mapper in mappers:
+                        r = ks.create_mapper(realm, client['name'], mapper)
             
             users = values[realm]['users']
             for user in users:
