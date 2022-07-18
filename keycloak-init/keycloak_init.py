@@ -99,7 +99,6 @@ class KeycloakSession:
         self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
         client_id = self.keycloak_admin.get_client_id(client)
         mapper_url = 'admin/realms/'+realm+'/clients/'+client_id+'/protocol-mappers/models'
-        #print(mapper_url)
         payload = {
                         "protocol":"openid-connect",
                         "config": {
@@ -118,7 +117,6 @@ class KeycloakSession:
         try:
             print('\tCreating Mapper %s' % mapper['mapper_name'])
             data_raw = self.keycloak_admin.connection.raw_post(mapper_url, data=json.dumps(payload))
-            #print(data_raw)
             return raise_error_from_response(data_raw, KeycloakGetError, skip_exists=skip_exists)
 
         except KeycloakError as e:
