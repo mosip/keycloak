@@ -188,13 +188,13 @@ class KeycloakSession:
                         "protocolMapper":"oidc-usermodel-attribute-mapper"
                   }
         try:
-            print('\tCreating Mapper %s' % mapper['mapper_name'])
+            print('\t\tCreating Mapper %s' % mapper['mapper_name'])
             data_raw = self.keycloak_admin.connection.raw_post(mapper_url, data=json.dumps(payload))
             return raise_error_from_response(data_raw, KeycloakGetError, skip_exists=skip_exists)
 
         except KeycloakError as e:
             if e.response_code == 409:
-                print('\tMapper %s Exists already exists; SKIPPING;' % mapper['mapper_name'])
+                print('\t\tMapper %s Exists already exists; SKIPPING;' % mapper['mapper_name'])
 
         except:
             self.keycloak_admin.realm_name = 'master' # restore
