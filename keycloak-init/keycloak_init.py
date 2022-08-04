@@ -238,6 +238,26 @@ class KeycloakSession:
 
         self.keycloak_admin.realm_name = 'master' # restore
 
+    def assign_sa_client_roles(self, realm, client, sa_client, sa_client_roles=None):
+        self.keycloak_admin.realm_name = realm
+        try:
+            client_id = self.keycloak_admin.get_client_id(client)
+            user = self.keycloak_admin.get_client_service_account_user(client_id)
+            sa_client_id = self.keycloak_admin.get_client_id(sa_client)
+            sa_client_role_list = []  # Get full role representation of all roles
+
+            for sa_client_role in sa_client_roles:
+                print('\t\t\tAdding Client Role :: "%s" to =====> client user :: "%s"' %(sa_client_role, user['username']))
+                sa_client_role_list.append(self.keycloak_admin.get_client_role(sa_client_id, sa_client_role))
+
+            URL = 'admin/realms/{realm-name}/users/{user}/role-mappings/clients/{sa-client-id}'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "user": user["id"], "sa-client-id": sa_client_id}
+            data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=json.dumps(sa_client_role_list))
+            return raise_error_from_response(data_raw, KeycloakGetError)
+        except:
+            self.keycloak_admin.realm_name = 'master' # restore
+            raise
+
 def args_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('server_url', type=str, help='Full url to point to the server for auth: Eg. https://iam.xyz.com/auth/.  Note: slash is important')
@@ -330,6 +350,16 @@ def main():
                     print("\tCreating mappers for %s client " % client['name'])
                     for mapper in mappers:
                         r = ks.create_mapper(realm, client['name'], mapper)
+
+                if 'sa_client_roles' in client:
+                    sa_client_roles = client['sa_client_roles']
+                    print('\tAssigning service account client roles for %s client ' % client['name'])
+                    for cid_roles in sa_client_roles:
+                        sa_client = list(cid_roles)[0]
+                        sa_client_role_list = cid_roles[sa_client]
+                        print('\t\tService account client name :: "%s"' % list(cid_roles)[0])
+                        r = ks.assign_sa_client_roles(realm, client['name'], sa_client, sa_client_role_list)
+
             users = []
             if 'users' in values[realm]:
                 users = values[realm]['users']
