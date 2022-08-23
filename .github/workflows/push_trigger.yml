@@ -97,7 +97,7 @@ jobs:
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=9.0.0
+          VERSION=$BRANCH_NAME
           echo "push version $VERSION"
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
