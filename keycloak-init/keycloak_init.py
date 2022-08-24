@@ -43,8 +43,6 @@ class KeycloakSession:
         except:
             raise
 
-        return 0
-
     def delete_realm(self, realm, skip_exists=False):
         self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
         url = 'admin/realms/'+realm
@@ -123,7 +121,6 @@ class KeycloakSession:
         self.keycloak_admin.realm_name = realm  # work around because otherwise role was getting created in master
         self.keycloak_admin.create_realm_role({'name' : role, 'clientRole' : False}, skip_exists=True)
         self.keycloak_admin.realm_name = 'master' # restore
-        return 0
 
     # sa_roles: service account roles
     def create_client(self, realm, client, secret, sa_roles=None):
@@ -302,7 +299,7 @@ def main():
             if realm == "del_realms":
                 continue
             print('\tCreate realms : %s' % realm)
-            r = ks.create_realm(realm, args.frontend_url)  # {realm : [role]}
+            ks.create_realm(realm, args.frontend_url)  # {realm : [role]}
 
         for realm in values:
             roles = []
@@ -310,20 +307,20 @@ def main():
                 print('Create roles for realm %s' % realm)
                 roles = values[realm]['roles']
             for role in roles:
-                r = ks.create_role(realm, role)
+                ks.create_role(realm, role)
 
             del_roles = []
             if 'del_roles' in values[realm]:
                 print('Delete roles for realm %s' % realm)
                 del_roles = values[realm]['del_roles']
             for role in del_roles:
-                r = ks.delete_realm_role(realm, role)
+                ks.delete_realm_role(realm, role)
             del_clients = []
             if 'del_clients' in values[realm]:
                 print("Deleting clients for realm %s" % realm)
                 del_clients = values[realm]['del_clients']
             for client in del_clients:
-                r = ks.delete_client(realm, client)
+                ks.delete_client(realm, client)
 
             # Expect secrets passed via env variables.
             clients = []
@@ -339,17 +336,17 @@ def main():
                     secret = secrets.token_urlsafe(16)
 
                 if 'saroles' in client:
-                    r = ks.create_client(realm, client['name'], secret, client['saroles'])
+                    ks.create_client(realm, client['name'], secret, client['saroles'])
 
                 if 'del_saroles' in client:
                     print("\tRemoving roles from service account user for client %s" % client['name'])
-                    r = ks.remove_sa_roles(realm, client['name'], client['del_saroles'])
+                    ks.remove_sa_roles(realm, client['name'], client['del_saroles'])
 
                 if 'mappers' in client:
                     mappers = client['mappers']
                     print("\tCreating mappers for %s client " % client['name'])
                     for mapper in mappers:
-                        r = ks.create_mapper(realm, client['name'], mapper)
+                        ks.create_mapper(realm, client['name'], mapper)
 
                 if 'sa_client_roles' in client:
                     sa_client_roles = client['sa_client_roles']
@@ -358,21 +355,21 @@ def main():
                         sa_client = list(cid_roles)[0]
                         sa_client_role_list = cid_roles[sa_client]
                         print('\t\tService account client name :: "%s"' % list(cid_roles)[0])
-                        r = ks.assign_sa_client_roles(realm, client['name'], sa_client, sa_client_role_list)
+                        ks.assign_sa_client_roles(realm, client['name'], sa_client, sa_client_role_list)
 
             users = []
             if 'users' in values[realm]:
                 users = values[realm]['users']
             for user in users:
                 print(f'''Creating user {user['username']}''')
-                r = ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'])
-                r = ks.assign_user_roles(realm, user['username'], user['realmRoles'])
+                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'])
+                ks.assign_user_roles(realm, user['username'], user['realmRoles'])
     except:
         formatted_lines = traceback.format_exc()
         print(formatted_lines)
         sys.exit(1)
 
-    sys.exit(r)
+    sys.exit(0)
 
 if __name__=="__main__":
     main()
