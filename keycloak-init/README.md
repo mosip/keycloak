@@ -6,7 +6,7 @@ After Keycloak is installed, it needs to be populated with base data that is nee
 
 ## Prerequisites
 * Keycloak server must be running and available via a url like `https://iam.xyz.net`.
-* Updated `input.yaml` file
+* Updated `input.yaml` file (an example is given here).
 * Install utilities
 * Install python3 virtual environment  and activate the same as per the link https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
 
