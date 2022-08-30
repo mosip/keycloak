@@ -32,6 +32,15 @@ class KeycloakSession:
             "accessTokenLifespanForImplicitFlow": 900,
             "actionTokenGeneratedByAdminLifespan": 43200,
             "actionTokenGeneratedByUserLifespan": 300,
+            "passwordPolicy":"length(8)",
+            "bruteForceProtected":true,
+            "permanentLockout":false,
+            "maxFailureWaitSeconds":900,
+            "minimumQuickLoginWaitSeconds":60,
+            "waitIncrementSeconds":300,
+            "quickLoginCheckMilliSeconds":1000,
+            "maxDeltaTimeSeconds":600,
+            "failureFactor":5,
             "attributes": {"frontendUrl": frontend_url}
         }
         try:
