@@ -32,15 +32,15 @@ class KeycloakSession:
             "accessTokenLifespanForImplicitFlow": 900,
             "actionTokenGeneratedByAdminLifespan": 43200,
             "actionTokenGeneratedByUserLifespan": 300,
-            "passwordPolicy":"forceExpiredPasswordChange(365) and passwordHistory(3) and length(8) and notUsername(undefined) and notEmail(undefined) and upperCase(1) and lowerCase(1)",
+            "passwordPolicy":"length(8)",
             "bruteForceProtected":true,
             "permanentLockout":false,
             "maxFailureWaitSeconds":900,
             "minimumQuickLoginWaitSeconds":60,
-            "waitIncrementSeconds":600,
+            "waitIncrementSeconds":300,
             "quickLoginCheckMilliSeconds":1000,
             "maxDeltaTimeSeconds":600,
-            "failureFactor":20,
+            "failureFactor":5,
             "attributes": {"frontendUrl": frontend_url}
         }
         try:
