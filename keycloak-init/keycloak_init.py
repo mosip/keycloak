@@ -264,6 +264,74 @@ class KeycloakSession:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
 
+    def get_client_scope_id(self, realm, client_scope_name):
+        self.keycloak_admin.realm_name = realm
+
+        try:
+            payload = {}
+            URL = 'admin/realms/{realm-name}/client-scopes'
+            params_path = {"realm-name": self.keycloak_admin.realm_name}
+            data_raw = self.keycloak_admin.connection.raw_get(URL.format(**params_path), data=json.dumps(payload))
+            for client_scope in data_raw.json():
+                if client_scope['name'] == client_scope_name:
+                    return client_scope['id']
+            return raise_error_from_response(data_raw, KeycloakGetError)
+
+        except:
+            self.keycloak_admin.realm_name = 'master'  # restore
+            raise
+
+    def update_client_scope(self, realm, client_scope, client_scope_id):
+        self.keycloak_admin.realm_name = realm
+
+        try:
+            payload = client_scope
+            payload['id'] = client_scope_id
+            URL = 'admin/realms/{realm-name}/client-scopes/{client-scope-id}'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "client-scope-id": client_scope_id}
+            data_raw = self.keycloak_admin.connection.raw_put(URL.format(**params_path), data=json.dumps(payload))
+            return raise_error_from_response(data_raw, KeycloakGetError)
+        except:
+            self.keycloak_admin.realm_name = 'master'  # restore
+            raise
+
+    def create_client_scope(self, realm, client_scope):
+        self.keycloak_admin.realm_name = realm
+
+        try:
+            payload = client_scope
+            print("\tCreating client scope \"%s\" for realm %s " % (payload['name'], self.keycloak_admin.realm_name))
+            URL = 'admin/realms/{realm-name}/client-scopes'
+            params_path = {"realm-name": self.keycloak_admin.realm_name}
+            data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=json.dumps(payload))
+            return raise_error_from_response(data_raw, KeycloakGetError)
+        except KeycloakError as e:
+            if e.response_code == 409:
+                print('\tExists, updating "%s"' % payload['name'])
+                client_scope_id = self.get_client_scope_id(self.keycloak_admin.realm_name, payload['name'])
+                self.update_client_scope(self.keycloak_admin.realm_name, payload, client_scope_id)
+        except:
+            self.keycloak_admin.realm_name = 'master'  # restore
+            raise
+
+    def assign_client_scope(self, realm, client_name, client_scope):
+        self.keycloak_admin.realm_name = realm
+
+        try:
+            client_scope_id = self.get_client_scope_id(realm, client_scope)
+            client_id = self.keycloak_admin.get_client_id(client_name)
+            payload = {"client": client_id, "clientScopeId": client_scope_id, "realm": self.keycloak_admin.realm_name}
+            print("\t\tAssigning client scope \"%s\" for %s client " % (client_scope, client_name))
+            URL = 'admin/realms/{realm-name}/clients/{client-id}/default-client-scopes/{client-scope-id}'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "client-id": client_id, "client-scope-id": client_scope_id}
+            data_raw = self.keycloak_admin.connection.raw_put(URL.format(**params_path), data=json.dumps(payload))
+            return raise_error_from_response(data_raw, KeycloakGetError)
+
+        except:
+            self.keycloak_admin.realm_name = 'master'  # restore
+            raise
+
+
 def args_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('server_url', type=str, help='Full url to point to the server for auth: Eg. https://iam.xyz.com/auth/.  Note: slash is important')
@@ -326,22 +394,29 @@ def main():
                 ks.delete_realm_role(realm, role)
             del_clients = []
             if 'del_clients' in values[realm]:
-                print("Deleting clients for realm %s" % realm)
+                print("Delete clients for realm %s" % realm)
                 del_clients = values[realm]['del_clients']
             for client in del_clients:
                 ks.delete_client(realm, client)
 
+            client_scopes = []
+            if 'client_scopes' in values[realm]:
+                print("Create client scopes for realm %s" % realm)
+                client_scopes = values[realm]['client_scopes']
+            for client_scope in client_scopes:
+                ks.create_client_scope(realm, client_scope)
+
             # Expect secrets passed via env variables.
             clients = []
             if 'clients' in values[realm]:
-                print('Create clients for realm %s' % realm)
+                print('\nCreate clients for realm %s' % realm)
                 clients = values[realm]['clients']
             for client in clients:
                 secret_env_name = '%s_secret' % client['name']
                 secret_env_name = secret_env_name.replace('-', '_') # Compatible with environment variables
                 secret = os.environ.get(secret_env_name)
                 if secret is None:  # Env variable not found
-                    print('\tSecret environment variable %s not found, generating' % secret_env_name)
+                    print('\n\tSecret environment variable %s not found, generating' % secret_env_name)
                     secret = secrets.token_urlsafe(16)
 
                 if 'saroles' in client:
@@ -365,6 +440,12 @@ def main():
                         sa_client_role_list = cid_roles[sa_client]
                         print('\t\tService account client name :: "%s"' % list(cid_roles)[0])
                         ks.assign_sa_client_roles(realm, client['name'], sa_client, sa_client_role_list)
+
+                if 'assign_client_scopes' in client:
+                    assign_client_scopes = client['assign_client_scopes']
+                    print('\tAssigning client scopes for %s client ' % client['name'])
+                    for client_scope in assign_client_scopes:
+                        ks.assign_client_scope(realm, client['name'], client_scope)
 
             users = []
             if 'users' in values[realm]:
