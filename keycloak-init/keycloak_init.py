@@ -41,7 +41,11 @@ class KeycloakSession:
             "quickLoginCheckMilliSeconds":1000,
             "maxDeltaTimeSeconds":600,
             "failureFactor":5,
-            "attributes": {"frontendUrl": frontend_url}
+            "attributes": {"frontendUrl": frontend_url},
+            "loginTheme":"mosip",
+            "accountTheme":"mosip",
+            "adminTheme":"mosip",
+            "emailTheme":"mosip"
         }
         try:
             self.keycloak_admin.create_realm(payload, skip_exists=False)
