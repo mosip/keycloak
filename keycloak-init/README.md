@@ -42,3 +42,5 @@ Keycloak will feature the Mosip theme as the default theme. To apply a customize
 * Log in to Keycloak.
 * Navigate to the MOSIP realm settings.
 * Goto Themes section and from the theme dropdown menu, choose the desired theme.
+
+Note: We are adding theme as a part of keycloak_init
