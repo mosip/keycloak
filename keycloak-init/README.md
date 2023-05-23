@@ -37,5 +37,5 @@ See `run.sh`
 
 To just create users see example `users.yaml`
 
-#Theme
+# Theme
 To have a Mosip theme or any customized  theme in keycloak, update the theme under the function create_realm section in keycloak_init.py
