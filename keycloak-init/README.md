@@ -36,3 +36,11 @@ $ docker push <your docker registry >/keycloak-init:<tag>
 See `run.sh`
 
 To just create users see example `users.yaml`
+
+# Theme
+Keycloak will feature the Mosip theme as the default theme. To apply a customized theme, please follow these steps:
+* Log in to Keycloak.
+* Navigate to the MOSIP realm settings.
+* Goto Themes section and from the theme dropdown menu, choose the desired theme.
+
+Note: We are adding theme as a part of keycloak_init
