@@ -206,14 +206,15 @@ class KeycloakSession:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
 
-    def create_user(self, realm, uname, email, fname, lname, password, temp_flag):
+    def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}):
         self.keycloak_admin.realm_name = realm
         payload = {
           "username" : uname,
           "email" : email,
           "firstName" : fname,
           "lastName" : lname,
-          "enabled": True
+          "enabled": True,
+          "attributes": attributes
         }
         try:
             print('Creating user %s' % uname)
@@ -452,7 +453,7 @@ def main():
                 users = values[realm]['users']
             for user in users:
                 print(f'''Creating user {user['username']}''')
-                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'])
+                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'])
                 ks.assign_user_roles(realm, user['username'], user['realmRoles'])
     except:
         formatted_lines = traceback.format_exc()
