@@ -9,6 +9,10 @@ mosip:  # realm
       lastName: User15
       password: abcde
       temporary: False
+      attributes: {
+        "abc1": "xyz1",
+        "abc2": "xyz2"
+      }
       realmRoles: 
         - PARTNER
     - username: test_user16
