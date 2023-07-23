@@ -41,7 +41,11 @@ class KeycloakSession:
             "quickLoginCheckMilliSeconds":1000,
             "maxDeltaTimeSeconds":600,
             "failureFactor":5,
-            "attributes": {"frontendUrl": frontend_url}
+            "attributes": {"frontendUrl": frontend_url},
+            "loginTheme":"mosip",
+            "accountTheme":"mosip",
+            "adminTheme":"mosip",
+            "emailTheme":"mosip"
         }
         try:
             self.keycloak_admin.create_realm(payload, skip_exists=False)
@@ -131,6 +135,62 @@ class KeycloakSession:
         self.keycloak_admin.create_realm_role({'name' : role, 'clientRole' : False}, skip_exists=True)
         self.keycloak_admin.realm_name = 'master' # restore
 
+    def get_auth_flow_id(self, realm, alias):
+        self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
+        try:
+            payload = {}
+            auth_id = None
+            URL = 'admin/realms/{realm-name}/authentication/flows'
+            params_path = {"realm-name": self.keycloak_admin.realm_name}
+            data_raw = self.keycloak_admin.connection.raw_get(URL.format(**params_path), data=json.dumps(payload))
+            for authflow in data_raw.json():
+                if authflow['alias'] == alias:
+                    auth_id = authflow['id']
+            if auth_id == None:
+                print("\tAuthflow id not found for alias ", alias)
+                exit(1)
+            return auth_id
+
+        except:
+            self.keycloak_admin.realm_name = 'master'  # restore
+            raise
+
+    def create_public_client(self, realm, client, redirect_urls, web_origins, direct_grant_flow_id, browser_flow_id):
+        self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
+        payload = {
+            "clientId": "mosip-toolkit-android-client",
+            "baseUrl": "",
+            "surrogateAuthRequired": False,
+            "enabled": True,
+            "alwaysDisplayInConsole": False,
+            "clientAuthenticatorType": "client-secret",
+            "redirectUris": redirect_urls,
+            "webOrigins": web_origins,
+            "bearerOnly": False,
+            "consentRequired": False,
+            "standardFlowEnabled": True,
+            "implicitFlowEnabled": False,
+            "directAccessGrantsEnabled": True,
+            "serviceAccountsEnabled": False,
+            "publicClient": True,
+            "protocol": "openid-connect",
+            "authenticationFlowBindingOverrides": {"direct_grant": direct_grant_flow_id, "browser": browser_flow_id},
+            "fullScopeAllowed": True
+        }
+        try:
+            print('\tCreating public client %s' % client)
+            self.keycloak_admin.create_client(payload, skip_exists=False)  # If exists, update. So don't skip
+        except KeycloakError as e:
+            if e.response_code == 409:
+                print('\tExists, updating %s' % client)
+                client_id = self.keycloak_admin.get_client_id(client)
+                self.keycloak_admin.update_client(client_id, payload)
+        except:
+            self.keycloak_admin.realm_name = 'master'  # restore
+            raise
+
+        self.keycloak_admin.realm_name = 'master'  # restore
+
     # sa_roles: service account roles
     def create_client(self, realm, client, secret, sa_roles=None):
         self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
@@ -160,7 +220,7 @@ class KeycloakSession:
             return
 
         try:
-            roles = [] # Get full role reprentation of all roles 
+            roles = [] # Get full role reprentation of all roles
             for role in sa_roles:
                 role_rep = self.keycloak_admin.get_realm_role(role)
                 roles.append(role_rep)
@@ -171,7 +231,7 @@ class KeycloakSession:
         except:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
-        
+
         self.keycloak_admin.realm_name = 'master' # restore
 
     def create_mapper(self, realm, client, mapper, skip_exists=False):
@@ -206,14 +266,15 @@ class KeycloakSession:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
 
-    def create_user(self, realm, uname, email, fname, lname, password, temp_flag):
+    def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}):
         self.keycloak_admin.realm_name = realm
         payload = {
           "username" : uname,
           "email" : email,
           "firstName" : fname,
           "lastName" : lname,
-          "enabled": True
+          "enabled": True,
+          "attributes": attributes
         }
         try:
             print('Creating user %s' % uname)
@@ -419,7 +480,11 @@ def main():
                     print('\n\tSecret environment variable %s not found, generating' % secret_env_name)
                     secret = secrets.token_urlsafe(16)
 
-                if 'saroles' in client:
+                if 'public_client' in client and client['public_client']:
+                    direct_grant_flow_id = ks.get_auth_flow_id(realm, client['direct_grant_flow_alias'])
+                    browser_flow_id = ks.get_auth_flow_id(realm, client['browser_flow_alias'])
+                    ks.create_public_client(realm, client['name'], client['redirect_urls'], client['web_origins'], direct_grant_flow_id, browser_flow_id)
+                elif 'saroles' in client:
                     ks.create_client(realm, client['name'], secret, client['saroles'])
 
                 if 'del_saroles' in client:
@@ -452,7 +517,7 @@ def main():
                 users = values[realm]['users']
             for user in users:
                 print(f'''Creating user {user['username']}''')
-                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'])
+                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'])
                 ks.assign_user_roles(realm, user['username'], user['realmRoles'])
     except:
         formatted_lines = traceback.format_exc()
