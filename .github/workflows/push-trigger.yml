@@ -3,6 +3,14 @@ name: Keycloak Build upon a push
 on:
   release:
     types: [published]
+  pull_request:
+    types: [opened]
+    branches:
+      - '!release-branch'
+      - release-1*
+      - 1.*
+      - develop
+      - MOSIP*
   workflow_dispatch:
     inputs:
       message:
@@ -31,6 +39,7 @@ jobs:
           - SERVICE_LOCATION: 'keycloak-artemis'
             SERVICE_NAME: 'mosip-artemis-keycloak'
       fail-fast: false
+    name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
     with:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
