@@ -34,9 +34,9 @@
                 </div>
 
                 <#if recaptchaRequired??>
-                    <div class="form-group">
+                    <div class="form-group-recaptcha">
                         <div class="${properties.kcInputWrapperClass!}">
-                            <div class="g-recaptcha" data-size="compact" data-sitekey="${recaptchaSiteKey}"></div>
+                            <div class="g-recaptcha" data-theme="light" data-sitekey="${recaptchaSiteKey}"></div>
                         </div>
                     </div>
                 </#if>

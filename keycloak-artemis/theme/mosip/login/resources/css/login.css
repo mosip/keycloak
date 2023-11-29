@@ -140,7 +140,13 @@ div.kc-logo-text span {
 }
 .g-recaptcha {
     transform:scale(0.77);
+    -webkit-transform:scale(1.24);
     transform-origin:0 0;
+    -webkit-transform-origin:0 0;
+    height: 105px;
+}
+div.form-group.login-pf-settings{
+    display: block;
 }
 #kc-header {
     color: #ededed;
