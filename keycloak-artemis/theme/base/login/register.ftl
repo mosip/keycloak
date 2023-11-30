@@ -131,7 +131,7 @@
             <#if recaptchaRequired??>
             <div class="form-group">
                 <div class="${properties.kcInputWrapperClass!}">
-                    <div class="g-recaptcha" data-theme="light" data-sitekey="${recaptchaSiteKey}" style="transform:scale(0.77);-webkit-transform:scale(1.36);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+                    <div class="g-recaptcha" data-theme="light" data-sitekey="${recaptchaSiteKey}" style="padding-left:15px;"></div>
                 </div>
             </div>
             </#if>
