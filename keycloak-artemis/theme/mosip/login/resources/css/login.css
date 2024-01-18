@@ -147,8 +147,6 @@ div.kc-logo-text span {
 }
 div.form-group.login-pf-settings{
     display: block;
-    position: relative;
-    z-index: 1;
 }
 #kc-header {
     color: #ededed;
