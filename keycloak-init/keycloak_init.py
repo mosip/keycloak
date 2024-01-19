@@ -3,7 +3,6 @@
 
 import os
 import sys
-import ast
 import argparse
 import secrets
 import json
@@ -11,7 +10,6 @@ import yaml
 import traceback
 from keycloak import KeycloakAdmin
 from keycloak.exceptions import raise_error_from_response, KeycloakError, KeycloakGetError
-from keycloak.connection import  ConnectionManager
 from keycloak.urls_patterns import URL_ADMIN_USER_REALM_ROLES
 
 class KeycloakSession:
@@ -21,32 +19,8 @@ class KeycloakSession:
                                             password=pwd,
                                             realm_name=realm,
                                             verify=ssl_verify)
-    def create_realm(self, realm, frontend_url=''):
-        payload = {
-            "realm" : realm,
-            "enabled": True,
-            "accessCodeLifespan": 7200,
-            "accessCodeLifespanLogin": 1800,
-            "accessCodeLifespanUserAction": 300,
-            "accessTokenLifespan": 86400,
-            "accessTokenLifespanForImplicitFlow": 900,
-            "actionTokenGeneratedByAdminLifespan": 43200,
-            "actionTokenGeneratedByUserLifespan": 300,
-            "passwordPolicy":"length(8)",
-            "bruteForceProtected":True,
-            "permanentLockout":False,
-            "maxFailureWaitSeconds":900,
-            "minimumQuickLoginWaitSeconds":60,
-            "waitIncrementSeconds":300,
-            "quickLoginCheckMilliSeconds":1000,
-            "maxDeltaTimeSeconds":600,
-            "failureFactor":5,
-            "attributes": {"frontendUrl": frontend_url},
-            "loginTheme":"mosip",
-            "accountTheme":"mosip",
-            "adminTheme":"mosip",
-            "emailTheme":"mosip"
-        }
+    def create_realm(self, realm, realm_config):
+        payload = realm_config
         try:
             self.keycloak_admin.create_realm(payload, skip_exists=False)
         except KeycloakError as e:
@@ -55,6 +29,220 @@ class KeycloakSession:
                 self.keycloak_admin.update_realm(realm, payload)
         except:
             raise
+
+    def create_flow_to_auth_flow(self, realm, flow_alias, add_flow_payload, space):
+        self.keycloak_admin.realm_name = realm
+        payload = add_flow_payload
+
+        URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions/flow'
+        params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
+        try:
+            response = self.keycloak_admin.connection.raw_post(
+                URL.format(**params_path),
+                data=json.dumps(payload)
+            )
+            raise_error_from_response(response, KeycloakGetError)
+
+        except KeycloakError as e:
+            if e.response_code == 409:
+                print(space,'Flow "%s" already exists for flow "%s"; SKIPPING;' % (payload['alias'], flow_alias))
+            else:
+                raise
+
+    def update_config_to_execution(self, realm, flow_alias,execution_displayName, update_config_payload, space):
+        self.keycloak_admin.realm_name = realm
+        payload = update_config_payload
+        try:
+            site_key=os.environ.get(payload['alias']+"-site-key") if os.environ.get(payload['alias']+"-site-key") else payload['config']['secret']
+            secret_key=os.environ.get(payload['alias']+"-secret-key") if os.environ.get(payload['alias']+"-secret-key") else payload['config']['site.key']
+            use_recaptcha_net=os.environ.get(payload['alias']+"-use-recaptcha-net") if os.environ.get(payload['alias']+"-use-recaptcha-net") else payload['config']['useRecaptchaNet']
+            if site_key is None or site_key == '':
+                print(space,'\033[91m'+"Environmental variable ",payload['alias']+"-site-key"," Not Found; EXITING")
+                exit(1)
+            if secret_key is None or secret_key == '':
+                print(space,'\033[91m'+"Environmental variable ",payload['alias']+"-secret-key"," Not Found; EXITING")
+                exit(1)
+            if use_recaptcha_net is None or use_recaptcha_net == '':
+                print(space,"Environmental variable ",payload['alias']+"-use-recaptcha-net"," Not Found; Setting empty value :")
+                use_recaptcha_net=''
+            payload['config']['secret']=secret_key
+            payload['config']['site.key']=site_key
+            payload['config']['useRecaptchaNet']=use_recaptcha_net
+
+            print(space, "Update config Payload : ", payload)
+            GET_URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
+            GET_RESPONSE = self.keycloak_admin.connection.raw_get(
+                GET_URL.format(**params_path)
+            )
+            AUTH_EXECUTION_LIST=GET_RESPONSE.json()
+            for auth_execution in AUTH_EXECUTION_LIST:
+                if payload is not None and auth_execution['displayName'] == execution_displayName:
+                    URL = 'admin/realms/mosip/authentication/executions/{execution_alias_id}/config'
+                    params_path = {"realm-name": self.keycloak_admin.realm_name, "execution_alias_id": auth_execution['id']}
+                    response = self.keycloak_admin.connection.raw_post(
+                        URL.format(**params_path),
+                        data=json.dumps(payload)
+                    )
+                    raise_error_from_response(response, KeycloakGetError)
+                    return
+        except KeycloakError as e:
+            if e.response_code == 204 or e.response_code == 201:
+                print(space,'Execution for flow "%s" updated;' % execution_displayName)
+            else:
+                raise
+
+    def update_execution_to_auth_flow(self, realm, flow_alias, execution, update_execution_payload=None, space=None):
+        self.keycloak_admin.realm_name = realm
+        payload = update_execution_payload
+        try:
+            GET_URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
+            GET_RESPONSE = self.keycloak_admin.connection.raw_get(
+                GET_URL.format(**params_path)
+            )
+            AUTH_EXECUTION_LIST=GET_RESPONSE.json()
+            for auth_execution in AUTH_EXECUTION_LIST:
+                if payload is not None and auth_execution['displayName'] == execution['displayName']:
+                    # print(space,'Execution for flow "%s" already exists; SKIPPING;' % auth_execution['displayName'])
+                    URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions'
+                    params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
+                    payload=({**auth_execution, **payload})
+                    response = self.keycloak_admin.connection.raw_put(
+                        URL.format(**params_path),
+                        data=json.dumps(payload)
+                    )
+                    raise_error_from_response(response, KeycloakGetError)
+                    return
+        except KeycloakError as e:
+            if e.response_code == 202:
+                print(space,'Execution for flow "%s" updated;' % execution['displayName'])
+            else:
+                raise
+
+    def create_execution_to_auth_flow(self, realm, flow_alias, add_execution_payload, space):
+        self.keycloak_admin.realm_name = realm
+        payload = add_execution_payload
+        try:
+            GET_URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
+            GET_RESPONSE = self.keycloak_admin.connection.raw_get(
+                GET_URL.format(**params_path)
+            )
+            AUTH_EXECUTION_LIST=GET_RESPONSE.json()
+            for auth_execution in AUTH_EXECUTION_LIST:
+                if auth_execution['displayName'] == payload['displayName']:
+                    print(space,'Execution for flow "%s" already exists; SKIPPING;' % add_execution_payload['displayName'])
+                    raise_error_from_response(GET_RESPONSE, KeycloakError,None, True)
+                    return
+
+            URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions/execution'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
+
+            response = self.keycloak_admin.connection.raw_post(
+                URL.format(**params_path),
+                data=json.dumps(payload)
+            )
+            raise_error_from_response(response, KeycloakGetError)
+
+        except KeycloakError as e:
+            if e.response_code == 409:
+                print(space,'Execution for flow "%s" already exists; SKIPPING;' % add_execution_payload['displayName'])
+            else:
+                raise
+
+
+    def create_authentication_flow(self, realm, auth_flow_payload):
+        self.keycloak_admin.realm_name = realm
+        executions=[]
+        if 'authentication_executions' in auth_flow_payload:
+           executions = auth_flow_payload.pop('authentication_executions')
+
+        flows=[]
+        if 'authentication_flows' in auth_flow_payload:
+            flows = auth_flow_payload.pop('authentication_flows')
+
+        payload = auth_flow_payload
+        URL = 'admin/realms/{realm-name}/authentication/flows'
+        params_path = {"realm-name": self.keycloak_admin.realm_name}
+        try:
+            response = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=json.dumps(payload))
+            raise_error_from_response(response, KeycloakError)
+        except KeycloakError as e:
+            if e.response_code == 409:
+                print('\t\t\tFlow "%s" already exists; SKIPPING;' % payload['alias'])
+            else:
+                raise
+        for execution in executions:
+            space="\t\t\t"
+            print(space,'Adding execution : "%s" for "%s"' % (execution['displayName'], payload['alias']))
+            update_config=None
+            if 'update_config' in execution:
+                update_config=execution.pop('update_config')
+            update_execution={}
+            if 'update_execution' in execution:
+                update_execution=execution.pop('update_execution')
+            self.create_execution_to_auth_flow(realm, payload['alias'], execution, space+"\t")
+            self.update_execution_to_auth_flow(realm, payload['alias'], execution, update_execution, space+"\t")
+            if update_config is not None:
+                self.update_config_to_execution(realm, payload['alias'], execution['displayName'], update_config, space+"\t")
+
+        for flow in flows:
+            space="\t\t\t"
+            print(space,'Adding flow : "%s" for "%s" ' % (flow['alias'], payload['alias']))
+            flow_authentication_executions={}
+            if 'authentication_executions' in flow:
+                flow_authentication_executions=flow.pop('authentication_executions')
+            flow_authentication_flows={}
+            if 'authentication_flows' in flow:
+                flow_authentication_flows=flow.pop('authentication_flows')
+            update_flow_requirement={}
+            if 'update_flow_requirement' in flow:
+                update_flow_requirement=flow.pop('update_flow_requirement')
+
+            ## create the flow
+            self.create_flow_to_auth_flow(realm, payload['alias'], flow, space)
+
+            ## update the requirement in flow
+            print(space,'Updating requirement for flow : "%s"' % flow['displayName'])
+            self.update_execution_to_auth_flow(realm, payload['alias'], flow, update_flow_requirement, space+"\t")
+
+            for flow_execution in flow_authentication_executions:
+                exec_space=space+'\t'
+                print(exec_space,'Adding execution : "%s" to flow "%s" ' % (flow_execution['displayName'], flow['alias']))
+                update_config=None
+                if 'update_config' in flow_execution:
+                    update_config=flow_execution.pop('update_config')
+                self.create_execution_to_auth_flow(realm, flow['alias'], flow_execution, exec_space)
+                if update_config is not None:
+                    print(exec_space,'Updating execution config, "Google Captcha Site key & Secret Key" to execution : "%s" of flow "%s" ' % (flow_execution['displayName'], flow['alias']))
+                    self.update_config_to_execution(realm, payload['alias'], flow_execution['displayName'], update_config, exec_space)
+
+            for add_flow in flow_authentication_flows:
+                flow_space=space+'\t'
+                print(flow_space,'Adding flow : "%s" to flow "%s" ' % (add_flow['alias'], flow['alias']))
+                update_execution={}
+                if 'update_execution' in add_flow:
+                    update_execution=add_flow.pop('update_execution')
+                auth_flow_execs={}
+                if 'authentication_executions' in add_flow:
+                    auth_flow_execs=add_flow.pop('authentication_executions')
+
+                self.create_flow_to_auth_flow(realm, flow['alias'], add_flow, flow_space+"\t")
+
+                print(flow_space,'Updating requirement for flow : "%s"' % flow['displayName']  )
+                self.update_execution_to_auth_flow(realm, flow['alias'], add_flow, update_execution, flow_space)
+
+
+                for auth_flow_exec in auth_flow_execs:
+                    update_execution={}
+                    if 'update_execution' in auth_flow_exec:
+                        update_execution=auth_flow_exec.pop('update_execution')
+                    print(flow_space,'Adding execution : "%s" to flow "%s" ' % (auth_flow_exec['displayName'], flow['alias']))
+                    self.create_execution_to_auth_flow(realm, add_flow['alias'], auth_flow_exec, flow_space+"\t")
+                    self.update_execution_to_auth_flow(realm, add_flow['alias'], auth_flow_exec, update_execution, flow_space+'\t')
+
+
 
     def delete_realm(self, realm, skip_exists=False):
         self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
@@ -400,7 +588,6 @@ def args_parse():
     parser.add_argument('password', type=str, help='Admin password')
     parser.add_argument('input_yaml', type=str, help='File containing input for roles and clients in YAML format')
     parser.add_argument('--disable_ssl_verify', help='Disable ssl cert verification while connecting to server', action='store_true')
-    parser.add_argument('--frontend_url', help='Frontend URL', dest='frontend_url', action='store', default='')
 
     args = parser.parse_args()
     return args
@@ -420,7 +607,7 @@ def main():
     fp = open(input_yaml, 'rt')
     values = yaml.load(fp, Loader=yaml.FullLoader)
 
-    server_url = server_url + '/auth/' # Full url to access api
+    server_url = server_url # Full url to access api
 
     try:
         print(server_url)
@@ -436,8 +623,9 @@ def main():
         for realm in values:
             if realm == "del_realms":
                 continue
-            print('\tCreate realms : %s' % realm)
-            ks.create_realm(realm, args.frontend_url)  # {realm : [role]}
+            print('\tCreate realms : %s' %realm)
+            if 'realm_config' in values[realm]:
+                ks.create_realm(realm, values[realm]['realm_config'])  # {realm : [role]}
 
         for realm in values:
             roles = []
@@ -466,6 +654,17 @@ def main():
                 client_scopes = values[realm]['client_scopes']
             for client_scope in client_scopes:
                 ks.create_client_scope(realm, client_scope)
+
+            authentication = []
+            if 'authentication' in values[realm]:
+                authentication = values[realm]['authentication']
+                auth_flows = []
+                if 'auth_flows' in authentication:
+                    auth_flows = authentication['auth_flows']
+                    print('\tCreating authentication flows')
+                    for auth_flow in auth_flows:
+                        print('\t\tCreating authentication flow for "%s" ' % auth_flow['alias'])
+                        ks.create_authentication_flow(realm, auth_flow)
 
             # Expect secrets passed via env variables.
             clients = []
@@ -511,6 +710,25 @@ def main():
                     print('\tAssigning client scopes for %s client ' % client['name'])
                     for client_scope in assign_client_scopes:
                         ks.assign_client_scope(realm, client['name'], client_scope)
+
+                if 'authentication_flow_overrides' in client:
+                    cid=None
+                    client_data=None
+                    print('\tUpdating "authentication flow overrides" for client : "%s"' % client['name'])
+
+                    for auth_flow_overrides in client['authentication_flow_overrides']:
+                        print('\t\tAuth flow overrides "%s" : "%s"' %(auth_flow_overrides, client['authentication_flow_overrides'][auth_flow_overrides]))
+                        authentication_flow_overrides_id = ks.get_auth_flow_id(realm, client['authentication_flow_overrides'][auth_flow_overrides])
+                        cid=ks.keycloak_admin.get_client_id(client['name'])
+                        client_data=ks.keycloak_admin.get_client(cid)
+                        client_data['authenticationFlowBindingOverrides'][auth_flow_overrides]=authentication_flow_overrides_id
+                        print('\t\t\tauthentication_flow_overrides_id : ', authentication_flow_overrides_id)
+                        print("\t\t\tClient ID : ",cid)
+                        print("\t\t\tClient Data authentication_flow_overrides_id : ",client_data['authenticationFlowBindingOverrides'])
+                    if cid is not None and client_data is not None:
+                        ks.keycloak_admin.update_client(cid,client_data)
+                        print("\t\t\t'authenticationFlowBindingOverrides' successfully updated for client '%s' "% client['name'])
+
 
             users = []
             if 'users' in values[realm]:
