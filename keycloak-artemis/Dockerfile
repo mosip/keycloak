@@ -15,7 +15,8 @@ LABEL maintainer="Bitnami <containers@bitnami.com>"
 
 COPY prebuildfs /
 RUN chmod +x /usr/sbin/install_packages && chmod g+rwX /opt/bitnami && \
-    chmod +x /opt/bitnami/scripts/keycloak/entrypoint.sh /opt/bitnami/scripts/keycloak/setup.sh /opt/bitnami/scripts/keycloak/run.sh
+    chmod +x /opt/bitnami/scripts/keycloak/entrypoint.sh /opt/bitnami/scripts/keycloak/setup.sh /opt/bitnami/scripts/keycloak/run.sh && \
+    chown -R 1001:1001 /opt/bitnami/*
 
 # Install required system packages and dependencies
 RUN . /usr/sbin/install_packages acl ca-certificates curl gzip libaio1 libc6 procps rsync tar zlib1g
