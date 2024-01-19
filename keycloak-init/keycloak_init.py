@@ -69,7 +69,8 @@ class KeycloakSession:
             payload['config']['site.key']=site_key
             payload['config']['useRecaptchaNet']=use_recaptcha_net
 
-            print(space, "Update config Payload : ", payload)
+            # print(space, "Update config Payload : ", payload)
+            print(space, "Update config Payload : ")
             GET_URL = 'admin/realms/{realm-name}/authentication/flows/{flow_alias}/executions'
             params_path = {"realm-name": self.keycloak_admin.realm_name, "flow_alias": flow_alias}
             GET_RESPONSE = self.keycloak_admin.connection.raw_get(
