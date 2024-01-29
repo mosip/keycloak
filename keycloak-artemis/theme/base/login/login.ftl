@@ -3,7 +3,7 @@
     <#if section = "header">
 		${msg("loginAccountTitle")}
     <#elseif section = "form">
-    <div id="kc-form" <#if "${locale.currentLanguageTag}" == "ara">dir="rtl"</#if>>
+    <div id="kc-form" <#if locale?exists && locale.currentLanguageTag == "ara">dir="rtl"</#if>>
       <div id="kc-form-wrapper">
         <#if realm.password>
             <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">
