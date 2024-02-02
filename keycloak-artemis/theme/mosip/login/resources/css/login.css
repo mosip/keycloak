@@ -139,11 +139,11 @@ div.kc-logo-text span {
     display: none;
 }
 .g-recaptcha {
-    transform:scale(1.27);
+    transform:scale(1.15);
     transform-origin:left;
     height: 105px;
     direction: ltr;
-    padding-top: 10px;
+    padding: 15px;
 }
 div.form-group.login-pf-settings{
     display: block;
