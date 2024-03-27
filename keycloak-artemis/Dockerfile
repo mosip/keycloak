@@ -30,7 +30,19 @@ RUN chmod +x /usr/sbin/install_packages && chmod g+rwX /opt/bitnami && \
 # Install required system packages and dependencies
 RUN . /usr/sbin/install_packages acl ca-certificates curl gzip libaio1 libc6 procps rsync tar zlib1g
 
-USER 1001
+ARG container_user=mosip
+ARG container_user_group=mosip
+ARG container_user_uid=1001
+ARG container_user_gid=1001
+
+# Create and set ownership for the container user
+RUN groupadd -g ${container_user_gid} ${container_user_group} && \
+    useradd -r -u ${container_user_uid} -g ${container_user_group} ${container_user} && \
+    mkdir -p /home/${container_user} && \
+    chown -R ${container_user}:${container_user} /home/${container_user}
+
+USER ${container_user_uid}:${container_user_gid}
+WORKDIR /home/${container_user}
 
 ENTRYPOINT [ "/opt/bitnami/scripts/keycloak/entrypoint.sh" ]
 
