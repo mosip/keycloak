@@ -34,5 +34,7 @@ RUN chown -R ${container_user}:${container_user} /home/${container_user}
 # Switch to non-root user
 USER ${container_user}:${container_user}
 
+USER ${container_user_uid}:${container_user_gid}
+
 # Change working directory
 WORKDIR /home/${container_user}
