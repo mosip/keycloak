@@ -25,15 +25,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - SERVICE_LOCATION: 'keycloak-jboss'
-            SERVICE_NAME: 'mosip-jboss-keycloak'
           - SERVICE_LOCATION: 'keycloak-init'
             SERVICE_NAME: 'keycloak-init'
           - SERVICE_LOCATION: 'keycloak-artemis'
             SERVICE_NAME: 'mosip-artemis-keycloak'
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
-    uses: mosip/kattu/.github/workflows/docker-build.yml@master
+    uses: abhishek8shankar/kattu/.github/workflows/docker-build.yml@develop
     with:
       SERVICE_LOCATION: ${{ matrix.SERVICE_LOCATION }}
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
