@@ -1,4 +1,4 @@
-FROM docker.io/bitnami/keycloak:24.0.2-debian-12-r1
+FROM docker.io/bitnami/keycloak:16.1.1
 
 USER root
 
