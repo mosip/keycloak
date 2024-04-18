@@ -378,7 +378,7 @@ keycloak_initialize() {
     if [[ -f "${KEYCLOAK_CONF_DIR}/${KEYCLOAK_CONF_FILE}" ]]; then
         debug "Injected configuration file found. Skipping default configuration"
     else
-        cp "${KEYCLOAK_CONF_DIR}/${KEYCLOAK_DEFAULT_CONF_FILE}" "${KEYCLOAK_CONF_DIR}/${KEYCLOAK_CONF_FILE}"
+        #cp "${KEYCLOAK_CONF_DIR}/${KEYCLOAK_DEFAULT_CONF_FILE}" "${KEYCLOAK_CONF_DIR}/${KEYCLOAK_CONF_FILE}"
 
         # Configure settings using jboss-cli.sh
         keycloak_configure_database
