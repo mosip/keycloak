@@ -1,0 +1,42 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.my-color {
+	color: red;
+}
+
+.my-font {
+	font-family: 'Work Sans';
+}
+
+.my-root-class {
+	background: white;
+}
+
+#kc-locale-dropdown a {
+	color: #fff !important;
+}
+
+.kcInputClass {
+	height: 36px !important;
+	border-radius: 5px;
+	border: 1px solid #707070;
+	font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+#kc-form-buttons {
+	margin-top: 0px;
+}
+
+.btn-primary {
+	height: 40px !important;
+	background-color: #0D3077 !important;
+	border-radius: 10px !important;
+	background-image: none !important;
+}
+
+.my-root-class body {
+	background: url(./assets/mosip_keycloakbg.png) no-repeat center center fixed;
+	height: 120%;
+}
