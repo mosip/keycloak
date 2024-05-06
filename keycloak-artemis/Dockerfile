@@ -9,7 +9,6 @@ COPY ./mosip_keycloak_theme/ /opt/app/
 RUN yarn build-keycloak-theme
 
 
-
 FROM docker.io/bitnami/keycloak:24.0.2
 
 USER root
