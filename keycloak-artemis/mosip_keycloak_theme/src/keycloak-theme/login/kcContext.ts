@@ -2,8 +2,6 @@ import { createGetKcContext } from "keycloakify/login";
 
 export type KcContextExtension =
 	| { pageId: "login.ftl";  }
-	| { pageId: "my-extra-page-1.ftl"; }
-	| { pageId: "my-extra-page-2.ftl"; someCustomValue: string; }
 	// NOTE: register.ftl is deprecated in favor of register-user-profile.ftl
 	// but let's say we use it anyway and have this plugin enabled: https://github.com/micedre/keycloak-mail-whitelisting
 	// keycloak-mail-whitelisting define the non standard ftl global authorizedMailDomains, we declare it here.
@@ -26,10 +24,6 @@ export const { getKcContext } = createGetKcContext<KcContextExtension>({
 			//"message": undefined
 			//Uncomment the following line for showing an Error message
 			//message: { type: "error", summary: "This is an error" }
-		},
-		{
-			pageId: "my-extra-page-2.ftl",
-			someCustomValue: "foo bar baz",
 		},
 		{
 			//NOTE: You will either use register.ftl (legacy) or register-user-profile.ftl, not both
@@ -80,7 +74,7 @@ export const { getKcContext } = createGetKcContext<KcContextExtension>({
 			],
 			// Simulate we got an error with the email field
 			messagesPerField: {
-				printIfExists: <T>(fieldName: string, className: T) => { console.log({ fieldName }); return fieldName === "email" ? className : undefined; },
+				printIfExists: <T>(fieldName: string, className: T) => { return fieldName === "email" ? className : undefined; },
 				existsError: (fieldName: string) => fieldName === "email",
 				get: (fieldName: string) => `Fake error for ${fieldName}`,
 				exists: (fieldName: string) => fieldName === "email"

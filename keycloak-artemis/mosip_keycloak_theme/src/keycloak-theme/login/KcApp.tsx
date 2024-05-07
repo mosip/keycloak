@@ -10,8 +10,6 @@ const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const RegisterUserProfile = lazy(() => import("./pages/RegisterUserProfile"));
 const Terms = lazy(() => import("./pages/Terms"));
-const MyExtraPage1 = lazy(() => import("./pages/MyExtraPage1"));
-const MyExtraPage2 = lazy(() => import("./pages/MyExtraPage2"));
 const Info = lazy(() => import("keycloakify/login/pages/Info"));
 
 // This is like adding classes to theme.properties 
@@ -50,8 +48,7 @@ export default function KcApp(props: { kcContext: KcContext; }) {
                     // Removes those pages in you project. They are included to show you how to implement keycloak pages
                     // that are not yes implemented by Keycloakify. 
                     // See: https://docs.keycloakify.dev/limitations#some-pages-still-have-the-default-theme.-why
-                    case "my-extra-page-1.ftl": return <MyExtraPage1 {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
-                    case "my-extra-page-2.ftl": return <MyExtraPage2 {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
+                    
                     // We choose to use the default Template for the Info page and to download the theme resources.
                     // This is just an example to show you what is possible. You likely don't want to keep this as is. 
                     case "info.ftl": return (
