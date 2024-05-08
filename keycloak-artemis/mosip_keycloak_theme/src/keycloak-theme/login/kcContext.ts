@@ -1,11 +1,26 @@
 import { createGetKcContext } from "keycloakify/login";
 
 export type KcContextExtension =
-	| { pageId: "login.ftl";  }
+	| { pageId: "login.ftl"; }
 	// NOTE: register.ftl is deprecated in favor of register-user-profile.ftl
 	// but let's say we use it anyway and have this plugin enabled: https://github.com/micedre/keycloak-mail-whitelisting
 	// keycloak-mail-whitelisting define the non standard ftl global authorizedMailDomains, we declare it here.
-	| { pageId: "register.ftl"; authorizedMailDomains: string[]; };
+	| {
+		pageId: "register.ftl"; authorizedMailDomains: string[];
+		register: {
+			formData: {
+				firstName?: string;
+                displayName?: string;
+                lastName?: string;
+                email?: string;
+                username?: string;
+				partnerType?: string;
+				orgName?: string;
+				address?: string;
+				phoneNumber?: string;
+			};
+		};
+	};
 
 //NOTE: In most of the cases you do not need to overload the KcContext, you can 
 // just call createGetKcContext(...) without type arguments.  
