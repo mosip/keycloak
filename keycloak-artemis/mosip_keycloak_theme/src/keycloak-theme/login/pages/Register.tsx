@@ -120,7 +120,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     {msg("requiredFieldsTwo")} <span className="required">*</span> {msg("requiredFields")}
                 </span>
             </>
-        } descText={msg("regDesc")}>
+        }>
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
                 <div className={clsx(getClassName("kcFormGroupClass"), messagesPerField.printIfExists("partnerType", getClassName("kcFormGroupErrorClass")))}>
                     <div className={getClassName("kcLabelWrapperClass")}>

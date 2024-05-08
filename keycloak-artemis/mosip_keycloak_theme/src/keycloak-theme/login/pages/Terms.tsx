@@ -49,7 +49,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
     }
 
     return (
-        <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msg("termsTitle")} descText='hello'>
+        <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msg("termsTitle")}>
             <div id="kc-terms-text">
                 <Markdown>{termMarkdown}</Markdown>
             </div>
