@@ -29,6 +29,16 @@
 	margin-top: 0px;
 }
 
+.login-pf-page .login-pf-header h1 {
+	text-align: left !important;
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.login-pf-page .login-pf-header {
+	margin-bottom: 10px;
+}
+
 .btn-primary {
 	height: 40px !important;
 	background-color: #0D3077 !important;
@@ -38,5 +48,51 @@
 
 .my-root-class body {
 	background: url(./assets/mosip_keycloakbg.png) no-repeat center center fixed;
-	height: 120%;
+	height: 180%;
+	background-size: cover;
+}
+
+
+
+a {
+	color: #0D3077 !important;
+    text-decoration: none !important;
+}
+
+.login-pf-page .card-pf {
+	padding: 20px 25px 20px 25px;
+}
+
+.login-pf-page .card-pf p{
+	color: #3D4468;
+}
+
+.g-recaptcha {
+    transform: scale(1.08);
+    margin-left: 10px;
+}
+
+/*
+.g-recaptcha > * {
+    float: right;
+    right: 0;
+}*/
+
+.g-recaptcha::after{
+    width: 400px !important;
+} 
+
+@media (max-width: 840px) {
+    .login-pf-page .card-pf {
+        max-width: 500px;
+	}
+}
+
+@media (max-width: 767px) {
+	.login-pf-page .card-pf {
+	   margin: 0 10px 0 10px;
+	}
+	#kc-locale {
+		top: 40px;
+	}
 }

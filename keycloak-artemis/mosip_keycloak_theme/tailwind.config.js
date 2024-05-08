@@ -7,8 +7,12 @@ export default {
       colors: {
         'pTextColor': '#3D4468',
         'hTextColor': '#031640',
-        'hLinkColor': '#0D3077'
+        'hLinkColor': '#0D3077',
+        'bColor': '#707070'
       },
+      width:{
+        'orgDropdownW': '89%'
+      }
     }
   },
   plugins: [],

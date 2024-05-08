@@ -41,7 +41,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
     useRerenderOnStateChange(evtTermMarkdown);
 
     const { url } = kcContext;
-
+    console.log(kcContext)
     const termMarkdown = evtTermMarkdown.state;
 
     if (termMarkdown === undefined) {
@@ -49,7 +49,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
     }
 
     return (
-        <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msg("termsTitle")}>
+        <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={msg("termsTitle")} descText='hello'>
             <div id="kc-terms-text">
                 <Markdown>{termMarkdown}</Markdown>
             </div>
