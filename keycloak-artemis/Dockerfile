@@ -6,7 +6,7 @@ COPY ./mosip_keycloak_theme/package.json ./mosip_keycloak_theme/yarn.lock /opt/a
 WORKDIR /opt/app
 RUN npm install --frozen-lockfile --legacy-peer-deps
 COPY ./mosip_keycloak_theme/ /opt/app/
-RUN npm build-keycloak-theme
+RUN yarn build-keycloak-theme
 
 
 FROM docker.io/bitnami/keycloak:24.0.2
