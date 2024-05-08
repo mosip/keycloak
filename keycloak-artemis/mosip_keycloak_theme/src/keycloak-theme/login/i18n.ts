@@ -33,10 +33,9 @@ export const { useI18n } = createUseI18n({
         phoneNumberPH: "Enter Phone Number",
         userNamePH: "Enter Username",
         alreadyMember: "Already a member?",
-        requiredFields: "are mandatory.",
-        requiredFieldsTwo: "All fields marked with",
+        requiredFields: "All fields are required, except ones marked as optional",
         missingPartnerTypeMessage: "Please specify partner type",
-        logInErrorMsg: "Please Enter Email and Password",
+        logInErrorMsg: "Entered Email Address or Password invalid!",
         registerErrorMsg: "Please fill all the required fields"
     },
     fr: {
@@ -66,11 +65,10 @@ export const { useI18n } = createUseI18n({
         phoneNumberPH: "Entrez le numéro de téléphone",
         userNamePH: "Saisissez votre nom d'utilisateur",
         alreadyMember: "Déjà membre?",
-        requiredFields: "sont obligatoires.",
-        requiredFieldsTwo: "Tous les champs marqués d'un",
 
+        requiredFields: "All fields are required, except ones marked as optional",
         missingPartnerTypeMessage:"Please specify partner type",
-        logInErrorMsg: "Please Enter Email and Password",
+        logInErrorMsg: "Entered Email Address or Password invalid!",
         registerErrorMsg: "Please fill all the required fields"
         /* spell-checker: enable */
     }

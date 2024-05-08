@@ -30,7 +30,7 @@ declare global {
 
 export default function Register(props: PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-    const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey } = kcContext;
+    const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey} = kcContext;
 
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
@@ -115,16 +115,14 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     </div>
                 </div>
                 <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-sans">{msg("registerTitle")}</h1>
-                <p className="text-pTextColor text-xl font-semibold">{msg("regDesc")}</p>
-                <span className="text-pTextColor mt-4 text-xl font-semibold">
-                    {msg("requiredFieldsTwo")} <span className="required">*</span> {msg("requiredFields")}
-                </span>
+                <p className="text-pTextColor text-xl mt-3">{msg("regDesc")}</p>
+                <span className="text-pTextColor mt-4 text-xl"> {msg("requiredFields")}</span>
             </>
         }>
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
                 <div className={clsx(getClassName("kcFormGroupClass"), messagesPerField.printIfExists("partnerType", getClassName("kcFormGroupErrorClass")))}>
                     <div className={getClassName("kcLabelWrapperClass")}>
-                        <label htmlFor="partnerType" className={getClassName("kcLabelClass")}>{msg("partnerType")}<span className="text-red-500">*</span></label>
+                        <label htmlFor="partnerType" className={getClassName("kcLabelClass")}>{msg("partnerType")}</label>
                     </div>
                     <div className={getClassName('kcInputWrapperClass')}>
                         <select
@@ -153,7 +151,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="firstName" className={getClassName("kcLabelClass")}>
-                            {msg("firstName")}<span className="text-red-500">*</span>
+                            {msg("firstName")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -176,7 +174,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="lastName" className={getClassName("kcLabelClass")}>
-                            {msg("lastName")}<span className="text-red-500">*</span>
+                            {msg("lastName")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -199,7 +197,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="orgName" className={getClassName("kcLabelClass")}>
-                            {msg("orgName")}<span className="text-red-500">*</span>
+                            {msg("orgName")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -233,7 +231,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="address" className={getClassName("kcLabelClass")}>
-                            {msg("address")}<span className="text-red-500">*</span>
+                            {msg("address")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -256,7 +254,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="email" className={getClassName("kcLabelClass")}>
-                            {msg("email")}<span className="text-red-500">*</span>
+                            {msg("email")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -280,7 +278,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="phoneNumber" className={getClassName("kcLabelClass")}>
-                            {msg("phoneNumber")}<span className="text-red-500">*</span>
+                            {msg("phoneNumber")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -303,7 +301,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     >
                         <div className={getClassName("kcLabelWrapperClass")}>
                             <label htmlFor="username" className={getClassName("kcLabelClass")}>
-                                {msg("username")}<span className="text-red-500">*</span>
+                                {msg("username")}
                             </label>
                         </div>
                         <div className={getClassName("kcInputWrapperClass")}>
@@ -329,7 +327,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password" className={getClassName("kcLabelClass")}>
-                                    {msg("password")}<span className="text-red-500">*</span>
+                                    {msg("password")}
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
@@ -355,7 +353,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password-confirm" className={getClassName("kcLabelClass")}>
-                                    {msg("passwordConfirm")}<span className="text-red-500">*</span>
+                                    {msg("passwordConfirm")}
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
