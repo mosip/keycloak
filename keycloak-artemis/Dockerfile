@@ -4,9 +4,9 @@ RUN apt-get update && \
     apt-get install -y maven;
 COPY ./mosip_keycloak_theme/package.json ./mosip_keycloak_theme/yarn.lock /opt/app/
 WORKDIR /opt/app
-RUN yarn install --frozen-lockfile
+RUN npm install --frozen-lockfile --legacy-peer-deps
 COPY ./mosip_keycloak_theme/ /opt/app/
-RUN yarn build-keycloak-theme
+RUN npm build-keycloak-theme
 
 
 FROM docker.io/bitnami/keycloak:24.0.2
