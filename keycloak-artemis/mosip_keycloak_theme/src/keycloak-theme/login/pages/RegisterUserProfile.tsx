@@ -27,7 +27,6 @@ export default function RegisterUserProfile(props: PageProps<Extract<KcContext, 
             displayMessage={messagesPerField.exists("global")}
             displayRequiredFields={true}
             headerNode={msg("registerTitle")}
-            descText='hello'
         >
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
                 <UserProfileFormFields

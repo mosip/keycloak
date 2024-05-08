@@ -18,7 +18,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         displayWide = false,
         showAnotherWayIfPresent = true,
         headerNode,
-        // descText,
         // showUsernameNode = null,
         infoNode = null,
         kcContext,
