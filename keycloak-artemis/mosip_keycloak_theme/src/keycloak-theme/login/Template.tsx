@@ -47,8 +47,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         "documentTitle": i18n.msgStr("loginTitle", kcContext.realm.displayName)
     });
 
-    console.log(kcContext)
-
     useEffect(() => {
         console.log(`Value of MY_ENV_VARIABLE on the Keycloak server: "${kcContext.properties.MY_ENV_VARIABLE}"`);
     }, []);
@@ -147,23 +145,16 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     <div id="kc-content">
                         <div id="kc-content-wrapper">
                             {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                                <div className={clsx("alert", `alert-${message.type}`)}>
+                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
+                                <div className='bg-errorBg min-h-11 p-2 text-center text-danger font-semibold'>
                                     {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
-                                    {message.type === "error" && <span className={getClassName("kcFeedbackErrorIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>}
-                                    {pageId === 'login.ftl' ? ( <span
-                                        className="kc-feedback-text"
+                                    <span className="kc-feedback-text"
                                         dangerouslySetInnerHTML={{
                                             "__html": msgStr("logInErrorMsg")
                                         }}
-                                    />) : (<span
-                                        className="kc-feedback-text"
-                                        dangerouslySetInnerHTML={{
-                                            "__html": msgStr("registerErrorMsg")
-                                        }}
-                                    />)}
+                                    />
                                 </div>
                             )}
                             {children}

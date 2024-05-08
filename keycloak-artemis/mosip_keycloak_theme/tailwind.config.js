@@ -8,7 +8,8 @@ export default {
         'pTextColor': '#3D4468',
         'hTextColor': '#031640',
         'hLinkColor': '#0D3077',
-        'bColor': '#707070'
+        'bColor': '#707070',
+        'errorBg': "#FFE0E0"
       },
       width:{
         'orgDropdownW': '89%'
