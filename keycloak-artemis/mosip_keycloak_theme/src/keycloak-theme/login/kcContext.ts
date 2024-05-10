@@ -18,6 +18,8 @@ export type KcContextExtension =
 				orgName?: string;
 				address?: string;
 				phoneNumber?: string;
+				password?:string;
+				'password-confirm'?:string;
 			};
 		};
 	};

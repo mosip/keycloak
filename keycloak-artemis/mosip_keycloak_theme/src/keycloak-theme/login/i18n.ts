@@ -36,7 +36,9 @@ export const { useI18n } = createUseI18n({
         requiredFields: "All fields are required, except ones marked as optional",
         missingPartnerTypeMessage: "Please specify partner type",
         logInErrorMsg: "Entered Email Address or Password invalid!",
-        registerErrorMsg: "Please fill all the required fields"
+        registerErrorMsg: "Please fill all the required fields",
+        passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character.",
+        inputErrorMsg: "Please enter"
     },
     fr: {
         /* spell-checker: disable */
@@ -69,7 +71,9 @@ export const { useI18n } = createUseI18n({
         requiredFields: "All fields are required, except ones marked as optional",
         missingPartnerTypeMessage:"Please specify partner type",
         logInErrorMsg: "Entered Email Address or Password invalid!",
-        registerErrorMsg: "Please fill all the required fields"
+        registerErrorMsg: "Please fill all the required fields",
+        passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character.",
+        inputErrorMsg: "Please enter"
         /* spell-checker: enable */
     }
 });

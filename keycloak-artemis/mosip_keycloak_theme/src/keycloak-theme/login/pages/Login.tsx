@@ -5,8 +5,9 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
-import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg'
-import info from '../assets/info.svg'
+import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
+import info from '../assets/info.svg';
+import ToolTip from "./shared/Tooltip";
 
 const my_custom_param = new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -30,11 +31,9 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
     const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
         e.preventDefault();
-
         setIsLoginButtonDisabled(true);
 
         const formElement = e.target as HTMLFormElement;
-
         //NOTE: Even if we login with email Keycloak expect username and password in
         //the POST request.
         formElement.querySelector("input[name='email']")?.setAttribute("name", "username");
@@ -102,7 +101,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                     <input
                                                         tabIndex={1}
                                                         id={autoCompleteHelper}
-                                                        className={(getClassName("kcInputClass"), 'border-none outline-none')}
+                                                        className={(getClassName("kcInputClass"), 'border-none w-full outline-none')}
                                                         //NOTE: This is used by Google Chrome auto fill so we use it to tell
                                                         //the browser how to pre fill the form but before submit we put it back
                                                         //to username because it is what keycloak expects.
@@ -119,9 +118,12 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     })()}
                             </div>
                             <div className={getClassName("kcFormGroupClass")}>
-                                <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row')}>
+                                <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row items-center')}>
                                     <span>{msg("password")} </span>
-                                    <img className="ml-2 cursor-pointer" alt="info" src={info} />
+                                    <ToolTip tooltip={msgStr('passwordInfo')}>
+                                        <img className="ml-2 cursor-pointer" alt="info" src={info} />
+                                    </ToolTip>
+                                    
                                 </label>
                                 <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 p-2">
                                     <input
@@ -157,7 +159,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         </div>
                                     )}
                                 </div>
-                                <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-hLinkColor font-semibold text-right')}>
+                                <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-hLinkColor font-bold text-right')}>
                                     {realm.resetPasswordAllowed && (
                                         <span>
                                             <a tabIndex={5} href={url.loginResetCredentialsUrl}>
