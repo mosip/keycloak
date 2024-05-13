@@ -28,7 +28,7 @@ LABEL maintainer="Bitnami <containers@bitnami.com>"
 
 COPY ./theme/mosip /opt/bitnami/keycloak/themes/mosip
 
-COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
+COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments/
 
 COPY --from=keycloakify_jar_builder /opt/app/dist_keycloak/target/*.jar /opt/bitnami/keycloak/providers/
 
