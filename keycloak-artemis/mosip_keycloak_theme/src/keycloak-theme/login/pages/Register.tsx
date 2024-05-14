@@ -1,5 +1,5 @@
 // ejected using 'npx eject-keycloak-page'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { clsx } from "keycloakify/tools/clsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
@@ -8,6 +8,7 @@ import type { I18n } from "../i18n";
 import Recaptcha from 'react-recaptcha';
 import arrow from '../assets/expand_more_FILL0_wght300_GRAD0_opsz24 (1).svg';
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
+import eyeIconOff from '../assets/visibility_off.svg'
 import info from '../assets/info.svg';
 import error from '../assets/error.svg'
 import ToolTip from "./shared/Tooltip";
@@ -39,8 +40,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [confPasswordType, setConfPasswordType] = useState('password');
     const [orgDropdown, showOrgDropdown] = useState(false);
     const [partnerTypeValue, setPartnerType] = useState(register.formData.partnerType ?? '');
-    const [orgValue, setOrgValue] = useState(register.formData.orgName ?? '');
-    const [dummyFormData, addFormDataValue] = useState(register.formData)
+    // const [orgValue, setOrgValue] = useState(register.formData.orgName ?? '');
+    const [dummyFormData, addFormDataValue] = useState(register.formData);
+
+    const inputRef = useRef<HTMLInputElement>(null)
+    const menuRef = useRef<HTMLDivElement>(null)
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
@@ -102,19 +106,27 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     }
 
     const selectOrgName = (val: any) => {
-        setOrgValue(val)
-        showOrgDropdown(false)
+        // setOrgValue(val)
+        addFormDataValue(prevState =>({
+            ...prevState,
+            orgName:val
+        }));
+        showOrgDropdown(false);
     }
 
     const handleFormData = (event: any) => {
-        console.log("Hell")
         const { name, value } = event.target;
         addFormDataValue(prevState =>({
             ...prevState,
             [name]:value
         }))
     }
-    console.log(dummyFormData)
+
+    window.addEventListener("click", (e) =>{
+        if(orgDropdown && !menuRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)){
+            showOrgDropdown(false)
+        }
+    })
     const { msg, msgStr } = i18n;
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={
@@ -139,7 +151,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     <div className={getClassName('kcInputWrapperClass')}>
                         <select
                             id="partnerType"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.partnerType) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full'))}
+                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.partnerType) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full text-xl'))}
                             name="partnerType"
                             onChange={event => {
                                 selectedFormValue(event)
@@ -225,17 +237,18 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             className={(getClassName("kcInputClass"), ((message && !dummyFormData.orgName) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full p-2' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full p-2'))}
                             name="orgName"
                             placeholder={msgStr("orgnamePH")}
-                            defaultValue={orgValue}
+                            value={dummyFormData.orgName ?? ''}
                             autoComplete="off"
-                            onBlur={handleFormData}
+                            onChange={handleFormData}
                             onClick={displayOrgDropdown}
+                            ref={inputRef}
                         />
                         {orgDropdown && (
-                            <div className="absolute w-orgDropdownW z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" >
-                                <ul className="py-1 text-2xl text-gray-700" role="none" >
-                                    <li onClick={() => selectOrgName('organisation 1')} className="block px-4 py-2 cursor-pointer" role="menuitem" id="menu-item-1">organisation 1</li>
-                                    <li onClick={() => selectOrgName('organisation 2')} className="block px-4 py-2 cursor-pointer" role="menuitem" id="menu-item-2">organisation 2</li>
-                                    <li onClick={() => selectOrgName('organisation 3')} className="block px-4 py-2 cursor-pointer" role="menuitem" id="menu-item-0">organisation 3</li>
+                            <div ref={menuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border" >
+                                <ul  className="py-1 px-4 text-2xl text-gray-700" role="none" >
+                                    <li onClick={() => selectOrgName('organisation 1')} className="block py-2 cursor-pointer border-b" role="menuitem" id="menu-item-1">organisation 1</li>
+                                    <li onClick={() => selectOrgName('organisation 2')} className="block py-2 cursor-pointer border-b" role="menuitem" id="menu-item-2">organisation 2</li>
+                                    <li onClick={() => selectOrgName('organisation 3')} className="block py-2 cursor-pointer" role="menuitem" id="menu-item-0">organisation 3</li>
                                 </ul>
                             </div>
                         )}
@@ -374,7 +387,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         onBlur={handleFormData}
                                         autoComplete="new-password"
                                     />
-                                    <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} />
+                                    {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
                                 </div>
                                 {(message && !dummyFormData.password) && <span className="text-[#C61818] mb-0 font-bold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("password")}</span></span>}
                             </div>
@@ -400,7 +413,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         onBlur={handleFormData}
                                         placeholder={msgStr("passwordPlaceholder")}
                                     />
-                                    <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIcon} />
+                                    {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIconOff} />}
                                 </div>
                                 {(message && !dummyFormData["password-confirm"]) && <span className="text-[#C61818] mb-0 font-bold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("passwordConfirm")}</span></span>}
                             </div>
