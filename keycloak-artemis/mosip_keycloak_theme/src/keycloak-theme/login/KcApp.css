@@ -73,6 +73,11 @@ a {
     margin-left: 17px;
 }
 
+.kcButtonClass:disabled{
+	background-color: #A5A5A5 !important;
+	color: #ffffff !important;
+}
+
 /*
 .g-recaptcha > * {
     float: right;

@@ -6,6 +6,7 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
+import eyeIconOff from '../assets/visibility_off.svg'
 import info from '../assets/info.svg';
 import ToolTip from "./shared/Tooltip";
 
@@ -26,12 +27,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     console.log(kcContext)
     const { msg, msgStr } = i18n;
 
-    const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
-    const [passwordType, setPasswordType] = useState('password')
+    // const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
+    const [dirtyLoginData, setLoginData] = useState(login);
+    const [passwordType, setPasswordType] = useState('password');
 
     const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
         e.preventDefault();
-        setIsLoginButtonDisabled(true);
+        // setIsLoginButtonDisabled(true);
 
         const formElement = e.target as HTMLFormElement;
         //NOTE: Even if we login with email Keycloak expect username and password in
@@ -43,6 +45,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
     const showPassword = () => {
         passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')
+    }
+
+    const handleLogInData = (e:any) =>{
+        setLoginData(prevData => ({
+            ...prevData,
+            [e.target.name]:e.target.value
+        }))
     }
 
     return (
@@ -111,6 +120,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                         type="text"
                                                         autoFocus={true}
                                                         autoComplete="off"
+                                                        onChange={handleLogInData}
                                                     />
                                                 </div>
                                             </>
@@ -134,8 +144,9 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         placeholder={msgStr('passwordPlaceholder')}
                                         type={passwordType}
                                         autoComplete="off"
+                                        onChange={handleLogInData}
                                     />
-                                    <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} />
+                                    {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
                                 </div>
                             </div>
                             <div className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))}>
@@ -192,7 +203,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     id="kc-login"
                                     type="submit"
                                     value={msgStr("doLogIn")}
-                                    disabled={isLoginButtonDisabled}
+                                    disabled={!dirtyLoginData.email || !dirtyLoginData.password}
                                 />
                             </div>
                         </form>

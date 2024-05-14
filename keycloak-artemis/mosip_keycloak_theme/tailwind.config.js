@@ -12,9 +12,6 @@ export default {
         'errorBg': "#FFE0E0",
         'errorColor': '#E21D1D'
       },
-      width:{
-        'orgDropdownW': '89%'
-      },
       boxShadow: {
         errorShadow: '0px 3px 6px rgba(255, 0, 0, 0.15)',
       },
