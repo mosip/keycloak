@@ -14,6 +14,7 @@ export default {
       },
       boxShadow: {
         errorShadow: '0px 3px 6px rgba(255, 0, 0, 0.15)',
+        errorShadowTwo: '0px 0px 6px rgba(255, 0, 0, 0.15)'
       },
     }
   },
