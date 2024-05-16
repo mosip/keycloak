@@ -38,7 +38,8 @@ export const { useI18n } = createUseI18n({
         logInErrorMsg: "Entered Email Address or Password invalid!",
         registerErrorMsg: "Please fill all the required fields",
         passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character.",
-        inputErrorMsg: "Please enter"
+        inputErrorMsg: "Please enter",
+        orgInfoMsg: "Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate"
     },
     fr: {
         /* spell-checker: disable */
@@ -73,7 +74,8 @@ export const { useI18n } = createUseI18n({
         logInErrorMsg: "Entered Email Address or Password invalid!",
         registerErrorMsg: "Please fill all the required fields",
         passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character.",
-        inputErrorMsg: "Please enter"
+        inputErrorMsg: "Please enter",
+        orgInfoMsg:"Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate"
         /* spell-checker: enable */
     }
 });

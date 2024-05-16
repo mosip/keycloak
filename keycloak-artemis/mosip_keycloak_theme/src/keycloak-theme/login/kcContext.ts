@@ -22,6 +22,7 @@ export type KcContextExtension =
 				phoneNumber?: string;
 				password?:string;
 				'password-confirm'?:string;
+				'g-recaptcha-response'?:string;
 			};
 		};
 	};
