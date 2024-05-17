@@ -18,7 +18,7 @@ export const { useI18n } = createUseI18n({
         namePlaceholder:"Enter username",
         passwordPlaceholder:"Enter Password",
         noAccount:"Not a member yet?",
-        doRegister:"Register Now",
+        doRegister:"Register",
         partnerType: "Partner Type",
         selectAnOption: "Select Partner Type",
         orgName: "Organisation Name",
@@ -39,7 +39,12 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "Please fill all the required fields",
         passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character.",
         inputErrorMsg: "Please enter",
-        orgInfoMsg: "Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate"
+        orgInfoMsg: "Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate",
+        existingEmailErr: "Email already exists.",
+        invalidEmailErr: "Invalid email address.",
+        passwordConditions: "Password does not meet the minimum requirements. Please try again.",
+        passwordNotMatch: "Password confirmation doesn't match.",
+        invalidPhoneNo:"Please Enter valid Phone Number"
     },
     fr: {
         /* spell-checker: disable */
@@ -53,7 +58,7 @@ export const { useI18n } = createUseI18n({
         namePlaceholder:"Saisissez votre nom d'utilisateur",
         passwordPlaceholder:"Entrer le mot de passe",
         noAccount:"Pas encore membre?",
-        doRegister:"S'inscrire maintenant",
+        doRegister:"Registre",
         partnerType: "Type de partenaire",
         selectAnOption: "Sélectionnez le type de partenaire",
         orgName: "Nom de l'organisme",
@@ -75,7 +80,12 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "Please fill all the required fields",
         passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character.",
         inputErrorMsg: "Please enter",
-        orgInfoMsg:"Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate"
+        orgInfoMsg:"Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate",
+        existingEmailErr: "Email already exists.",
+        invalidEmailErr: "Invalid email address.",
+        passwordConditions: "Password does not meet the minimum requirements. Please try again.",
+        passwordNotMatch: "Password confirmation doesn't match.",
+        invalidPhoneNo:"Please Enter valid Phone Number"
         /* spell-checker: enable */
     }
 });
