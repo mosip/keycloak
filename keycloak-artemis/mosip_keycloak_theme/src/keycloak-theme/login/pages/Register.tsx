@@ -42,6 +42,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [partnerTypesMenu, showPartnerTypeMenu] = useState(false);
     // const [partnerTypeValue, setPartnerType] = useState(register.formData.partnerType ?? '');
     const [dummyFormData, addFormDataValue] = useState(register.formData);
+    const errorSummary = message?.summary.split('<br>')
 
     const inputRef = useRef<HTMLInputElement>(null)
     const menuRef = useRef<HTMLDivElement>(null)
@@ -127,7 +128,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
     console.log(kcContext)
     console.log(dummyFormData)
-    console.log(message?.summary.split('<br>'))
+    console.log(errorSummary)
 
     window.addEventListener("click", (e) => {
         if (orgDropdown && !menuRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {
@@ -319,14 +320,18 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="email"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.address) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), ((message && (!dummyFormData.address || errorSummary?.includes("Email already exists.") || errorSummary?.includes("Invalid email address.") || errorSummary?.includes("Username already exists."))) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="email"
                             placeholder={msgStr("emailPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.email ?? ""}
                             autoComplete="email"
                         />
-                        {(message && !dummyFormData.email) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("email")}</span></span>}
+                        {message && <span className="text-[#C61818] mb-0 font-semibold">
+                            {(errorSummary?.includes("Email already exists.") || errorSummary?.includes("Username already exists.")) && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('existingEmailErr')}</span>}
+                            {errorSummary?.includes("Invalid email address.") && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('invalidEmailErr')}</span>}
+                            {!dummyFormData.email && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} {msg("email")}</span>}
+                        </span>}
                     </div>
                 </div>
 
@@ -345,13 +350,16 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="number"
                             id="phoneNumber"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.phoneNumber) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), ((message && (!dummyFormData.phoneNumber || message?.summary.includes("Length must be between 10 and 10."))) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="phoneNumber"
                             placeholder={msgStr("phoneNumberPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.phoneNumber ?? ""}
                         />
-                        {(message && !dummyFormData.phoneNumber) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("phoneNumber")}</span></span>}
+                        {message && <span className="text-[#C61818] mb-0 font-semibold">
+                            {message?.summary.includes("Length must be between 10 and 10.") && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
+                            {!dummyFormData.phoneNumber && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp; {msg('inputErrorMsg')} {msg("phoneNumber")}</span>}
+                        </span>}
                     </div>
                 </div>
                 {!realm.registrationEmailAsUsername && (
@@ -400,7 +408,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
-                                <div className={(message && !dummyFormData.password) ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3'}>
+                                <div className={(message && (!dummyFormData.password || message?.summary.includes('Invalid password') || message?.summary.includes("Password confirmation doesn't match."))) ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3'}>
                                     <input
                                         type={passwordType}
                                         id="password"
@@ -412,7 +420,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                     />
                                     {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
                                 </div>
-                                {(message && !dummyFormData.password) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("password")}</span></span>}
+                                {message && <span className="text-[#C61818] mb-0 font-semibold">
+                                    {message?.summary.includes('Invalid password') && <span className="flex items-center"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordConditions')}</span>}
+                                    {message?.summary.includes("Password confirmation doesn't match.") && <span className="flex items-center"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
+                                    {/* {!dummyFormData.password && <span><img className="inline" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} {msg("password")}</span>} */}
+                                </span>}
                             </div>
                         </div>
 
