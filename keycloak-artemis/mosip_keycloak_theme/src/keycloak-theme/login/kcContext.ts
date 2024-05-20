@@ -1,8 +1,9 @@
 import { createGetKcContext } from "keycloakify/login";
 
 export type KcContextExtension =
-	| { pageId: "login.ftl"; 
-	    login: {email?:string}
+	| {
+		pageId: "login.ftl";
+		login: { email?: string }
 	}
 	// NOTE: register.ftl is deprecated in favor of register-user-profile.ftl
 	// but let's say we use it anyway and have this plugin enabled: https://github.com/micedre/keycloak-mail-whitelisting
@@ -12,19 +13,21 @@ export type KcContextExtension =
 		register: {
 			formData: {
 				firstName?: string;
-                displayName?: string;
-                lastName?: string;
-                email?: string;
-                username?: string;
+				displayName?: string;
+				lastName?: string;
+				email?: string;
+				username?: string;
 				partnerType?: string;
 				orgName?: string;
 				address?: string;
 				phoneNumber?: string;
-				password?:string;
-				'password-confirm'?:string;
-				'g-recaptcha-response'?:string;
+				password?: string;
+				'password-confirm'?: string;
+				'g-recaptcha-response'?: string;
 			};
 		};
+	} | {
+		pageId: "login-reset-password.ftl";
 	};
 
 //NOTE: In most of the cases you do not need to overload the KcContext, you can 
@@ -100,7 +103,13 @@ export const { getKcContext } = createGetKcContext<KcContextExtension>({
 				exists: (fieldName: string) => fieldName === "email"
 			},
 
-		}
+		},
+		{
+			pageId: "login-reset-password.ftl",
+			locale: {
+				currentLanguageTag: "en",
+			},
+		},
 	],
 	// Defined in vite.config.ts
 	// See: https://docs.keycloakify.dev/environnement-variables

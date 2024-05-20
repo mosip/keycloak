@@ -4,6 +4,8 @@ import Fallback, { type PageProps } from "keycloakify/login";
 import type { KcContext } from "./kcContext";
 import { useI18n } from "./i18n";
 import Template from "./Template";
+import LoginResetPassword from "./pages/LoginResetPassword";
+import LoginUpdatePassword from "./pages/LoginUpdatePassword";
 
 const Login = lazy(() => import("./pages/Login"));
 // If you can, favor register-user-profile.ftl over register.ftl, see: https://docs.keycloakify.dev/realtime-input-validation
@@ -43,6 +45,8 @@ export default function KcApp(props: { kcContext: KcContext; }) {
                 switch (kcContext.pageId) {
                     case "login.ftl": return <Login {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
                     case "register.ftl": return <Register {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
+                    case "login-reset-password.ftl": return <LoginResetPassword {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
+                    case "login-update-password.ftl": return <LoginUpdatePassword {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
                     case "register-user-profile.ftl": return <RegisterUserProfile {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />
                     case "terms.ftl": return <Terms {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
                     // Removes those pages in you project. They are included to show you how to implement keycloak pages
