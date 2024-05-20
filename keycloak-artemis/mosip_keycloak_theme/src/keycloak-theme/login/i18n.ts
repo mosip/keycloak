@@ -44,7 +44,9 @@ export const { useI18n } = createUseI18n({
         invalidEmailErr: "Invalid email address.",
         passwordConditions: "Password does not meet the minimum requirements. Please try again.",
         passwordNotMatch: "Password confirmation doesn't match.",
-        invalidPhoneNo:"Please Enter valid Phone Number"
+        invalidPhoneNo: "Please Enter valid Phone Number",
+        forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
+        resetPassword: "Reset Password"
     },
     fr: {
         /* spell-checker: disable */
@@ -85,7 +87,9 @@ export const { useI18n } = createUseI18n({
         invalidEmailErr: "Invalid email address.",
         passwordConditions: "Password does not meet the minimum requirements. Please try again.",
         passwordNotMatch: "Password confirmation doesn't match.",
-        invalidPhoneNo:"Please Enter valid Phone Number"
+        invalidPhoneNo:"Please Enter valid Phone Number",
+        forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
+        resetPassword: "Reset Password"
         /* spell-checker: enable */
     }
 });
