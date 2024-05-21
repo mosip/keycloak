@@ -35,18 +35,22 @@ declare global {
 export default function Register(props: PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
     const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey, message } = kcContext;
+    const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
+    const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
 
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
     const [orgDropdown, showOrgDropdown] = useState(false);
     const [partnerTypesMenu, showPartnerTypeMenu] = useState(false);
-    // const [partnerTypeValue, setPartnerType] = useState(register.formData.partnerType ?? '');
     const [dummyFormData, addFormDataValue] = useState(register.formData);
-    const errorSummary = message?.summary.split('<br>')
+    const [invalidEmail, checkInvalidEmail] = useState(false)
+    const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false)
+    const [ConfPasswordMatch, checkConfPasswordMatch] = useState(false)
 
     const inputRef = useRef<HTMLInputElement>(null)
     const menuRef = useRef<HTMLDivElement>(null)
     const partnerTypeRef = useRef<HTMLInputElement>(null)
+    const partnerTypesMenuRef = useRef<HTMLDivElement>(null)
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
@@ -107,7 +111,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     }
 
     const displayOrgDropdown = () => {
-        showOrgDropdown(current => !current)
+        if (dummyFormData.orgName && orgDropdown) {
+            showOrgDropdown(false)
+        } else {
+            showOrgDropdown(true)
+        }
+
     }
 
     const selectOrgName = (val: any) => {
@@ -120,24 +129,44 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
     const handleFormData = (event: any) => {
         const { name, value } = event.target;
+        if (name === 'email' && value) {
+            checkInvalidEmail(!pattern.test(value))
+        }
+        if (name === 'phoneNumber' && value) {
+            checkInvalidPhoneNo(!phonePattern.test(String(value)))
+            console.log(invalidPhoneNo)
+        }
+
         addFormDataValue(prevState => ({
             ...prevState,
             [name]: value
         }))
+
+        if (name === 'password-confirm' && dummyFormData.password) {
+            if (value !== dummyFormData.password) {
+                checkConfPasswordMatch(true)
+            } else {
+                checkConfPasswordMatch(false)
+            }
+        }
     }
 
-    console.log(kcContext)
-    console.log(dummyFormData)
-    console.log(errorSummary)
+    console.log(kcContext);
+    console.log(dummyFormData);
 
     window.addEventListener("click", (e) => {
         if (orgDropdown && !menuRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {
-            showOrgDropdown(false)
+            if (dummyFormData.orgName) {
+                showOrgDropdown(false)
+            }
         }
-        if (!partnerTypeRef.current?.contains(e.target as Node)) {
-            showPartnerTypeMenu(false)
+        if (!partnerTypeRef.current?.contains(e.target as Node) && !partnerTypesMenuRef.current?.contains(e.target as Node)) {
+            if (dummyFormData.partnerType) {
+                showPartnerTypeMenu(false)
+            }
         }
     })
+
     const { msg, msgStr } = i18n;
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={
@@ -155,14 +184,32 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             </>
         }>
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
+                {message !== undefined && (
+                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
+                        {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
+                                    {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
+                                    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
+                        <span className="kc-feedback-text"
+                            dangerouslySetInnerHTML={{
+                                "__html": message.summary
+                            }}
+                        />
+                    </div>
+                )}
                 <div className={clsx(getClassName("kcFormGroupClass"), messagesPerField.printIfExists("partnerType", getClassName("kcFormGroupErrorClass")))}>
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="partnerType" className={getClassName("kcLabelClass")}>{msg("partnerType")}</label>
                     </div>
                     <div className={getClassName('kcInputWrapperClass')}>
 
-                        <div className={(message && !dummyFormData.partnerType) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3'}
-                            onClick={() => { showPartnerTypeMenu(!partnerTypesMenu) }}>
+                        <div className={dummyFormData.partnerType === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3'}
+                            onClick={() => {
+                                if (partnerTypesMenu && dummyFormData.partnerType) {
+                                    showPartnerTypeMenu(false);
+                                } else {
+                                    showPartnerTypeMenu(true);
+                                }
+                            }}>
                             <input
                                 type="text"
                                 id="partnerType"
@@ -176,7 +223,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <div className="w-0 h-0 border-[5px] border-solid border-transparent border-t-black"></div>
                         </div>
                         {partnerTypesMenu && (
-                            <div className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
+                            <div ref={partnerTypesMenuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
                                 <ul className="py-1 px-3 text-xl text-[#031640] font-semibold" role="none" >
                                     <li onClick={() => selectedPartnerTypeValue('Device Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">Device Provider</li>
                                     <li onClick={() => selectedPartnerTypeValue('FTM Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">FTM Provider</li>
@@ -187,7 +234,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </ul>
                             </div>
                         )}
-                        {(message && !dummyFormData.partnerType) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("partnerType")}</span></span>}
+                        {dummyFormData.partnerType === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("partnerType")}</span></span>}
                     </div>
                 </div>
                 <div
@@ -205,13 +252,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="firstName"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.firstName) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), (dummyFormData.firstName === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="firstName"
                             placeholder={msgStr("firstNamePH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.firstName ?? ""}
                         />
-                        {(message && !dummyFormData.firstName) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("firstName")}</span></span>}
+                        {dummyFormData.firstName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("firstName")}</span></span>}
                     </div>
                 </div>
 
@@ -230,13 +277,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="lastName"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.lastName) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), (dummyFormData.lastName === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="lastName"
                             placeholder={msgStr("lastNamePH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.lastName ?? ""}
                         />
-                        {(message && !dummyFormData.lastName) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("lastName")}</span></span>}
+                        {dummyFormData.lastName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("lastName")}</span></span>}
                     </div>
                 </div>
 
@@ -255,7 +302,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="orgName"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.orgName) ? 'shadow-errorShadowTwo outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), (dummyFormData.orgName === '' ? 'shadow-errorShadowTwo outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="orgName"
                             placeholder={msgStr("orgnamePH")}
                             value={dummyFormData.orgName ?? ''}
@@ -276,7 +323,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <div className="border border-[#EDDCAF] border-t-0 rounded-b-lg p-3 -mt-2 bg-[#FFF7E5]">
                             <span className="text-[#8B6105] font-semibold">{msg('orgInfoMsg')}</span>
                         </div>
-                        {(message && !dummyFormData.orgName) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("orgName")}</span></span>}
+                        {dummyFormData.orgName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("orgName")}</span></span>}
                     </div>
                 </div>
 
@@ -295,13 +342,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="address"
-                            className={(getClassName("kcInputClass"), ((message && !dummyFormData.address) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), (dummyFormData.address === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="address"
                             placeholder={msgStr("addressPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.address ?? ""}
                         />
-                        {(message && !dummyFormData.address) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("address")}</span></span>}
+                        {dummyFormData.address === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("address")}</span></span>}
                     </div>
                 </div>
 
@@ -320,17 +367,17 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="email"
-                            className={(getClassName("kcInputClass"), ((message && (!dummyFormData.address || errorSummary?.includes("Email already exists.") || errorSummary?.includes("Invalid email address.") || errorSummary?.includes("Username already exists."))) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.email === '' || invalidEmail) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="email"
                             placeholder={msgStr("emailPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.email ?? ""}
                             autoComplete="email"
                         />
-                        {message && <span className="text-[#C61818] mb-0 font-semibold">
-                            {(errorSummary?.includes("Email already exists.") || errorSummary?.includes("Username already exists.")) && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('existingEmailErr')}</span>}
-                            {errorSummary?.includes("Invalid email address.") && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('invalidEmailErr')}</span>}
-                            {!dummyFormData.email && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} {msg("email")}</span>}
+                        {<span className="text-[#C61818] mb-0 font-semibold">
+                            {/* {(errorSummary?.includes("Email already exists.") || errorSummary?.includes("Username already exists.")) && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('existingEmailErr')}</span>} */}
+                            {invalidEmail && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('invalidEmailErr')}</span>}
+                            {dummyFormData.email === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} &nbsp;{msg("email")}</span>}
                         </span>}
                     </div>
                 </div>
@@ -350,15 +397,15 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="number"
                             id="phoneNumber"
-                            className={(getClassName("kcInputClass"), ((message && (!dummyFormData.phoneNumber || message?.summary.includes("Length must be between 10 and 10."))) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.phoneNumber === '' || invalidPhoneNo) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                             name="phoneNumber"
                             placeholder={msgStr("phoneNumberPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.phoneNumber ?? ""}
                         />
-                        {message && <span className="text-[#C61818] mb-0 font-semibold">
-                            {message?.summary.includes("Length must be between 10 and 10.") && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
-                            {!dummyFormData.phoneNumber && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp; {msg('inputErrorMsg')} {msg("phoneNumber")}</span>}
+                        {<span className="text-[#C61818] mb-0 font-semibold">
+                            {invalidPhoneNo && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
+                            {dummyFormData.phoneNumber === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp; {msg('inputErrorMsg')} &nbsp; {msg("phoneNumber")}</span>}
                         </span>}
                     </div>
                 </div>
@@ -378,14 +425,14 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <input
                                 type="text"
                                 id="username"
-                                className={(getClassName("kcInputClass"), ((message && !dummyFormData.username) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
+                                className={(getClassName("kcInputClass"), (dummyFormData.username === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3'))}
                                 name="username"
                                 placeholder={msgStr("userNamePH")}
                                 onBlur={handleFormData}
                                 defaultValue={register.formData.username ?? ""}
                                 autoComplete="username"
                             />
-                            {(message && !dummyFormData.username) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("username")}</span></span>}
+                            {dummyFormData.username === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("username")}</span></span>}
                         </div>
                     </div>
                 )}
@@ -408,7 +455,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
-                                <div className={(message && (!dummyFormData.password || message?.summary.includes('Invalid password') || message?.summary.includes("Password confirmation doesn't match."))) ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3'}>
+                                <div className={(dummyFormData.password === '') ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3'}>
                                     <input
                                         type={passwordType}
                                         id="password"
@@ -420,11 +467,10 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                     />
                                     {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
                                 </div>
-                                {message && <span className="text-[#C61818] mb-0 font-semibold">
-                                    {message?.summary.includes('Invalid password') && <span className="flex items-center"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordConditions')}</span>}
-                                    {message?.summary.includes("Password confirmation doesn't match.") && <span className="flex items-center"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
-                                    {/* {!dummyFormData.password && <span><img className="inline" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} {msg("password")}</span>} */}
-                                </span>}
+                                {/* { && <span className="flex items-center"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordConditions')}</span>} */}
+                                {/* {ConfPasswordMatch && <span className="flex items-center text-[#C61818] mb-0 font-semibold"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>} */}
+                                {dummyFormData.password === '' && <span className="flex items-center text-[#C61818] mb-0 font-semibold"><img className="inline" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} &nbsp; {msg("password")}</span>}
+
                             </div>
                         </div>
 
@@ -440,7 +486,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
-                                <div className={(message && !dummyFormData["password-confirm"]) ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3'}>
+                                <div className={(dummyFormData["password-confirm"] === '' || ConfPasswordMatch) ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3'}>
                                     <input type={confPasswordType}
                                         id="password-confirm"
                                         className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
@@ -450,7 +496,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                     />
                                     {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIconOff} />}
                                 </div>
-                                {(message && !dummyFormData["password-confirm"]) && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("passwordConfirm")}</span></span>}
+                                {ConfPasswordMatch && <span className="flex items-center text-[#C61818] mb-0 font-semibold"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
+                                {dummyFormData["password-confirm"] === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("passwordConfirm")}</span></span>}
                             </div>
                         </div>
                     </>
@@ -488,7 +535,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             )}
                             type="submit"
                             value={msgStr("doRegister")}
-                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || !dummyFormData["g-recaptcha-response"]}
+                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || !dummyFormData["g-recaptcha-response"] || invalidEmail || invalidPhoneNo || ConfPasswordMatch}
                         />
                     </div>
                 </div>

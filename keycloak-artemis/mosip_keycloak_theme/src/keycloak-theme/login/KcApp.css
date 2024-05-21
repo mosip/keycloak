@@ -39,6 +39,10 @@
 	margin-bottom: 10px;
 }
 
+.login-pf-page .login-pf-signup{
+	margin: 0;
+}
+
 .btn-primary {
 	height: 40px !important;
 	background-color: #0D3077 !important;
@@ -108,5 +112,11 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 	#kc-locale {
 		top: 40px;
+	}
+}
+
+@media (max-width: 767px) {
+    #kc-info-wrapper {
+		padding-top: 0;
 	}
 }
