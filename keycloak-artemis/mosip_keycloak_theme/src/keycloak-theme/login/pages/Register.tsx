@@ -37,20 +37,22 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey, message } = kcContext;
     const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
+    const organisationData = register?.attributesByName?.organisationName?.validators?.options?.options;
 
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
     const [orgDropdown, showOrgDropdown] = useState(false);
     const [partnerTypesMenu, showPartnerTypeMenu] = useState(false);
     const [dummyFormData, addFormDataValue] = useState(register.formData);
-    const [invalidEmail, checkInvalidEmail] = useState(false)
-    const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false)
-    const [ConfPasswordMatch, checkConfPasswordMatch] = useState(false)
+    const [invalidEmail, checkInvalidEmail] = useState(false);
+    const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false);
+    const [ConfPasswordMatch, checkConfPasswordMatch] = useState(false);
+    const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
 
-    const inputRef = useRef<HTMLInputElement>(null)
-    const menuRef = useRef<HTMLDivElement>(null)
-    const partnerTypeRef = useRef<HTMLInputElement>(null)
-    const partnerTypesMenuRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const partnerTypeRef = useRef<HTMLInputElement>(null);
+    const partnerTypesMenuRef = useRef<HTMLDivElement>(null);
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
@@ -111,12 +113,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     }
 
     const displayOrgDropdown = () => {
-        if (dummyFormData.orgName && orgDropdown) {
-            showOrgDropdown(false)
-        } else {
-            showOrgDropdown(true)
-        }
-
+        showOrgDropdown(true)
     }
 
     const selectOrgName = (val: any) => {
@@ -134,7 +131,14 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
         if (name === 'phoneNumber' && value) {
             checkInvalidPhoneNo(!phonePattern.test(String(value)))
-            console.log(invalidPhoneNo)
+        }
+
+        if (name === 'orgName' && organisationData) {
+            let newOrgData = organisationData.filter(item => {
+                if (item.toLowerCase().includes(value.toLowerCase()))
+                    return item
+            })
+            setOrgData(newOrgData)
         }
 
         addFormDataValue(prevState => ({
@@ -311,15 +315,16 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             onClick={displayOrgDropdown}
                             ref={inputRef}
                         />
-                        {orgDropdown && (
-                            <div ref={menuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
-                                <ul className="py-1 px-3 text-2xl text-[#031640] font-semibold" role="none" >
-                                    <li onClick={() => selectOrgName('organisation 1')} className="block py-2 cursor-pointer border-b" role="menuitem" id="menu-item-1">organisation 1</li>
-                                    <li onClick={() => selectOrgName('organisation 2')} className="block py-2 cursor-pointer border-b" role="menuitem" id="menu-item-2">organisation 2</li>
-                                    <li onClick={() => selectOrgName('organisation 3')} className="block py-2 cursor-pointer" role="menuitem" id="menu-item-0">organisation 3</li>
-                                </ul>
-                            </div>
-                        )}
+                        {(orgDropdown && organisationData )&&
+                            (<div ref={menuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
+                                {(orgData?.length) ?
+                                    <ul className="py-1 px-3 text-xl text-[#031640] font-semibold" role="none" >
+                                        {orgData.map((item, index) => (
+                                            <li key={item} id={'orgName' + index} onClick={() => selectOrgName(item)} className="block py-2 cursor-pointer border-b last-of-type:border-none" role="menuitem">{item}</li>
+                                        ))}
+                                    </ul> : (<p className="py-1 px-3 text-xl text-[#031640] font-semibold">{msg('nosearchData')}</p>)}
+                            </div>)
+                        }
                         <div className="border border-[#EDDCAF] border-t-0 rounded-b-lg p-3 -mt-2 bg-[#FFF7E5]">
                             <span className="text-[#8B6105] font-semibold">{msg('orgInfoMsg')}</span>
                         </div>

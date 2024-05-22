@@ -39,7 +39,15 @@ export type KcContextExtension =
 							pattern:RegExp
 						}
 					}
-				}
+				};
+				organisationName:{
+					validators:{
+						options:{
+							options: string[]
+						}
+					}
+				};
+
 			}
 
 		};
