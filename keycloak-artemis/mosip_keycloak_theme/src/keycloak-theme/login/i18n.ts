@@ -47,7 +47,8 @@ export const { useI18n } = createUseI18n({
         invalidPhoneNo: "Please Enter valid Phone Number",
         forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
         resetPassword: "Reset Password",
-        rememberPW:"Remember Password?"
+        rememberPW: "Remember Password?",
+        nosearchData: "Data not found in the dropdown list"
     },
     fr: {
         /* spell-checker: disable */
@@ -91,7 +92,8 @@ export const { useI18n } = createUseI18n({
         invalidPhoneNo:"Please Enter valid Phone Number",
         forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
         resetPassword: "Reset Password",
-        rememberPW:"Remember Password?"
+        rememberPW:"Remember Password?",
+        nosearchData: "Data not found in the dropdown list"
         /* spell-checker: enable */
     }
 });
