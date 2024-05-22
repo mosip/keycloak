@@ -29,7 +29,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const { getClassName } = useGetClassName({ doUseDefaultCss, classes });
 
-    const { msg, msgStr, changeLocale, labelBySupportedLanguageTag, currentLanguageTag } = i18n;
+    const { msg, changeLocale, labelBySupportedLanguageTag, currentLanguageTag } = i18n;
 
     const { realm, locale, auth, url, message, isAppInitiatedAction, pageId } = kcContext;
     console.log(kcContext)
@@ -147,12 +147,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
                             {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
                                 <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
-                                    {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
+                                    {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
-                                    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>}
+                                    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
                                     <span className="kc-feedback-text"
                                         dangerouslySetInnerHTML={{
-                                            "__html": msgStr("logInErrorMsg")
+                                            "__html": message.summary
                                         }}
                                     />
                                 </div>

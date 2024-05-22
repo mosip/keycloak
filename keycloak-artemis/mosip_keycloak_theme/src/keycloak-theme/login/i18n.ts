@@ -10,7 +10,7 @@ export const { useI18n } = createUseI18n({
         gender: "Gender",
         // Here we overwrite the default english value for the message "doForgotPassword"
         // that is "Forgot Password?" see: https://github.com/InseeFrLab/keycloakify/blob/f0ae5ea908e0aa42391af323b6d5e2fd371af851/src/lib/i18n/generated_messages/18.0.1/login/en.ts#L17
-        invalidUserMessage: "Invalid username or password. (this message was overwrite in the theme)",
+        invalidUserMessage: "Invalid username or password.",
         usernameOrEmail: "Username",
         doLogIn:"Login",
         loginDesc:"Please enter your username and password to login.",
@@ -43,10 +43,11 @@ export const { useI18n } = createUseI18n({
         existingEmailErr: "Email already exists.",
         invalidEmailErr: "Invalid email address.",
         passwordConditions: "Password does not meet the minimum requirements. Please try again.",
-        passwordNotMatch: "Password confirmation doesn't match.",
+        passwordNotMatch: "Password and Confirm password do not match. Try again.",
         invalidPhoneNo: "Please Enter valid Phone Number",
         forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
-        resetPassword: "Reset Password"
+        resetPassword: "Reset Password",
+        rememberPW:"Remember Password?"
     },
     fr: {
         /* spell-checker: disable */
@@ -86,10 +87,11 @@ export const { useI18n } = createUseI18n({
         existingEmailErr: "Email already exists.",
         invalidEmailErr: "Invalid email address.",
         passwordConditions: "Password does not meet the minimum requirements. Please try again.",
-        passwordNotMatch: "Password confirmation doesn't match.",
+        passwordNotMatch: "Password and Confirm password do not match. Try again.",
         invalidPhoneNo:"Please Enter valid Phone Number",
         forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
-        resetPassword: "Reset Password"
+        resetPassword: "Reset Password",
+        rememberPW:"Remember Password?"
         /* spell-checker: enable */
     }
 });

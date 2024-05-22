@@ -25,6 +25,23 @@ export type KcContextExtension =
 				'password-confirm'?: string;
 				'g-recaptcha-response'?: string;
 			};
+			attributesByName:{
+				email: {
+					validators:{
+						pattern:{
+							pattern:RegExp
+						}
+					}
+				};
+				phoneNumber:{
+					validators:{
+						pattern:{
+							pattern:RegExp
+						}
+					}
+				}
+			}
+
 		};
 	} | {
 		pageId: "login-reset-password.ftl";
