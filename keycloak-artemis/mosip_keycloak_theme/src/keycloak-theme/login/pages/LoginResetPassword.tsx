@@ -82,6 +82,14 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                         />
                     </div>
                 </div>
+                <div className="mt-7">
+                    <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-center')}>
+                        <span>
+                            <p className="inline">{msg('rememberPW')}</p>
+                            <a href={url.loginUrl} className="text-hLinkColor font-bold text-xl"> {msg("doLogIn")}</a>
+                        </span>
+                    </div>
+                </div>
             </form>
         </Template>
     );
