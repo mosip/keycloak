@@ -8,7 +8,7 @@ import type { I18n } from "../i18n";
 import Recaptcha from 'react-recaptcha';
 import arrow from '../assets/expand_more_FILL0_wght300_GRAD0_opsz24 (1).svg';
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
-import eyeIconOff from '../assets/visibility_off.svg'
+import eyeIconOff from '../assets/visibility_off.svg';
 import info from '../assets/info.svg';
 import error from '../assets/error.svg'
 import ToolTip from "./shared/Tooltip";
