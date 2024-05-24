@@ -24,12 +24,20 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         classes
     });
     const { social, realm, url, usernameHidden, login, auth, registrationDisabled } = kcContext;
-    console.log(kcContext)
     const { msg, msgStr } = i18n;
 
     // const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
     const [dirtyLoginData, setLoginData] = useState(login);
     const [passwordType, setPasswordType] = useState('password');
+
+    const label = !realm.loginWithEmailAllowed
+        ? "username"
+        : realm.registrationEmailAsUsername
+            ? "email"
+            : "usernameOrEmail";
+
+    const autoCompleteHelper: typeof label = label === "usernameOrEmail" ? "username" : label;
+
 
     const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
         e.preventDefault();
@@ -47,12 +55,15 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')
     }
 
-    const handleLogInData = (e:any) =>{
+    const handleLogInData = (event:any) =>{
+        const { name, value } = event.target;
         setLoginData(prevData => ({
             ...prevData,
-            [e.target.name]:e.target.value
+            [name]:value
         }))
     }
+
+    console.log(dirtyLoginData)
 
     return (
         <Template
@@ -93,13 +104,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             <div className={getClassName("kcFormGroupClass")}>
                                 {!usernameHidden &&
                                     (() => {
-                                        const label = !realm.loginWithEmailAllowed
-                                            ? "username"
-                                            : realm.registrationEmailAsUsername
-                                                ? "email"
-                                                : "usernameOrEmail";
-
-                                        const autoCompleteHelper: typeof label = label === "usernameOrEmail" ? "username" : label;
 
                                         return (
                                             <>
@@ -133,7 +137,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     <ToolTip tooltip={msgStr('passwordInfo')}>
                                         <img className="ml-2 cursor-pointer" alt="info" src={info} />
                                     </ToolTip>
-                                    
                                 </label>
                                 <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 p-2">
                                     <input
@@ -203,7 +206,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     id="kc-login"
                                     type="submit"
                                     value={msgStr("doLogIn")}
-                                    disabled={!dirtyLoginData.email || !dirtyLoginData.password}
+                                    disabled={(!dirtyLoginData[autoCompleteHelper] &&  !login?.username)|| !dirtyLoginData.password}
                                 />
                             </div>
                         </form>
