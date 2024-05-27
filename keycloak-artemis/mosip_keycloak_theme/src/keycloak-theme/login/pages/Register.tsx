@@ -540,7 +540,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             )}
                             type="submit"
                             value={msgStr("doRegister")}
-                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || !dummyFormData["g-recaptcha-response"] || invalidEmail || invalidPhoneNo || ConfPasswordMatch}
+                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || ConfPasswordMatch}
                         />
                     </div>
                 </div>
