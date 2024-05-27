@@ -48,7 +48,9 @@ export const { useI18n } = createUseI18n({
         forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
         resetPassword: "Reset Password",
         rememberPW: "Remember Password?",
-        nosearchData: "Data not found in the dropdown list"
+        nosearchData: "Data not found in the dropdown list",
+        updatePasswordTitle: "Change Password",
+        updatePasswordDesc: "To change the password, please enter the new password and re-enter the password to confirm."
     },
     fr: {
         /* spell-checker: disable */
@@ -93,7 +95,9 @@ export const { useI18n } = createUseI18n({
         forgotPasswordDesc: "Please enter your registered email address and we will send you instructions on to your email on how to create a new password.",
         resetPassword: "Reset Password",
         rememberPW:"Remember Password?",
-        nosearchData: "Data not found in the dropdown list"
+        nosearchData: "Data not found in the dropdown list",
+        updatePasswordTitle: "Change Password",
+        updatePasswordDesc: "To change the password, please enter the new password and re-enter the password to confirm."
         /* spell-checker: enable */
     }
 });

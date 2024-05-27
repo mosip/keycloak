@@ -8,7 +8,7 @@ import type { I18n } from "../i18n";
 import Recaptcha from 'react-recaptcha';
 import arrow from '../assets/expand_more_FILL0_wght300_GRAD0_opsz24 (1).svg';
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
-import eyeIconOff from '../assets/visibility_off.svg'
+import eyeIconOff from '../assets/visibility_off.svg';
 import info from '../assets/info.svg';
 import error from '../assets/error.svg'
 import ToolTip from "./shared/Tooltip";
@@ -540,7 +540,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             )}
                             type="submit"
                             value={msgStr("doRegister")}
-                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || !dummyFormData["g-recaptcha-response"] || invalidEmail || invalidPhoneNo || ConfPasswordMatch}
+                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || ConfPasswordMatch}
                         />
                     </div>
                 </div>

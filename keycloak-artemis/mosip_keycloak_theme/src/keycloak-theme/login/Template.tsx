@@ -146,7 +146,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         <div id="kc-content-wrapper">
                             {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
                             {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
-                                <div className={`min-h-11 p-2 text-center font-semibold mb-3 ${message.type === "error" && "bg-errorBg text-errorColor"} ${(message.type === "warning" || message.type === 'info') && "bg-[#FFF7E5] text-[#8B6105"} ${message.type === "success" && "bg-[#E7F2E2] text-[#2E6E0D]q"}`}>
+                                <div className={`min-h-11 p-2 text-center font-semibold mb-3 ${message.type === "error" && "bg-errorBg text-errorColor"} ${message.type === "success" && "bg-[#E7F2E2] text-[#2E6E0D]"} ${(message.type === "warning" || message.type === 'info') && "bg-[#FFF7E5] text-[#8B6105"}`}>
                                     {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
