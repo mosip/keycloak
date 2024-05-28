@@ -495,14 +495,6 @@ class KeycloakSession:
         self.keycloak_admin.realm_name = 'master' # restore
 
     def assign_client_roles_to_user(self, realm, username, client_roles):
-    """
-    Assign client roles to a user.
-
-    Args:
-        realm (str): The Keycloak realm name.
-        username (str): The username of the user.
-        client_roles (dict): A dictionary where keys are client IDs and values are lists of role names.
-    """
     try:
         # Get user ID
         user_id = self.keycloak_admin.get_user_id(username)
