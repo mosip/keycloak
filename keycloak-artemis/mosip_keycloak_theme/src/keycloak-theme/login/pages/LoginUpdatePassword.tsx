@@ -29,7 +29,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     }
     const { msg, msgStr } = i18n;
 
-    const { url, messagesPerField, isAppInitiatedAction, username } = kcContext;
+    const { url, messagesPerField, isAppInitiatedAction, username, message } = kcContext;
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }}
@@ -41,6 +41,18 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             }
         >
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
+                {message !== undefined && (
+                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
+                        {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
+                                    {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
+                                    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
+                        <span className="kc-feedback-text"
+                            dangerouslySetInnerHTML={{
+                                "__html": message.summary
+                            }}
+                        />
+                    </div>
+                )}
                 <input
                     type="text"
                     id="username"
