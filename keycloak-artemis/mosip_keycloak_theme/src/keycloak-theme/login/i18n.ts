@@ -58,7 +58,6 @@ export const { useI18n } = createUseI18n({
         resentEmail: "Resend Email",
         expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
         sryText: "We are sorry!"
-        resentEmail: "Resend Email"
 
     },
     fr: {
@@ -114,7 +113,6 @@ export const { useI18n } = createUseI18n({
         resentEmail: "Resend Email",
         expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
         sryText: "We are sorry!"
-        resentEmail: "Resend Email"
         /* spell-checker: enable */
     }
 });
