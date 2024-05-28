@@ -55,7 +55,10 @@ export const { useI18n } = createUseI18n({
         emailVerifyTitle: "Email Verification link sent!",
         emailVerifyText: "You need to verify your email address to activate your account. An email with instruction to verify your email address has been sent to you.",
         notReceviedText: "Haven’t received the email in your inbox yet?",
-        resentEmail: "Resend Email"
+        resentEmail: "Resend Email",
+        expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
+        sryText: "We are sorry!"
+
     },
     fr: {
         /* spell-checker: disable */
@@ -107,7 +110,9 @@ export const { useI18n } = createUseI18n({
         emailVerifyTitle:"Email Verification link sent!",
         emailVerifyText:"You need to verify your email address to activate your account. An email with instruction to verify your email address has been sent to you.",
         notReceviedText: "Haven’t received the email in your inbox yet?",
-        resentEmail: "Resend Email"
+        resentEmail: "Resend Email",
+        expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
+        sryText: "We are sorry!"
         /* spell-checker: enable */
     }
 });
