@@ -455,7 +455,7 @@ class KeycloakSession:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
 
-    def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}, client_roles={}):
+    def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}):
         self.keycloak_admin.realm_name = realm
         payload = {
           "username" : uname,
@@ -469,44 +469,12 @@ class KeycloakSession:
             print('Creating user %s' % uname)
             self.keycloak_admin.create_user(payload, False) # If exists, update. So don't skip
             user_id = self.keycloak_admin.get_user_id(uname)
-            self.keycloak_admin.set_user_password(user_id, password, temporary=temp_flag)
-
-            # Assign client roles
-            for client_id, roles in client_roles.items():
-                # Get client representation
-                client = self.keycloak_admin.get_client(client_id)
-                client_uuid = client['id']
-
-                # Get roles representation
-                role_representations = []
-                for role_name in roles:
-                    role = self.keycloak_admin.get_client_role(client_uuid, role_name)
-                    if role:
-                        role_representations.append(role)
-
-                # Assign roles to the user
-                if role_representations:
-                    self.keycloak_admin.assign_client_roles(user_id, client_uuid, role_representations)        
-        
+            self.keycloak_admin.set_user_password(user_id, password, temporary=temp_flag)      
         except KeycloakError as e:
             if e.response_code == 409:
                 print('Exists, updating %s' % uname)
                 user_id = self.keycloak_admin.get_user_id(uname)
                 self.keycloak_admin.update_user(user_id, payload)
-
-                # Re-assign client roles if user exists
-                for client_id, roles in client_roles.items():
-                    client = self.keycloak_admin.get_client(client_id)
-                    client_uuid = client['id']
-
-                    role_representations = []
-                    for role_name in roles:
-                        role = self.keycloak_admin.get_client_role(client_uuid, role_name)
-                        if role:
-                            role_representations.append(role)
-
-                    if role_representations:
-                        self.keycloak_admin.assign_client_roles(user_id, client_uuid, role_representations)
         except:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
@@ -526,6 +494,19 @@ class KeycloakSession:
 
         self.keycloak_admin.realm_name = 'master' # restore
 
+    def assign_user_client_roles(self, realm, username, client_roles):
+        self.keycloak_admin.realm_name = realm
+        client_roles = [self.keycloak_admin.get_client_role(role) for role in client_roles]
+        try:
+            print(f'''Get user id for {username}''')
+            user_id = self.keycloak_admin.get_user_id(username)
+            self.keycloak_admin.assign_client_roles(user_id, client_roles)
+         except:
+             self.keycloak_admin.realm_name = 'master' 
+             raise
+
+         self.keycloak_admin.realm_name = 'master'  
+    
     def assign_sa_client_roles(self, realm, client, sa_client, sa_client_roles=None):
         self.keycloak_admin.realm_name = realm
         try:
@@ -768,8 +749,9 @@ def main():
                 users = values[realm]['users']
             for user in users:
                 print(f'''Creating user {user['username']}''')
-                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'], user['clientRoles'])
+                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'])
                 ks.assign_user_roles(realm, user['username'], user['realmRoles'])
+                ks.assign_user_client_roles(realm, user['username'], user['clientRoles'])
     except:
         formatted_lines = traceback.format_exc()
         print(formatted_lines)
