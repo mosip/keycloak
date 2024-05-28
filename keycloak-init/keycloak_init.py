@@ -455,7 +455,7 @@ class KeycloakSession:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
 
-    def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}):
+    def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}, client_roles={}):
         self.keycloak_admin.realm_name = realm
         payload = {
           "username" : uname,
@@ -469,12 +469,44 @@ class KeycloakSession:
             print('Creating user %s' % uname)
             self.keycloak_admin.create_user(payload, False) # If exists, update. So don't skip
             user_id = self.keycloak_admin.get_user_id(uname)
-            self.keycloak_admin.set_user_password(user_id, password, temporary=temp_flag)        
+            self.keycloak_admin.set_user_password(user_id, password, temporary=temp_flag)
+
+            # Assign client roles
+            for client_id, roles in client_roles.items():
+                # Get client representation
+                client = self.keycloak_admin.get_client(client_id)
+                client_uuid = client['id']
+
+                # Get roles representation
+                role_representations = []
+                for role_name in roles:
+                    role = self.keycloak_admin.get_client_role(client_uuid, role_name)
+                    if role:
+                        role_representations.append(role)
+
+                # Assign roles to the user
+                if role_representations:
+                    self.keycloak_admin.assign_client_roles(user_id, client_uuid, role_representations)        
+        
         except KeycloakError as e:
             if e.response_code == 409:
                 print('Exists, updating %s' % uname)
                 user_id = self.keycloak_admin.get_user_id(uname)
                 self.keycloak_admin.update_user(user_id, payload)
+
+                # Re-assign client roles if user exists
+                for client_id, roles in client_roles.items():
+                    client = self.keycloak_admin.get_client(client_id)
+                    client_uuid = client['id']
+
+                    role_representations = []
+                    for role_name in roles:
+                        role = self.keycloak_admin.get_client_role(client_uuid, role_name)
+                        if role:
+                            role_representations.append(role)
+
+                    if role_representations:
+                        self.keycloak_admin.assign_client_roles(user_id, client_uuid, role_representations)
         except:
             self.keycloak_admin.realm_name = 'master' # restore
             raise
@@ -493,37 +525,6 @@ class KeycloakSession:
             raise
 
         self.keycloak_admin.realm_name = 'master' # restore
-
-    def assign_client_roles_to_user(self, realm, username, client_roles):
-    try:
-        # Get user ID
-        user_id = self.keycloak_admin.get_user_id(username)
-
-        if client_roles:  # Check if client roles are provided
-            for client_id, roles in client_roles.items():
-                # Get client representation
-                client = self.keycloak_admin.get_client(client_id)
-                if not client:
-                    print(f"Client {client_id} not found.")
-                    continue
-                client_uuid = client['id']
-
-                # Assign roles to the user
-                role_representations = []
-                for role_name in roles:
-                    role = self.keycloak_admin.get_client_role(client_uuid, role_name)
-                    if not role:
-                        print(f"Role {role_name} not found in client {client_id}.")
-                        continue
-                    role_representations.append(role)
-
-                if role_representations:
-                    self.keycloak_admin.assign_client_roles(user_id, client_uuid, role_representations)
-                    print(f"Assigned client roles to user {username} in client {client_id}.")
-        else:
-            print(f"No client roles to assign for user {username}.")
-    except Exception as e:
-        print(f"Error assigning client roles to user {username}: {e}")
 
     def assign_sa_client_roles(self, realm, client, sa_client, sa_client_roles=None):
         self.keycloak_admin.realm_name = realm
@@ -767,14 +768,8 @@ def main():
                 users = values[realm]['users']
             for user in users:
                 print(f'''Creating user {user['username']}''')
-                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'])
+                ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'], user['clientRoles'])
                 ks.assign_user_roles(realm, user['username'], user['realmRoles'])
-                # Assign client roles
-                client_roles = user.get('clientRoles', {})
-                if client_roles:
-                    print(f"Assigning client roles to user {user['username']}")
-                    ks.assign_client_roles_to_user(realm, user['username'], client_roles)
-           
     except:
         formatted_lines = traceback.format_exc()
         print(formatted_lines)
