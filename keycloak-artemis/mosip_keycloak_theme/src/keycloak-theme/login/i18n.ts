@@ -50,7 +50,12 @@ export const { useI18n } = createUseI18n({
         rememberPW: "Remember Password?",
         nosearchData: "Data not found in the dropdown list",
         updatePasswordTitle: "Change Password",
-        updatePasswordDesc: "To change the password, please enter the new password and re-enter the password to confirm."
+        updatePasswordDesc: "To change the password, please enter the new password and re-enter the password to confirm.",
+        emailverificationHeading: "Email Verification link sent!",
+        emailVerifyTitle: "Email Verification link sent!",
+        emailVerifyText: "You need to verify your email address to activate your account. An email with instruction to verify your email address has been sent to you.",
+        notReceviedText: "Haven’t received the email in your inbox yet?",
+        resentEmail: "Resend Email"
     },
     fr: {
         /* spell-checker: disable */
@@ -97,7 +102,12 @@ export const { useI18n } = createUseI18n({
         rememberPW:"Remember Password?",
         nosearchData: "Data not found in the dropdown list",
         updatePasswordTitle: "Change Password",
-        updatePasswordDesc: "To change the password, please enter the new password and re-enter the password to confirm."
+        updatePasswordDesc: "To change the password, please enter the new password and re-enter the password to confirm.",
+        emailverificationHeading:"Email Verification link sent!",
+        emailVerifyTitle:"Email Verification link sent!",
+        emailVerifyText:"You need to verify your email address to activate your account. An email with instruction to verify your email address has been sent to you.",
+        notReceviedText: "Haven’t received the email in your inbox yet?",
+        resentEmail: "Resend Email"
         /* spell-checker: enable */
     }
 });
