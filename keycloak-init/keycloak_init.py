@@ -501,11 +501,11 @@ class KeycloakSession:
             print(f'''Get user id for {username}''')
             user_id = self.keycloak_admin.get_user_id(username)
             self.keycloak_admin.assign_client_roles(user_id, client_roles)
-         except:
-             self.keycloak_admin.realm_name = 'master' 
-             raise
+        except:
+            self.keycloak_admin.realm_name = 'master' 
+            raise
 
-         self.keycloak_admin.realm_name = 'master'  
+        self.keycloak_admin.realm_name = 'master'  
     
     def assign_sa_client_roles(self, realm, client, sa_client, sa_client_roles=None):
         self.keycloak_admin.realm_name = realm
