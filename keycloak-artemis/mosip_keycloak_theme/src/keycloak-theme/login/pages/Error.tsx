@@ -16,7 +16,6 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
                 <img className="w-36" alt="" src={errorIcon} />
                 <h4 className="font-bold text-[#000000] text-xl">{msg("sryText")}</h4>
             </div>
-            // msg("errorTitle")
         }>
             <div id="kc-error-message" className="text-center">
                 <p className="instruction">{message.summary}</p>

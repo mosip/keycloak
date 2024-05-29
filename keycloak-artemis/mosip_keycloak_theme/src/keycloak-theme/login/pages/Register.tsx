@@ -183,7 +183,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     </div>
                 </div>
                 <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-sans">{msg("registerTitle")}</h1>
-                <p className="text-pTextColor text-xl mt-3">{msg("regDesc")}</p>
+                <p className="text-pTextColor text-xl">{msg("regDesc")}</p>
                 <span className="text-pTextColor mt-4 text-xl"> {msg("requiredFields")}</span>
             </>
         }>
