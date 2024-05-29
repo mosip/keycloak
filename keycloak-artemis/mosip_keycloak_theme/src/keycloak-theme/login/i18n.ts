@@ -57,8 +57,9 @@ export const { useI18n } = createUseI18n({
         notReceviedText: "Haven’t received the email in your inbox yet?",
         resentEmail: "Resend Email",
         expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
-        sryText: "We are sorry!"
-
+        sryText: "We are sorry!",
+        backToApplication: "Back to Application",
+        proceedWithAction: "Click here to proceed"
     },
     fr: {
         /* spell-checker: disable */
@@ -112,7 +113,9 @@ export const { useI18n } = createUseI18n({
         notReceviedText: "Haven’t received the email in your inbox yet?",
         resentEmail: "Resend Email",
         expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
-        sryText: "We are sorry!"
+        sryText: "We are sorry!",
+        backToApplication: "Back to Application",
+        proceedWithAction: "Click here to proceed"
         /* spell-checker: enable */
     }
 });
