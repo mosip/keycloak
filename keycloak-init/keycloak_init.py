@@ -517,9 +517,9 @@ class KeycloakSession:
            # Make the POST request to assign roles
            data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=json.dumps(client_role_list))
            return raise_error_from_response(data_raw, KeycloakGetError)
-       except Exception as e:
-           self.keycloak_admin.realm_name = 'master'  # restore the realm
-           raise e
+        except Exception as e:
+            self.keycloak_admin.realm_name = 'master'  # restore the realm
+            raise e
     
     def assign_sa_client_roles(self, realm, client, sa_client, sa_client_roles=None):
         self.keycloak_admin.realm_name = realm
