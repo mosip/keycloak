@@ -41,7 +41,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             }
         >
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
-                {message !== undefined && (
+                {(message !== undefined && message.type !== 'warning')&& (
                     <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
                         {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
@@ -72,7 +72,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="password-new" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold flex flex-row items-center')}>
-                            <span>{msg("password")}</span>
+                            <span>{msg("newPassword")}</span>
                             <ToolTip tooltip={msgStr('passwordInfo')}>
                                 <img className="ml-2 cursor-pointer" alt="info" src={info} />
                             </ToolTip>
@@ -102,7 +102,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
                         <label htmlFor="password-confirm" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold')}>
-                            {msg("passwordConfirm")}
+                            {msg("confNewPassword")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>

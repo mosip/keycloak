@@ -451,7 +451,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row items-center')}>
-                                    {msg("password")}
+                                    {msg("newPassword")}
                                     <ToolTip tooltip={msgStr('passwordInfo')}>
                                         {/* <button className="bg-gray-900 text-white p-3 rounded"> */}
                                         <img className="ml-2 cursor-pointer" alt="info" src={info} />
@@ -487,7 +487,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password-confirm" className={getClassName("kcLabelClass")}>
-                                    {msg("passwordConfirm")}
+                                    {msg("confNewPassword")}
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>

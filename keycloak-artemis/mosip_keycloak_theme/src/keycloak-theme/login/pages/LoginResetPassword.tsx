@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { clsx } from "keycloakify/tools/clsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
@@ -12,6 +13,8 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
         doUseDefaultCss,
         classes
     });
+
+    const [email, addEmail] = useState('')
 
     const { url, realm, auth } = kcContext;
 
@@ -57,6 +60,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             placeholder={msgStr('emailPH')}
                             autoFocus
                             defaultValue={auth !== undefined && auth.showUsername ? auth.attemptedUsername : undefined}
+                            onChange={(event) =>{addEmail(event.target.value)}}
                         />
                     </div>
                 </div>
@@ -79,6 +83,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             )}
                             type="submit"
                             value={msgStr("resetPassword")}
+                            disabled={!email}
                         />
                     </div>
                 </div>
