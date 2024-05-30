@@ -494,18 +494,32 @@ class KeycloakSession:
 
         self.keycloak_admin.realm_name = 'master' # restore
 
-    def assign_user_client_roles(self, realm, username, client_roles):
+    def assign_client_roles_to_user(self, realm, username, client, client_roles=None):
         self.keycloak_admin.realm_name = realm
-        client_roles = [self.keycloak_admin.get_client_role(role) for role in client_roles]
         try:
-            print(f'''Get user id for {username}''')
-            user_id = self.keycloak_admin.get_user_id(username)
-            self.keycloak_admin.assign_client_roles(user_id, client_roles)
-        except:
-            self.keycloak_admin.realm_name = 'master' 
-            raise
+           # Get the user ID for the specified username
+           users = self.keycloak_admin.get_users({"username": username})
+           if not users:
+               raise KeycloakGetError(f"User '{username}' not found.")
+           user = users[0]  # Assuming usernames are unique and we're getting the first match
+           # Get the client ID
+           client_id = self.keycloak_admin.get_client_id(client)
+        
+           # Get full role representations for each client role
+           client_role_list = []  
+           for client_role in client_roles:
+               print('\t\t\tAdding Client Role :: "%s" to =====> user :: "%s"' %(client_role, user['username']))
+               client_role_list.append(self.keycloak_admin.get_client_role(client_id, client_role))
 
-        self.keycloak_admin.realm_name = 'master'  
+           # Construct the URL for role-mappings endpoint
+           URL = 'admin/realms/{realm-name}/users/{user-id}/role-mappings/clients/{client-id}'
+           params_path = {"realm-name": self.keycloak_admin.realm_name, "user-id": user["id"], "client-id": client_id}
+           # Make the POST request to assign roles
+           data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=json.dumps(client_role_list))
+           return raise_error_from_response(data_raw, KeycloakGetError)
+       except Exception as e:
+           self.keycloak_admin.realm_name = 'master'  # restore the realm
+           raise e
     
     def assign_sa_client_roles(self, realm, client, sa_client, sa_client_roles=None):
         self.keycloak_admin.realm_name = realm
@@ -751,7 +765,7 @@ def main():
                 print(f'''Creating user {user['username']}''')
                 ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'])
                 ks.assign_user_roles(realm, user['username'], user['realmRoles'])
-                ks.assign_user_client_roles(realm, user['username'], user['clientRoles'])
+                ks.assign_user_client_roles(realm, user['username'], user['client'], user['clientRoles'])
     except:
         formatted_lines = traceback.format_exc()
         print(formatted_lines)
