@@ -765,7 +765,7 @@ def main():
                 print(f'''Creating user {user['username']}''')
                 ks.create_user(realm, user['username'], user['email'], user['firstName'], user['lastName'], user['password'], user['temporary'], user['attributes'])
                 ks.assign_user_roles(realm, user['username'], user['realmRoles'])
-                ks.assign_user_client_roles(realm, user['username'], user['client'], user['clientRoles'])
+                ks.assign_client_roles_to_user(realm, user['username'], user['client'], user['clientRoles'])
     except:
         formatted_lines = traceback.format_exc()
         print(formatted_lines)
