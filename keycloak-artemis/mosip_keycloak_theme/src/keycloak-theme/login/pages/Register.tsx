@@ -48,6 +48,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false);
     const [ConfPasswordMatch, checkConfPasswordMatch] = useState(false);
     const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
+    const [isReloadBtn, setReloadBtn] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -171,6 +172,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
     })
 
+    window.onbeforeunload = function() {
+        if(!isReloadBtn){
+            return 'Do you want to leave this page?'
+        }
+    }
+
     const { msg, msgStr } = i18n;
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={
@@ -178,7 +185,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 <div id="kc-form-options">
                     <div className={getClassName("kcFormOptionsWrapperClass")}>
                         <span>
-                            <button> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-xl"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
+                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-xl"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
                         </span>
                     </div>
                 </div>
@@ -540,6 +547,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             )}
                             type="submit"
                             value={msgStr("doRegister")}
+                            onClick={() => setReloadBtn(true)}
                             disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || ConfPasswordMatch}
                         />
                     </div>
@@ -548,7 +556,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-center')}>
                         <span>
                             <span>{msg('alreadyMember')}</span>
-                            <a href={url.loginUrl} className="text-hLinkColor font-bold text-xl"> {msg("doLogIn")}</a>
+                            <a href={url.loginUrl} className="text-hLinkColor font-bold text-xl" onClick={() => setReloadBtn(true)}> {msg("doLogIn")}</a>
                         </span>
                     </div>
                 </div>

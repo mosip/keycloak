@@ -28,6 +28,13 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         }
     }
     const { msg, msgStr } = i18n;
+    const [isReloadBtn, setReloadBtn] = useState(false);
+
+    window.onbeforeunload = function() {
+        if(!isReloadBtn){
+            return 'Do you want to leave this page?'
+        }
+    }
 
     const { url, messagesPerField, isAppInitiatedAction, username, message } = kcContext;
 
@@ -168,6 +175,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                     getClassName("kcButtonLargeClass")
                                 )}
                                 type="submit"
+                                onClick={() => setReloadBtn(true)}
                                 value={msgStr("doSubmit")}
                             />
                         )}

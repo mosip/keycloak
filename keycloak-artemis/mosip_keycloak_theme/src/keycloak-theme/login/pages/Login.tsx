@@ -29,6 +29,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     // const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
     const [dirtyLoginData, setLoginData] = useState(login);
     const [passwordType, setPasswordType] = useState('password');
+    const [isReloadBtn, setReloadBtn] = useState(false);
 
     const label = !realm.loginWithEmailAllowed
         ? "username"
@@ -51,19 +52,23 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         formElement.submit();
     });
 
+    window.onbeforeunload = function() {
+        if(!isReloadBtn){
+            return 'Do you want to leave this page?'
+        }
+    }
+
     const showPassword = () => {
         passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')
     }
 
-    const handleLogInData = (event:any) =>{
+    const handleLogInData = (event: any) => {
         const { name, value } = event.target;
         setLoginData(prevData => ({
             ...prevData,
-            [name]:value
+            [name]: value
         }))
     }
-
-    console.log(dirtyLoginData)
 
     return (
         <Template
@@ -82,7 +87,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             }
             infoNode={
                 <div id="kc-registration" className="text-center mt-4">
-                    <span>
+                    <span onClick={() => setReloadBtn(true)}>
                         {msg("noAccount")} &nbsp;
                         <a className="text-hLinkColor font-semibold" tabIndex={6} href={url.registrationUrl}>
                             {msg("doRegister")}
@@ -175,7 +180,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 </div>
                                 <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-hLinkColor font-bold text-right')}>
                                     {realm.resetPasswordAllowed && (
-                                        <span>
+                                        <span onClick={() => setReloadBtn(true)}>
                                             <a tabIndex={5} href={url.loginResetCredentialsUrl}>
                                                 {msg("doForgotPassword")}
                                             </a>
@@ -206,7 +211,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     id="kc-login"
                                     type="submit"
                                     value={msgStr("doLogIn")}
-                                    disabled={(!dirtyLoginData[autoCompleteHelper] &&  !dirtyLoginData?.username)|| !dirtyLoginData.password}
+                                    onClick={() => setReloadBtn(true)}
+                                    disabled={(!dirtyLoginData[autoCompleteHelper] && !dirtyLoginData?.username) || !dirtyLoginData.password}
                                 />
                             </div>
                         </form>
