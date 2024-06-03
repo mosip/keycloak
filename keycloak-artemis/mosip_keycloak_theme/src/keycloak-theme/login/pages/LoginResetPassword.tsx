@@ -19,6 +19,14 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     const { url, realm, auth } = kcContext;
 
     const { msg, msgStr } = i18n;
+
+    const [isReloadBtn, setReloadBtn] = useState(false);
+
+    window.onbeforeunload = function() {
+        if(!isReloadBtn){
+            return 'Do you want to leave this page?'
+        }
+    }
     console.log(kcContext)
 
     return (
@@ -30,7 +38,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div id="kc-form-options">
                         <div className={getClassName("kcFormOptionsWrapperClass")}>
                             <span>
-                                <button> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-xl"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
+                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-xl"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
                             </span>
                         </div>
                     </div>
@@ -82,6 +90,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                                 getClassName("kcButtonLargeClass")
                             )}
                             type="submit"
+                            onClick={() => setReloadBtn(true)}
                             value={msgStr("resetPassword")}
                             disabled={!email}
                         />

@@ -6,9 +6,17 @@ import SuccessMsgIcon from '../assets/success_message_icon.svg'
 export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { pageId: "login-verify-email.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
+    // const [isReloadBtn, setReloadBtn] = useState(false);
+
     const { msg } = i18n;
 
     const { url } = kcContext;
+
+    window.onbeforeunload = function () {
+        // if(!isReloadBtn){
+        return "jdhbfdjbdhbchb"
+        // }
+    }
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={
@@ -19,7 +27,7 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
         }>
             <div className="text-center">
                 <span className="text-[#666666]">{msg("emailVerifyText")}</span>
-                <hr className="my-8 text-[#000000]"/>
+                <hr className="my-8 text-[#000000]" />
                 <span className="text-[#666666]">{msg("notReceviedText")}</span>
                 <h4 className="my-2 font-bold text-[#1447B2]"> <a href={url.loginAction}>{msg('resentEmail')}</a></h4>
             </div>
