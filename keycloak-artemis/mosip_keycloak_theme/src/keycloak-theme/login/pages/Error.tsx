@@ -6,7 +6,7 @@ import errorIcon from '../assets/error_message_icon.svg'
 export default function Error(props: PageProps<Extract<KcContext, { pageId: "error.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
-    const { message } = kcContext;
+    const { message, client } = kcContext;
 
     const { msg } = i18n;
 
@@ -17,15 +17,15 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
                 <h4 className="font-bold text-[#000000] text-xl">{msg("sryText")}</h4>
             </div>
         }>
-            <div id="kc-error-message" className="text-center">
+            <div id="kc-error-message" className="text-center w-100%">
                 <p className="instruction">{message.summary}</p>
-                {/* {client !== undefined && client.baseUrl !== undefined && (
-                    <p>
-                        <a id="backToApplication" href={client.baseUrl}>
+                {client !== undefined && client.baseUrl !== undefined && (
+                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl">
+                        <a id="backToApplication" className="text-[#ffffff]" href={client.baseUrl}>
                             {msg("backToApplication")}
                         </a>
-                    </p>
-                )} */}
+                    </button>
+                )}
             </div>
         </Template>
     );

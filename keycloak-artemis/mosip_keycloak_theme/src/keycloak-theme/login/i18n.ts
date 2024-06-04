@@ -56,14 +56,16 @@ export const { useI18n } = createUseI18n({
         emailVerifyText: "You need to verify your email address to activate your account. An email with instruction to verify your email address has been sent to you.",
         notReceviedText: "Haven’t received the email in your inbox yet?",
         resentEmail: "Resend Email",
-        expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
-        sryText: "Link expired!",
+        expiredActionMessage: "This action is no longer valid as you have already completed the process",
+        sryText: "We are sorry!",
         backToApplication: "Back to Application",
         proceedWithAction: "Click here to proceed",
         newPassword: "New Password",
         confNewPassword: "Confirm New Password",
         missingUsernameMessage: "Please enter valid email address.",
-        expiredActionTokenNoSessionMessage: "Please retry again"
+        expiredActionTokenNoSessionMessage: "Link has expired, Please retry again.",
+        loginTimeout: "Session has timed out because of inactivity. Please retry again",
+        invalidPasswordConfirmMessage: "The passwords do not match. Try again"
     },
     fr: {
         /* spell-checker: disable */
@@ -123,7 +125,9 @@ export const { useI18n } = createUseI18n({
         missingUsernameMessage: "Veuillez saisir une adresse e-mail valide.",
 
         expiredActionTokenNoSessionMessage: "Please retry again",
-        sryText: "Link expired!"
+        sryText: "Link expired!",
+        loginTimeout:"Session has timed out because of inactivity. Please retry again",
+        invalidPasswordConfirmMessage: "The passwords do not match. Try again"
         /* spell-checker: enable */
     }
 });

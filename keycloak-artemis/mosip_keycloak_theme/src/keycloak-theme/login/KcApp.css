@@ -57,7 +57,14 @@
 	background-size: cover;
 }
 
+#kc-info{
+	padding-bottom: 0; 
+    margin-bottom: 0;
+}
 
+#kc-error-message a{
+	color: #ffffff !important;
+}
 
 a {
 	color: #0D3077 !important;
