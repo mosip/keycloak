@@ -8,12 +8,19 @@ import info from '../assets/info.svg';
 import ToolTip from "./shared/Tooltip";
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
 import eyeIconOff from '../assets/visibility_off.svg';
+type PasswordUpdate = {
+    'password-new': string;
+    'password-confirm': string;
+}
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
+    const { msg, msgStr } = i18n;
+    const [isReloadBtn, setReloadBtn] = useState(false);
+    const [newPasswordData, getNewPasswordData] = useState<PasswordUpdate>({"password-new":"", "password-confirm":""})
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
@@ -27,8 +34,15 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             confPasswordType === 'password' ? setConfPasswordType('text') : setConfPasswordType('password')
         }
     }
-    const { msg, msgStr } = i18n;
-    const [isReloadBtn, setReloadBtn] = useState(false);
+
+    const capturePassWordData = (event:any) =>{
+        const {name, value} = event.target 
+        getNewPasswordData(prevData =>({
+            ...prevData,
+            [name]:value
+        }))
+    }
+
 
     window.onbeforeunload = function() {
         if(!isReloadBtn){
@@ -93,6 +107,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 name="password-new"
                                 autoFocus
                                 autoComplete="new-password"
+                                onChange={capturePassWordData}
                                 className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                 placeholder={msgStr('passwordPlaceholder')}
                             />
@@ -119,6 +134,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 id="password-confirm"
                                 name="password-confirm"
                                 autoComplete="new-password"
+                                onChange={capturePassWordData}
                                 className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                 placeholder={msgStr('passwordPlaceholder')}
                             />
@@ -177,6 +193,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 type="submit"
                                 onClick={() => setReloadBtn(true)}
                                 value={msgStr("doSubmit")}
+                                disabled={!newPasswordData['password-new'] || !newPasswordData['password-confirm']}
                             />
                         )}
                     </div>
