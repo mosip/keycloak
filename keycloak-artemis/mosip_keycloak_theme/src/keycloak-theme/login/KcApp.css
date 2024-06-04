@@ -52,7 +52,8 @@
 
 .my-root-class body {
 	background: url(./assets/mosip_keycloakbg.png) no-repeat center center fixed;
-	height: 180%;
+	height: auto;
+	min-height: 100%;
 	background-size: cover;
 }
 

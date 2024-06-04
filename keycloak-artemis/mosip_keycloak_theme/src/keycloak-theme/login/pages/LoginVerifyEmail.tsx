@@ -6,17 +6,9 @@ import SuccessMsgIcon from '../assets/success_message_icon.svg'
 export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { pageId: "login-verify-email.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
-    // const [isReloadBtn, setReloadBtn] = useState(false);
-
     const { msg } = i18n;
 
     const { url } = kcContext;
-
-    window.onbeforeunload = function () {
-        // if(!isReloadBtn){
-        return "jdhbfdjbdhbchb"
-        // }
-    }
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={
