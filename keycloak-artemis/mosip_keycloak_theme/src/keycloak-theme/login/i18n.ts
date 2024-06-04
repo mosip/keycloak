@@ -57,12 +57,13 @@ export const { useI18n } = createUseI18n({
         notReceviedText: "Haven’t received the email in your inbox yet?",
         resentEmail: "Resend Email",
         expiredActionMessage: "Looks like you have already reset password or this action is no longer valid.",
-        sryText: "We are sorry!",
+        sryText: "Link expired!",
         backToApplication: "Back to Application",
         proceedWithAction: "Click here to proceed",
         newPassword: "New Password",
         confNewPassword: "Confirm New Password",
         missingUsernameMessage: "Please enter valid email address.",
+        expiredActionTokenNoSessionMessage: "Please retry again"
     },
     fr: {
         /* spell-checker: disable */
@@ -115,12 +116,14 @@ export const { useI18n } = createUseI18n({
         notReceviedText: "Vous n'avez pas encore reçu l'e-mail dans votre boîte de réception?",
         resentEmail: "Ré-envoyer l'email",
         expiredActionMessage: "Il semble que vous ayez déjà réinitialisé votre mot de passe ou que cette action n'est plus valide.",
-        sryText: "Nous sommes désolés!",
         backToApplication: "Retour à la candidature",
         proceedWithAction: "Cliquez ici pour continuer",
         newPassword: "nouveau mot de passe",
         confNewPassword: "Confirmer le nouveau mot de passe",
-        missingUsernameMessage: "Veuillez saisir une adresse e-mail valide."
+        missingUsernameMessage: "Veuillez saisir une adresse e-mail valide.",
+
+        expiredActionTokenNoSessionMessage: "Please retry again",
+        sryText: "Link expired!"
         /* spell-checker: enable */
     }
 });
