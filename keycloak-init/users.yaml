@@ -23,17 +23,3 @@ mosip:  # realm
       temporary: False
       realmRoles: 
         - REGISTRATION_OFFICER
-    - username: read_user
-      email: read_user15@xyz.com
-      firstName: read
-      lastName: User
-      password: readuser123
-      temporary: False
-      client_roles:
-        realm-management:
-          - "view-users"
-          - "view-authorization"
-          - "view-clients"
-          - "view-events"
-          - "view-realm"
-          - "view-identity-providers"
