@@ -469,7 +469,7 @@ class KeycloakSession:
             print('Creating user %s' % uname)
             self.keycloak_admin.create_user(payload, False) # If exists, update. So don't skip
             user_id = self.keycloak_admin.get_user_id(uname)
-            self.keycloak_admin.set_user_password(user_id, password, temporary=temp_flag)      
+            self.keycloak_admin.set_user_password(user_id, password, temporary=temp_flag)
         except KeycloakError as e:
             if e.response_code == 409:
                 print('Exists, updating %s' % uname)
@@ -506,7 +506,7 @@ class KeycloakSession:
            client_id = self.keycloak_admin.get_client_id(client)
         
            # Get full role representations for each client role
-           client_role_list = []  
+           client_role_list = []
            for client_role in client_roles:
                print('\t\t\tAdding Client Role :: "%s" to =====> user :: "%s"' %(client_role, user['username']))
                client_role_list.append(self.keycloak_admin.get_client_role(client_id, client_role))
