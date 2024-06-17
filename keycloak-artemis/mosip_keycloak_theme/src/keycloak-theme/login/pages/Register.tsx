@@ -236,12 +236,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         {partnerTypesMenu && (
                             <div ref={partnerTypesMenuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
                                 <ul className="py-1 px-3 text-xl text-[#031640] font-semibold" role="none" >
-                                    <li onClick={() => selectedPartnerTypeValue('Device Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">Device Provider</li>
-                                    <li onClick={() => selectedPartnerTypeValue('FTM Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">FTM Provider</li>
-                                    <li onClick={() => selectedPartnerTypeValue('Authentication Partner')} className="block py-2 cursor-pointer border-b" role="menuitem">Authentication Partner</li>
-                                    <li onClick={() => selectedPartnerTypeValue('Credential Partner or ISP')} className="block py-2 cursor-pointer border-b" role="menuitem">Credential Partner or ISP</li>
-                                    <li onClick={() => selectedPartnerTypeValue('ABIS Partner')} className="block py-2 cursor-pointer border-b" role="menuitem">ABIS Partner</li>
-                                    <li onClick={() => selectedPartnerTypeValue('SDK Partner')} className="block py-2 cursor-pointer" role="menuitem">SDK Partner</li>
+                                    <li onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">Device Provider</li>
+                                    <li onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">FTM Provider</li>
+                                    <li onClick={() => selectedPartnerTypeValue('Authentication_Partner')} className="block py-2 cursor-pointer border-b" role="menuitem">Authentication Partner</li>
+                                    <li onClick={() => selectedPartnerTypeValue('Credential_Partner_or_ISP')} className="block py-2 cursor-pointer border-b" role="menuitem">Credential Partner or ISP</li>
+                                    <li onClick={() => selectedPartnerTypeValue('ABIS_Partner')} className="block py-2 cursor-pointer border-b" role="menuitem">ABIS Partner</li>
+                                    <li onClick={() => selectedPartnerTypeValue('SDK_Partner')} className="block py-2 cursor-pointer" role="menuitem">SDK Partner</li>
                                 </ul>
                             </div>
                         )}
