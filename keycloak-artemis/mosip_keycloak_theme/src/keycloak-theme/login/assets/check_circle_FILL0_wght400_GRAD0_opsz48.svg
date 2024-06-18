@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20.167" height="16.64" viewBox="0 0 25.167 21.64">
+  <defs>
+    <filter id="check_circle_FILL0_wght400_GRAD0_opsz48" x="0" y="0" width="20.167" height="16.64" filterUnits="userSpaceOnUse">
+      <feOffset dx="5" dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feFlood flood-opacity="0.059"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#check_circle_FILL0_wght400_GRAD0_opsz48)">
+    <g id="check_circle_FILL0_wght400_GRAD0_opsz48-2" data-name="check_circle_FILL0_wght400_GRAD0_opsz48" transform="translate(-5.44 -4.52)" fill="#0d3077">
+      <path d="M 11.28695011138916 16.44806671142578 L 7.14263391494751 12.27863216400146 L 7.759129047393799 11.66213798522949 L 10.93232917785645 14.83533763885498 L 11.28587913513184 15.18889713287354 L 11.63942909240723 14.83533763885498 L 18.25507545471191 8.219699859619141 L 18.89212608337402 8.842900276184082 L 11.28695011138916 16.44806671142578 Z" stroke="none"/>
+      <path d="M 11.28587913513184 17.15623664855957 L 6.436598777770996 12.27756786346436 L 7.759129047393799 10.95503711700439 L 11.28587913513184 14.48178768157959 L 18.25121879577637 7.516457557678223 L 19.6031379699707 8.838987350463867 L 11.28587913513184 17.15623664855957 Z" stroke="none" fill="#0d3077"/>
+    </g>
+  </g>
+</svg>

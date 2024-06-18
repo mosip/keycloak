@@ -71,6 +71,20 @@ a {
     text-decoration: none !important;
 }
 
+a#kc-current-locale-link::after{
+	content: none;
+}
+
+#kc-locale-dropdown a{
+	font-weight: 500;
+}
+
+#kc-locale ul li a{
+  font-weight: 600;
+  color: #505050 !important;
+  font-size: 12px;
+}
+
 .login-pf-page .card-pf {
 	padding: 20px 25px 20px 25px;
 	width: 550px;

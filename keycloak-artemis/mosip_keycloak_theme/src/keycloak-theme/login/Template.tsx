@@ -1,6 +1,6 @@
 // Copy pasted from: https://github.com/InseeFrLab/keycloakify/blob/main/src/login/Template.tsx
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { assert } from "keycloakify/tools/assert";
 import { clsx } from "keycloakify/tools/clsx";
 import { usePrepareTemplate } from "keycloakify/lib/usePrepareTemplate";
@@ -8,7 +8,11 @@ import { type TemplateProps } from "keycloakify/login/TemplateProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "./kcContext";
 import type { I18n } from "./i18n";
-import mosipLogo from './assets/mosip_logo.png'
+import mosipLogo from './assets/mosip_logo.png';
+import langIcon from './assets/language_FILL0_wght300_GRAD0_opsz24.svg';
+import polygon from './assets/Polygon.svg';
+import polygonRev from './assets/Polygon2.svg';
+import rightTick from './assets/check_circle_FILL0_wght400_GRAD0_opsz48.svg'
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -30,6 +34,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     const { getClassName } = useGetClassName({ doUseDefaultCss, classes });
 
     const { msg, changeLocale, labelBySupportedLanguageTag, currentLanguageTag } = i18n;
+    const [isLocaleOpen, setLocaleOpen] = useState(false)
 
     const { realm, locale, auth, url, message, isAppInitiatedAction, pageId } = kcContext;
     console.log(kcContext)
@@ -62,24 +67,42 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <div> {realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1 && (
                     <div id="kc-locale">
                         <div id="kc-locale-wrapper" className={getClassName("kcLocaleWrapperClass")}>
-                            <div className="kc-dropdown" id="kc-locale-dropdown">
-                                <a href="#" id="kc-current-locale-link">
+                            <div onMouseOver={() => { setLocaleOpen(true) }} onMouseOut={() => { setLocaleOpen(false) }} className="kc-dropdown flex content-center" id="kc-locale-dropdown">
+                                <img alt="langIcon" src={langIcon} />
+                                <a className="font-semibold text-xl" href="#" id="kc-current-locale-link">
                                     {labelBySupportedLanguageTag[currentLanguageTag]}
                                 </a>
-                                <ul>
-                                    {locale.supported.map(({ languageTag }) => (
-                                        <li key={languageTag} className="kc-dropdown-item">
-                                            <a href="#" onClick={() => changeLocale(languageTag)}>
-                                                {labelBySupportedLanguageTag[languageTag]}
-                                            </a>
+                                {!isLocaleOpen && <img alt="" src={polygon} />}
+                                {isLocaleOpen && <img alt="" src={polygonRev} />}
+                                <ul className="max-h-[400px] overflow-auto rounded-xl">
+                                    <>
+                                        <li className="text-[#0D3077] font-bold pl-[14px] py-[5px] flex content-center justify-between">
+                                            <span>{labelBySupportedLanguageTag[currentLanguageTag]}</span>
+                                            <img alt="" src={rightTick} />
                                         </li>
+                                        <hr className="mx-4 border-[1px] border-[#D8D8D8]" />
+                                    </>
+                                    {locale.supported.map(({ languageTag }) => (
+                                        <>
+                                            {(labelBySupportedLanguageTag[currentLanguageTag] != labelBySupportedLanguageTag[languageTag]) && (
+                                                <>
+                                                    <li key={languageTag} className="text-left">
+                                                        <a href="#" onClick={() => changeLocale(languageTag)}>
+                                                            {labelBySupportedLanguageTag[languageTag]}
+                                                        </a >
+                                                    </li>
+                                                    <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
+                                                </>
+                                            )}
+                                        </>
                                     ))}
                                 </ul>
                             </div>
                         </div>
                     </div>
-                )}</div>
-            </div>
+                )
+                }</div >
+            </div >
             <div className="flex justify-center">
                 <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"), 'rounded-3xl p-5')}>
                     <header className={getClassName("kcFormHeaderClass")}>
@@ -197,6 +220,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
