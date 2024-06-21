@@ -12,12 +12,12 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center font-inter">
                 <img className="w-36" alt="" src={errorIcon} />
                 <h4 className="font-bold text-[#000000] text-xl">{msg("sryText")}</h4>
             </div>
         }>
-            <div id="kc-error-message" className="text-center w-100%">
+            <div id="kc-error-message" className="text-center w-100% font-inter">
                 <p className="instruction">{message.summary}</p>
                 {client !== undefined && client.baseUrl !== undefined && (
                     <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl">

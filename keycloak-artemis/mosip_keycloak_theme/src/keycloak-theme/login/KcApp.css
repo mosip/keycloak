@@ -43,6 +43,11 @@
 	margin: 0;
 }
 
+.login-pf-page{
+	min-height: 95vh;
+	height: auto;
+}
+
 .btn-primary {
 	height: 40px !important;
 	background-color: #0D3077 !important;
@@ -66,6 +71,11 @@
 	color: #ffffff !important;
 }
 
+#storybook-root{
+	min-height: 95vh;
+	height: auto;
+}
+
 a {
 	color: #0D3077 !important;
     text-decoration: none !important;
@@ -87,7 +97,8 @@ a#kc-current-locale-link::after{
 
 .login-pf-page .card-pf {
 	padding: 20px 25px 20px 25px;
-	width: 550px;
+	min-width: 550px;
+    max-width: 632px;
 }
 
 .login-pf-page .card-pf p{
@@ -125,6 +136,7 @@ input[type=number]::-webkit-outer-spin-button {
 @media (max-width: 840px) {
     .login-pf-page .card-pf {
         max-width: 500px;
+		min-width: auto;
 	}
 }
 
@@ -134,6 +146,7 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 	#kc-locale {
 		top: 40px;
+		width: auto;
 	}
 }
 

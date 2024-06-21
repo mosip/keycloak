@@ -21,13 +21,13 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
             displayMessage={false}
             headerNode={
-                <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col justify-center items-center font-inter">
                     <img className="w-36" alt="" src={errorIcon} />
                     <h4 className="font-bold text-[#000000] text-xl">{msg("sryText")}</h4>
                 </div>
             }
         >
-            <div id="kc-info-message" className="text-center">
+            <div id="kc-info-message" className="text-center font-inter">
                 <p className="instruction">
                     {message?.summary}
                 </p>

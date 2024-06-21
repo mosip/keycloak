@@ -12,16 +12,16 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center font-inter">
                 <img className="w-36" src={SuccessMsgIcon} alt="" />
                 <h4 className="font-bold text-[#000000] text-xl">{msg("emailVerifyTitle")}</h4>
             </div>
         }>
-            <div className="text-center">
+            <div className="text-center font-inter">
                 <span className="text-[#666666]">{msg("emailVerifyText")}</span>
                 <hr className="my-8 text-[#000000]" />
                 <span className="text-[#666666]">{msg("notReceviedText")}</span>
-                <h4 className="my-2 font-bold text-[#1447B2]"> <a href={url.loginAction}>{msg('resentEmail')}</a></h4>
+                <h4 className="my-2 font-bold text-[#1447B2] text-xl"> <a href={url.loginAction}>{msg('resentEmail')}</a></h4>
             </div>
             {/* <p className="instruction">
                 {msg("emailVerifyInstruction2")}

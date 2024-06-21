@@ -81,12 +81,12 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             displayWide={realm.password && social.providers !== undefined}
             headerNode={
                 <>
-                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-sans">{msg("doLogIn")}</h1>
-                    <p className="text-pTextColor text-xl font-semibold">{msg("loginDesc")}</p>
+                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("doLogIn")}</h1>
+                    <p className="text-pTextColor text-xl font-semibold font-inter">{msg("loginDesc")}</p>
                 </>
             }
             infoNode={
-                <div id="kc-registration" className="text-center mt-4">
+                <div id="kc-registration" className="text-center mt-4 font-inter">
                     <span onClick={() => setReloadBtn(true)}>
                         {msg("noAccount")} &nbsp;
                         <a className="text-hLinkColor font-semibold" tabIndex={6} href={url.registrationUrl}>
@@ -112,10 +112,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
                                         return (
                                             <>
-                                                <label htmlFor={autoCompleteHelper} className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl')}>
-                                                    {msg(label)}
+                                                <label htmlFor={autoCompleteHelper} className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl font-inter')}>
+                                                    {msg('userNameLable')}
                                                 </label>
-                                                <div className="border border-bColor border-solid rounded-lg h-14 w-full p-2">
+                                                <div className="border border-bColor border-solid rounded-lg h-14 w-full p-2 font-inter">
                                                     <input
                                                         tabIndex={1}
                                                         id={autoCompleteHelper}
@@ -137,13 +137,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     })()}
                             </div>
                             <div className={getClassName("kcFormGroupClass")}>
-                                <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row items-center')}>
+                                <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row items-center font-inter')}>
                                     <span>{msg("password")} </span>
                                     <ToolTip tooltip={msgStr('passwordInfo')}>
                                         <img className="ml-2 cursor-pointer" alt="info" src={info} />
                                     </ToolTip>
                                 </label>
-                                <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 p-2">
+                                <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 p-2 font-inter">
                                     <input
                                         tabIndex={2}
                                         id="password"
@@ -167,6 +167,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                     id="rememberMe"
                                                     name="rememberMe"
                                                     type="checkbox"
+                                                    className="font-inter"
                                                     {...(login.rememberMe === "on"
                                                         ? {
                                                             "checked": true
@@ -178,7 +179,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         </div>
                                     )}
                                 </div>
-                                <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-hLinkColor font-bold text-right')}>
+                                <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-hLinkColor font-bold text-right font-inter')}>
                                     {realm.resetPasswordAllowed && (
                                         <span onClick={() => setReloadBtn(true)}>
                                             <a tabIndex={5} href={url.loginResetCredentialsUrl}>
@@ -188,7 +189,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     )}
                                 </div>
                             </div>
-                            <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
+                            <div id="kc-form-buttons" className={(getClassName("kcFormGroupClass"), 'font-inter')}>
                                 <input
                                     type="hidden"
                                     id="id-hidden-input"

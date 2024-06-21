@@ -16,7 +16,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
 
     const [email, addEmail] = useState('')
 
-    const { url, realm, auth } = kcContext;
+    const { url, auth } = kcContext;
 
     const { msg, msgStr } = i18n;
 
@@ -38,12 +38,12 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div id="kc-form-options">
                         <div className={getClassName("kcFormOptionsWrapperClass")}>
                             <span>
-                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-xl"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
+                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
                             </span>
                         </div>
                     </div>
-                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-sans">{msg("doForgotPassword")}</h1>
-                    <p className="text-pTextColor text-xl mt-2">{msg("forgotPasswordDesc")}</p>
+                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("doForgotPassword")}</h1>
+                    <p className="text-pTextColor text-xl mt-2 font-inter">{msg("forgotPasswordDesc")}</p>
                 </>
             }
             infoNode={msg("emailInstruction")}
@@ -51,12 +51,8 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className={getClassName("kcLabelWrapperClass")}>
-                        <label htmlFor="username" className={getClassName("kcLabelClass")}>
-                            {!realm.loginWithEmailAllowed
-                                ? msg("username")
-                                : !realm.registrationEmailAsUsername
-                                    ? msg("usernameOrEmail")
-                                    : msg("email")}
+                        <label htmlFor="username" className={(getClassName("kcLabelClass"), 'font-inter text-xl pb-1 text-hTextColor')}>
+                            {msg('email')}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
@@ -64,7 +60,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             type="text"
                             id="username"
                             name="username"
-                            className={getClassName("kcInputClass")}
+                            className={(getClassName("kcInputClass"), 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3  font-inter')}
                             placeholder={msgStr('emailPH')}
                             autoFocus
                             defaultValue={auth !== undefined && auth.showUsername ? auth.attemptedUsername : undefined}
@@ -81,7 +77,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                         </div>
                     </div> */}
 
-                    <div id="kc-form-buttons" className={(getClassName("kcFormButtonsClass"), 'w-full')}>
+                    <div id="kc-form-buttons" className={(getClassName("kcFormButtonsClass"), 'w-full font-inter')}>
                         <input
                             className={clsx(
                                 getClassName("kcButtonClass"),
@@ -97,7 +93,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     </div>
                 </div>
                 <div className="mt-7">
-                    <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-center')}>
+                    <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-center font-inter')}>
                         <span>
                             <p className="inline">{msg('rememberPW')}</p>
                             <a href={url.loginUrl} className="text-hLinkColor font-bold text-xl"> {msg("doLogIn")}</a>
