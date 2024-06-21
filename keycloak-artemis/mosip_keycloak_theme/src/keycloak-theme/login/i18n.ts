@@ -73,7 +73,7 @@ export const { useI18n } = createUseI18n({
         pageExpiredMsg1: "Please click on continue to resume from where you left. Else click on Restart to start a new session.",
         restartProcess: "Restart Process",
         continueSession: "Continue Session",
-        userNameLable: "Username/ Email address",
+        userNameLable: "Username / Email address",
         firstName: "First Name",
         lastName: "Last Name",
         phoneNumber: "Phone Number"
@@ -146,7 +146,7 @@ export const { useI18n } = createUseI18n({
         pageExpiredMsg1: "Please click on continue to resume from where you left. Else click on Restart to start a new session.",
         restartProcess: "Restart Process",
         continueSession: "Continue Session",
-        userNameLable: "Username/ Email address",
+        userNameLable: "Username / Email address",
         firstName: "First Name",
         lastName: "Last Name",
         phoneNumber: "Phone Number"
