@@ -84,16 +84,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     </>
                                     {locale.supported.map(({ languageTag }) => (
                                         <>
-                                            {(labelBySupportedLanguageTag[currentLanguageTag] != labelBySupportedLanguageTag[languageTag]) && (
-                                                <>
-                                                    <li key={languageTag} className="text-left">
-                                                        <a href="#" onClick={() => changeLocale(languageTag)}>
-                                                            {labelBySupportedLanguageTag[languageTag]}
-                                                        </a >
-                                                    </li>
-                                                    <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
-                                                </>
-                                            )}
+                                            <li key={languageTag} className="text-left">
+                                                {(labelBySupportedLanguageTag[currentLanguageTag] != labelBySupportedLanguageTag[languageTag]) && (
+                                                <a href="#" onClick={() => changeLocale(languageTag)}>
+                                                    {labelBySupportedLanguageTag[languageTag]}
+                                                </a>)}
+                                           </li>
+                                           <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
                                         </>
                                     ))}
                                 </ul>

@@ -65,10 +65,6 @@ export const { useI18n } = createUseI18n({
         expiredActionTokenNoSessionMessage: "Link has expired, Please retry again.",
         loginTimeout: "Session has timed out because of inactivity. Please retry again",
         invalidPasswordConfirmMessage: "The passwords do not match. Try again",
-        passwordResetBody:"Hi user,\n\nThere was a request to change your MOSIP PMP account's credentials. If this was you, click on the link below to reset your password.\n\n{0}\n\nThis link will expire within {3}.\n\nIf you don't want to reset your credentials, kindly ignore this message and nothing will be changed.\n\n Thank You.",
-        passwordResetBodyHtml:"<p>Hi user,</p><p>There was a request to change your MOSIP PMP account's credentials. If this was you, click on the link below to reset your password.</p><p><a href='{0}'>Click here to reset your password</a></p><p>This link will expire within {3}.</p><p>If you don't want to reset your credentials, kindly ignore this message and nothing will be changed.</p><p>Thank You.</p>",
-        emailVerificationBody:"Hi user,\n\n There was a request to verify your MOSIP PMP account's email address. If this was you, click on the link below to verify email.\n\n{0}\n\nThis link will expire within {3}.\n\nIf you don't want to verify, kindly ignore this message.\n\n Thank You.",
-        emailVerificationBodyHtml:"<p>Hi user,</p><p>There was a request to verify your MOSIP PMP account's email address. If this was you, click on the link below to verify email.</p><p><a href='{0}'>Click here to verify your email address</a></p><p>This link will expire within {3}.</p><p>If you don't want to verify, kindly ignore this message.</p><p>Thank You.</p>",
         pageExpiredTitle: "Session has expired!",
         pageExpiredMsg1: "Please click on continue to resume from where you left. Else click on Restart to start a new session.",
         restartProcess: "Restart Process",
@@ -76,7 +72,9 @@ export const { useI18n } = createUseI18n({
         userNameLable: "Username / Email address",
         firstName: "First Name",
         lastName: "Last Name",
-        phoneNumber: "Phone Number"
+        phoneNumber: "Phone Number",
+        invalidUserName: "Username does not meet the minimum requirements.",
+        userNamePolicy: "Alphanumeric characters and symbols ( _ ) are allowed. First character should be always a letter."
     },
     fr: {
         /* spell-checker: disable */
@@ -138,10 +136,6 @@ export const { useI18n } = createUseI18n({
         sryText: "Link expired!",
         loginTimeout:"Session has timed out because of inactivity. Please retry again",
         invalidPasswordConfirmMessage: "The passwords do not match. Try again",
-        passwordResetBody:"Hi user,\n\nThere was a request to change your MOSIP PMP account's credentials. If this was you, click on the link below to reset your password.\n\n{0}\n\nThis link will expire within {3}.\n\nIf you don't want to reset your credentials, kindly ignore this message and nothing will be changed.\n\n Thank You.",
-        passwordResetBodyHtml:"<p>Hi user,</p><p>There was a request to change your MOSIP PMP account's credentials. If this was you, click on the link below to reset your password.</p><p><a href='{0}'>Click here to reset your password</a></p><p>This link will expire within {3}.</p><p>If you don't want to reset your credentials, kindly ignore this message and nothing will be changed.</p><p>Thank You.</p>",
-        emailVerificationBody:"Hi user,\n\n There was a request to verify your MOSIP PMP account's email address. If this was you, click on the link below to verify email.\n\n{0}\n\nThis link will expire within {3}.\n\nIf you don't want to verify, kindly ignore this message.\n\n Thank You.",
-        emailVerificationBodyHtml:"<p>Hi user,</p><p>There was a request to verify your MOSIP PMP account's email address. If this was you, click on the link below to verify email.</p><p><a href='{0}'>Click here to verify your email address</a></p><p>This link will expire within {3}.</p><p>If you don't want to verify, kindly ignore this message.</p><p>Thank You.</p>",
         pageExpiredTitle: "Session has expired!",
         pageExpiredMsg1: "Please click on continue to resume from where you left. Else click on Restart to start a new session.",
         restartProcess: "Restart Process",
@@ -149,7 +143,9 @@ export const { useI18n } = createUseI18n({
         userNameLable: "Username / Email address",
         firstName: "First Name",
         lastName: "Last Name",
-        phoneNumber: "Phone Number"
+        phoneNumber: "Phone Number",
+        invalidUserName:"Username does not meet the minimum requirements.",
+        userNamePolicy: "Alphanumeric characters and symbols ( _ ) are allowed. First character should be always a letter."
         /* spell-checker: enable */
     }
 });

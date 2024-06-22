@@ -82,7 +82,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             headerNode={
                 <>
                     <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("doLogIn")}</h1>
-                    <p className="text-pTextColor text-xl font-semibold font-inter">{msg("loginDesc")}</p>
+                    <p className="text-pTextColor text-xl font-inter">{msg("loginDesc")}</p>
                 </>
             }
             infoNode={

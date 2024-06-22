@@ -50,6 +50,13 @@ export type KcContextExtension =
 						}
 					}
 				};
+				username:{
+					validators:{
+						pattern:{
+							pattern:RegExp
+						}
+					}
+				};
 
 			}
 
