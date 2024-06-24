@@ -14,13 +14,13 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} displayMessage={false} headerNode={
             <div className="flex flex-col justify-center items-center">
                 <img className="w-36" alt="" src={errorIcon} />
-                <h4 className="font-bold text-[#000000] text-[15px]">{msg("pageExpiredTitle")}</h4>
+                <h4 className="font-bold text-hTextColor text-2xl font-inter">{msg("pageExpiredTitle")}</h4>
             </div>}
         >
             <div className="text-center pr-5 pb-5">
-                <span className="text-[12px] text-[#666666] font-normal">{msg("pageExpiredMsg1")}</span>
+                <span className=" text-[#666666] font-normal text-xl font-inter">{msg("pageExpiredMsg1")}</span>
                 <hr className="mt-8 mb-6 border-[1px] border-[#D8D8D8]" />
-                <div className="font-bold flex justify-center items-center">
+                <div className="font-bold flex justify-center items-center text-2xl font-inter">
                     <p><a id="loginRestartLink" href={url.loginRestartFlowUrl}>
                         {msg("restartProcess")}
                     </a></p>

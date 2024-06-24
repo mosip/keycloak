@@ -84,16 +84,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     </>
                                     {locale.supported.map(({ languageTag }) => (
                                         <>
-                                            {(labelBySupportedLanguageTag[currentLanguageTag] != labelBySupportedLanguageTag[languageTag]) && (
-                                                <>
-                                                    <li key={languageTag} className="text-left">
-                                                        <a href="#" onClick={() => changeLocale(languageTag)}>
-                                                            {labelBySupportedLanguageTag[languageTag]}
-                                                        </a >
-                                                    </li>
-                                                    <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
-                                                </>
-                                            )}
+                                            <li key={languageTag} className="text-left">
+                                                {(labelBySupportedLanguageTag[currentLanguageTag] != labelBySupportedLanguageTag[languageTag]) && (
+                                                <a href="#" onClick={() => changeLocale(languageTag)}>
+                                                    {labelBySupportedLanguageTag[languageTag]}
+                                                </a>)}
+                                           </li>
+                                           <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
                                         </>
                                     ))}
                                 </ul>
@@ -103,11 +100,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 )
                 }</div >
             </div >
-            <div className="flex justify-center">
-                <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"), 'rounded-3xl p-5')}>
-                    <header className={getClassName("kcFormHeaderClass")}>
-                        {headerNode}
-                        {/* {!(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
+            <div className="flex flex-col min-h-[83vh] justify-center align-center">
+                <div>
+                    <div className="flex justify-center">
+                        <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"), 'rounded-3xl p-5')}>
+                            <header className={getClassName("kcFormHeaderClass")}>
+                                {headerNode}
+                                {/* {!(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
                         displayRequiredFields ? (
                             <div className={getClassName("kcContentWrapperClass")}>
                                 <div className={clsx(getClassName("kcLabelWrapperClass"), "subtitle")}>
@@ -164,58 +163,60 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             </div>
                         </>
                     )} */}
-                    </header>
-                    <div id="kc-content">
-                        <div id="kc-content-wrapper">
-                            {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
-                                <div className={`min-h-11 p-2 text-center font-semibold mb-3 ${message.type === "error" && "bg-errorBg text-errorColor"} ${message.type === "success" && "bg-[#E7F2E2] text-[#2E6E0D]"} ${(message.type === "warning" || message.type === 'info') && "bg-[#FFF7E5] text-[#8B6105"}`}>
-                                    {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
+                            </header>
+                            <div id="kc-content">
+                                <div id="kc-content-wrapper">
+                                    {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
+                                    {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
+                                        <div className={`min-h-11 p-2 text-center font-semibold mb-3 ${message.type === "error" && "bg-errorBg text-errorColor"} ${message.type === "success" && "bg-[#E7F2E2] text-[#2E6E0D]"} ${(message.type === "warning" || message.type === 'info') && "bg-[#FFF7E5] text-[#8B6105"}`}>
+                                            {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
-                                    <span className="kc-feedback-text"
-                                        dangerouslySetInnerHTML={{
-                                            "__html": message.summary
-                                        }}
-                                    />
-                                </div>
-                            )}
-                            {children}
-                            {auth !== undefined && auth.showTryAnotherWayLink && showAnotherWayIfPresent && (
-                                <form
-                                    id="kc-select-try-another-way-form"
-                                    action={url.loginAction}
-                                    method="post"
-                                    className={clsx(displayWide && getClassName("kcContentWrapperClass"))}
-                                >
-                                    <div
-                                        className={clsx(
-                                            displayWide && [getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass")]
-                                        )}
-                                    >
-                                        <div className={getClassName("kcFormGroupClass")}>
-                                            <input type="hidden" name="tryAnotherWay" value="on" />
-                                            <a
-                                                href="#"
-                                                id="try-another-way"
-                                                onClick={() => {
-                                                    document.forms["kc-select-try-another-way-form" as never].submit();
-                                                    return false;
+                                            <span className="kc-feedback-text"
+                                                dangerouslySetInnerHTML={{
+                                                    "__html": message.summary
                                                 }}
-                                            >
-                                                {msg("doTryAnotherWay")}
-                                            </a>
+                                            />
                                         </div>
-                                    </div>
-                                </form>
-                            )}
-                            {displayInfo && (
-                                <div id="kc-info" className={getClassName("kcSignUpClass")}>
-                                    <div id="kc-info-wrapper" className={getClassName("kcInfoAreaWrapperClass")}>
-                                        {infoNode}
-                                    </div>
+                                    )}
+                                    {children}
+                                    {auth !== undefined && auth.showTryAnotherWayLink && showAnotherWayIfPresent && (
+                                        <form
+                                            id="kc-select-try-another-way-form"
+                                            action={url.loginAction}
+                                            method="post"
+                                            className={clsx(displayWide && getClassName("kcContentWrapperClass"))}
+                                        >
+                                            <div
+                                                className={clsx(
+                                                    displayWide && [getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass")]
+                                                )}
+                                            >
+                                                <div className={getClassName("kcFormGroupClass")}>
+                                                    <input type="hidden" name="tryAnotherWay" value="on" />
+                                                    <a
+                                                        href="#"
+                                                        id="try-another-way"
+                                                        onClick={() => {
+                                                            document.forms["kc-select-try-another-way-form" as never].submit();
+                                                            return false;
+                                                        }}
+                                                    >
+                                                        {msg("doTryAnotherWay")}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    )}
+                                    {displayInfo && (
+                                        <div id="kc-info" className={getClassName("kcSignUpClass")}>
+                                            <div id="kc-info-wrapper" className={getClassName("kcInfoAreaWrapperClass")}>
+                                                {infoNode}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                            )}
+                            </div>
                         </div>
                     </div>
                 </div>

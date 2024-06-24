@@ -56,14 +56,14 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }}
             headerNode={
                 <>
-                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-sans">{msg("updatePasswordTitle")}</h1>
-                    <p className="text-pTextColor text-xl mt-2">{msg("updatePasswordDesc")}</p>
+                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("updatePasswordTitle")}</h1>
+                    <p className="text-pTextColor text-xl mt-2 font-inter">{msg("updatePasswordDesc")}</p>
                 </>
             }
         >
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
                 {(message !== undefined && message.type !== 'warning')&& (
-                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
+                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 font-inter'>
                         {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
@@ -92,15 +92,15 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                     )}
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
-                        <label htmlFor="password-new" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold flex flex-row items-center')}>
-                            <span>{msg("newPassword")}</span>
+                        <label htmlFor="password-new" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold flex flex-row items-center font-inter')}>
+                            <span className="text-xl">{msg("newPassword")}</span>
                             <ToolTip tooltip={msgStr('passwordInfo')}>
                                 <img className="ml-2 cursor-pointer" alt="info" src={info} />
                             </ToolTip>
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
-                        <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3">
+                        <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3 font-inter">
                             <input
                                 type={passwordType}
                                 id="password-new"
@@ -123,12 +123,12 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                     )}
                 >
                     <div className={getClassName("kcLabelWrapperClass")}>
-                        <label htmlFor="password-confirm" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold')}>
+                        <label htmlFor="password-confirm" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold font-inter text-xl')}>
                             {msg("confNewPassword")}
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
-                        <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3">
+                        <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3 font-inter">
                             <input
                                 type={confPasswordType}
                                 id="password-confirm"
@@ -157,7 +157,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                         </div>
                     </div>
 
-                    <div id="kc-form-buttons" className={getClassName("kcFormButtonsClass")}>
+                    <div id="kc-form-buttons" className={(getClassName("kcFormButtonsClass"), 'font-inter px-8')}>
                         {isAppInitiatedAction ? (
                             <>
                                 <input
