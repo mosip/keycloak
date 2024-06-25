@@ -34,7 +34,7 @@ declare global {
 
 export default function Register(props: PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-    const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey, message } = kcContext;
+    const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey, message, locale } = kcContext;
     const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
@@ -193,11 +193,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 <div id="kc-form-options">
                     <div className={getClassName("kcFormOptionsWrapperClass")}>
                         <span>
-                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
+                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag !== 'ar' &&  (<img alt="arrow" src={arrow} />)}{msg("backToLogin")} { locale?.currentLanguageTag === 'ar' &&  (<img alt="arrow" src={arrow} />)}</a></button>
                         </span>
                     </div>
                 </div>
-                <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter mb-2">{msg("registerTitle")}</h1>
+                <h2 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter mb-2">{msg("registerTitle")}</h2>
                 <p className="text-pTextColor text-xl font-inter">{msg("regDesc")}</p>
                 <span className="text-pTextColor mt-4 text-xl font-inter"> {msg("requiredFields")}</span>
             </>
@@ -439,8 +439,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <div className={getClassName("kcLabelWrapperClass")}>
                             <label htmlFor="username" className={(getClassName("kcLabelClass"), 'mb-1 font-bold font-inter text-xl text-hTextColor flex flex-row items-center')}>
                                 {msg("username")}
-                                <ToolTip tooltip={msgStr('userNamePolicy')}>
-                                    <img className="ml-2 cursor-pointer" alt="info" src={info} />
+                                <ToolTip tooltip={msgStr('userNamePolicy')} dir={locale?.currentLanguageTag}>
+                                    <img className={"mx-2 cursor-pointer"} alt="info" src={info} />
                                 </ToolTip>
                             </label>
                         </div>
@@ -457,7 +457,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             />
                             {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                                 {dummyFormData.username === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("username")}</span></span>}
-                                {(invalidUserName && dummyFormData.username !== '')&& <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('invalidUserName')}</span></span>}
+                                {(invalidUserName && dummyFormData.username !== '') && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('invalidUserName')}</span></span>}
                             </span>}
                         </div>
                     </div>
@@ -473,8 +473,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor flex flex-row items-center mb-1 font-bold font-inter text-xl')}>
                                     {msg("newPassword")}
-                                    <ToolTip tooltip={msgStr('passwordInfo')}>
-                                        <img className="ml-2 cursor-pointer" alt="info" src={info} />
+                                    <ToolTip tooltip={msgStr('passwordInfo')} dir={locale?.currentLanguageTag}>
+                                        <img className="mx-2 cursor-pointer" alt="info" src={info} />
                                     </ToolTip>
                                 </label>
                             </div>

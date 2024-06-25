@@ -61,39 +61,40 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     }
 
     return (
-        <div className={(getClassName("kcLoginClass"))}>
+        <div className={(getClassName("kcLoginClass"))} dir={currentLanguageTag === 'ar' ? 'rtl' : 'ltr'}>
             <div id="kc-header" className={(getClassName("kcHeaderClass"), 'mb-10 flex flex-row justify-between items-center px-10')}>
                 <div><img className="h-20 w-30" alt="logo" src={mosipLogo} /></div>
                 <div> {realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1 && (
                     <div id="kc-locale">
                         <div id="kc-locale-wrapper" className={getClassName("kcLocaleWrapperClass")}>
-                            <div onMouseOver={() => { setLocaleOpen(true) }} onMouseOut={() => { setLocaleOpen(false) }} className="kc-dropdown flex content-center" id="kc-locale-dropdown">
+                            <div onMouseOver={() => { setLocaleOpen(true) }} onMouseOut={() => { setLocaleOpen(false) }} className="kc-dropdown flex flex-row content-center" id="kc-locale-dropdown">
                                 <img alt="langIcon" src={langIcon} />
                                 <a className="font-semibold text-xl" href="#" id="kc-current-locale-link">
                                     {labelBySupportedLanguageTag[currentLanguageTag]}
                                 </a>
                                 {!isLocaleOpen && <img alt="" src={polygon} />}
                                 {isLocaleOpen && <img alt="" src={polygonRev} />}
-                                <ul className="max-h-[400px] overflow-auto rounded-xl">
+                                {isLocaleOpen && (<div className={`max-h-[400px] bg-white overflow-auto rounded-xl lang-dropDown ${currentLanguageTag === 'ar' ? 'mr-[-100px]' : 'ml-[-50px]'}`}>
                                     <>
-                                        <li className="text-[#0D3077] font-bold pl-[14px] py-[5px] flex content-center justify-between">
+                                        <span className="text-[#0D3077] font-bold pl-[14px] py-[5px] flex content-center justify-between">
                                             <span>{labelBySupportedLanguageTag[currentLanguageTag]}</span>
                                             <img alt="" src={rightTick} />
-                                        </li>
+                                        </span>
                                         <hr className="mx-4 border-[1px] border-[#D8D8D8]" />
                                     </>
                                     {locale.supported.map(({ languageTag }) => (
                                         <>
-                                            <li key={languageTag} className="text-left">
-                                                {(labelBySupportedLanguageTag[currentLanguageTag] != labelBySupportedLanguageTag[languageTag]) && (
-                                                <a href="#" onClick={() => changeLocale(languageTag)}>
-                                                    {labelBySupportedLanguageTag[languageTag]}
-                                                </a>)}
-                                           </li>
-                                           <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
+                                            {(currentLanguageTag !== languageTag) && (
+                                                <span key={languageTag} className="text-[#0D3077] pl-[14px] py-[5px] flex content-center justify-between">
+
+                                                    <a href="#" onClick={() => changeLocale(languageTag)}>
+                                                        {labelBySupportedLanguageTag[languageTag]}
+                                                    </a>
+                                                </span>)}
+                                            <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
                                         </>
                                     ))}
-                                </ul>
+                                </div>)}
                             </div>
                         </div>
                     </div>

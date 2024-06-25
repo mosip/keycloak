@@ -23,7 +23,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         doUseDefaultCss,
         classes
     });
-    const { social, realm, url, usernameHidden, login, auth, registrationDisabled } = kcContext;
+    const { social, realm, url, usernameHidden, login, auth, registrationDisabled, locale } = kcContext;
     const { msg, msgStr } = i18n;
 
     // const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
@@ -81,8 +81,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             displayWide={realm.password && social.providers !== undefined}
             headerNode={
                 <>
-                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("doLogIn")}</h1>
-                    <p className="text-pTextColor text-xl font-inter">{msg("loginDesc")}</p>
+                    <h2 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter" >{msg("doLogIn")}</h2>
+                    <p className="text-pTextColor text-xl font-inter mt-2">{msg("loginDesc")}</p>
                 </>
             }
             infoNode={
@@ -139,8 +139,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             <div className={getClassName("kcFormGroupClass")}>
                                 <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row items-center font-inter')}>
                                     <span>{msg("password")} </span>
-                                    <ToolTip tooltip={msgStr('passwordInfo')}>
-                                        <img className="ml-2 cursor-pointer" alt="info" src={info} />
+                                    <ToolTip tooltip={msgStr('passwordInfo')} dir={locale?.currentLanguageTag}>
+                                        <img className="mx-2 cursor-pointer" alt="info" src={info} />
                                     </ToolTip>
                                 </label>
                                 <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 p-2 font-inter">

@@ -16,7 +16,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
 
     const [email, addEmail] = useState('')
 
-    const { url, auth } = kcContext;
+    const { url, auth, locale } = kcContext;
 
     const { msg, msgStr } = i18n;
 
@@ -38,11 +38,11 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div id="kc-form-options">
                         <div className={getClassName("kcFormOptionsWrapperClass")}>
                             <span>
-                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> <img alt="arrow" src={arrow} />{msg("backToLogin")}</a></button>
+                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag !== 'ar' &&  (<img alt="arrow" src={arrow} />)}{msg("backToLogin")}{ locale?.currentLanguageTag === 'ar' &&  (<img alt="arrow" src={arrow} />)}</a></button>
                             </span>
                         </div>
                     </div>
-                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("doForgotPassword")}</h1>
+                    <h2 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("doForgotPassword")}</h2>
                     <p className="text-pTextColor text-xl mt-2 font-inter">{msg("forgotPasswordDesc")}</p>
                 </>
             }
