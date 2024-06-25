@@ -56,7 +56,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }}
             headerNode={
                 <>
-                    <h1 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("updatePasswordTitle")}</h1>
+                    <h2 id="kc-page-title" className="text-3xl font-bold text-hTextColor font-inter">{msg("updatePasswordTitle")}</h2>
                     <p className="text-pTextColor text-xl mt-2 font-inter">{msg("updatePasswordDesc")}</p>
                 </>
             }
