@@ -69,14 +69,14 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         <div id="kc-locale-wrapper" className={getClassName("kcLocaleWrapperClass")}>
                             <div onMouseOver={() => { setLocaleOpen(true) }} onMouseOut={() => { setLocaleOpen(false) }} className="kc-dropdown flex flex-row content-center" id="kc-locale-dropdown">
                                 <img alt="langIcon" src={langIcon} />
-                                <a className="font-semibold text-xl" href="#" id="kc-current-locale-link">
+                                <a className="font-semibold text-xl mx-2" href="#" id="kc-current-locale-link">
                                     {labelBySupportedLanguageTag[currentLanguageTag]}
                                 </a>
                                 {!isLocaleOpen && <img alt="" src={polygon} />}
                                 {isLocaleOpen && <img alt="" src={polygonRev} />}
-                                {isLocaleOpen && (<div className={`max-h-[400px] bg-white overflow-auto rounded-xl lang-dropDown ${currentLanguageTag === 'ar' ? 'mr-[-100px]' : 'ml-[-50px]'}`}>
+                                {isLocaleOpen && (<div className={`max-h-[400px] min-w-[200px] bg-white overflow-auto rounded-xl lang-dropDown font-inter ${currentLanguageTag === 'ar' ? 'mr-[-140px]' : 'ml-[-100px]'}`}>
                                     <>
-                                        <span className="text-[#0D3077] font-bold pl-[14px] py-[5px] flex content-center justify-between">
+                                        <span className="text-[#0D3077] text-xl font-bold px-[14px] py-[10px] flex content-center justify-between">
                                             <span>{labelBySupportedLanguageTag[currentLanguageTag]}</span>
                                             <img alt="" src={rightTick} />
                                         </span>
@@ -85,13 +85,15 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     {locale.supported.map(({ languageTag }) => (
                                         <>
                                             {(currentLanguageTag !== languageTag) && (
-                                                <span key={languageTag} className="text-[#0D3077] pl-[14px] py-[5px] flex content-center justify-between">
-
-                                                    <a href="#" onClick={() => changeLocale(languageTag)}>
-                                                        {labelBySupportedLanguageTag[languageTag]}
-                                                    </a>
-                                                </span>)}
-                                            <hr className="mx-4 border-[1px] last:hidden border-[#D8D8D8]" />
+                                                <>
+                                                    <span key={languageTag} onClick={() => changeLocale(languageTag)} className="text-[#0D3077] px-[14px] py-[10px] flex content-center justify-between cursor-pointer">
+                                                        <a href="#">
+                                                            <span className="text-xl">{labelBySupportedLanguageTag[languageTag]}</span>
+                                                        </a>
+                                                    </span>
+                                                    <hr className="mx-4 last:hidden border-[#D8D8D8]" />
+                                                </>
+                                            )}
                                         </>
                                     ))}
                                 </div>)}

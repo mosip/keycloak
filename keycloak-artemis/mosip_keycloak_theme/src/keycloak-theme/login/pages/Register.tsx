@@ -12,6 +12,7 @@ import eyeIconOff from '../assets/visibility_off.svg';
 import info from '../assets/info.svg';
 import error from '../assets/error.svg'
 import ToolTip from "./shared/Tooltip";
+import arrowRight from "../assets/arrow_right_rtl.svg"
 
 declare global {
     interface Window {
@@ -193,7 +194,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 <div id="kc-form-options">
                     <div className={getClassName("kcFormOptionsWrapperClass")}>
                         <span>
-                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag !== 'ar' &&  (<img alt="arrow" src={arrow} />)}{msg("backToLogin")} { locale?.currentLanguageTag === 'ar' &&  (<img alt="arrow" src={arrow} />)}</a></button>
+                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrow" src={arrowRight} /> :  <img alt="arrow" src={arrow} />}{msg("backToLogin")}</a></button>
                         </span>
                     </div>
                 </div>
@@ -242,7 +243,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <div className="w-0 h-0 border-[5px] border-solid border-transparent border-t-black"></div>
                         </div>
                         {partnerTypesMenu && (
-                            <div ref={partnerTypesMenuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
+                            <div ref={partnerTypesMenuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
                                 <ul className="py-1 px-5 text-xl text-[#031640] font-inter" role="none" >
                                     <li onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">Device Provider</li>
                                     <li onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">FTM Provider</li>
@@ -321,7 +322,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="orgName"
-                            className={(getClassName("kcInputClass"), (dummyFormData.orgName === '' ? 'shadow-errorShadowTwo outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.orgName === '' ? 'shadow-errorShadowTwo  border-[#C61818]' : 'border-bColor' }`)}
                             name="orgName"
                             placeholder={msgStr("orgnamePH")}
                             value={dummyFormData.orgName ?? ''}
@@ -331,7 +332,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             ref={inputRef}
                         />
                         {(orgDropdown && organisationData )&&
-                            (<div ref={menuRef} className="absolute max-[350px]:w-orgDropdownWForSM max-[590px]:w-[89%] w-[92%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
+                            (<div ref={menuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
                                 {(orgData?.length) ?
                                     <ul className="py-1 px-5 text-xl text-[#031640] font-inter" role="none" >
                                         {orgData.map((item, index) => (
@@ -362,7 +363,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="address"
-                            className={(getClassName("kcInputClass"), (dummyFormData.address === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3  font-inter'))}
+                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.address === '' ? 'shadow-errorShadow border-[#C61818]' : ' border-bColor'}`)}
                             name="address"
                             placeholder={msgStr("addressPH")}
                             onBlur={handleFormData}
@@ -387,7 +388,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="email"
-                            className={(getClassName("kcInputClass"), ((dummyFormData.email === '' || invalidEmail) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.email === '' || invalidEmail) ? 'shadow-errorShadow border-[#C61818]' : ' border-bColor'}`)}
                             name="email"
                             placeholder={msgStr("emailPH")}
                             onBlur={handleFormData}
@@ -417,7 +418,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="number"
                             id="phoneNumber"
-                            className={(getClassName("kcInputClass"), ((dummyFormData.phoneNumber === '' || invalidPhoneNo) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.phoneNumber === '' || invalidPhoneNo) ? 'shadow-errorShadow  border-[#C61818] ' : 'border-bColor'}`)}
                             name="phoneNumber"
                             placeholder={msgStr("phoneNumberPH")}
                             onBlur={handleFormData}
@@ -448,7 +449,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <input
                                 type="text"
                                 id="username"
-                                className={(getClassName("kcInputClass"), ((dummyFormData.username === '' || invalidUserName) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                                className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.username === '' || invalidUserName) ? 'shadow-errorShadow border-[#C61818]' : 'border-bColor'}`)}
                                 name="username"
                                 placeholder={msgStr("userNamePH")}
                                 onBlur={handleFormData}
@@ -479,7 +480,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
-                                <div className={(dummyFormData.password === '') ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3 font-inter' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3 font-inter'}>
+                                <div className={`border flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3 font-inter ${dummyFormData.password === '' ? 'shadow-errorShadow border-[#C61818] ' : ' border-bColor'}`}>
                                     <input
                                         type={passwordType}
                                         id="password"
@@ -510,7 +511,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
-                                <div className={(dummyFormData["password-confirm"] === '' || ConfPasswordMatch) ? 'shadow-errorShadow border border-[#C61818] flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3 font-inter' : 'flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3 font-inter'}>
+                                <div className={`flex flex-row justify-between items-center border border-solid rounded-lg h-14 px-3 font-inter ${(dummyFormData["password-confirm"] === '' || ConfPasswordMatch) ? 'shadow-errorShadow  border-[#C61818] ' : ' border-bColor'}`}>
                                     <input type={confPasswordType}
                                         id="password-confirm"
                                         className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}

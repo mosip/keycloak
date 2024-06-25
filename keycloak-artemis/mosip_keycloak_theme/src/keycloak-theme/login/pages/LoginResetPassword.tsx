@@ -5,6 +5,7 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import arrow from '../assets/expand_more_FILL0_wght300_GRAD0_opsz24 (1).svg';
+import arrowRight from '../assets/arrow_right_rtl.svg'
 
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -38,7 +39,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div id="kc-form-options">
                         <div className={getClassName("kcFormOptionsWrapperClass")}>
                             <span>
-                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag !== 'ar' &&  (<img alt="arrow" src={arrow} />)}{msg("backToLogin")}{ locale?.currentLanguageTag === 'ar' &&  (<img alt="arrow" src={arrow} />)}</a></button>
+                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrowright" src={arrowRight}/> :  <img alt="arrow" src={arrow} />}{msg("backToLogin")}</a></button>
                             </span>
                         </div>
                     </div>
