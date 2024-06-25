@@ -99,6 +99,14 @@ a#kc-current-locale-link::after{
   font-size: 12px;
 }
 
+#kc-locale-dropdown a{
+	padding: 0;
+}
+
+.info-a-link a{
+	color: #ffffff !important;
+}
+
 .login-pf-page .card-pf {
 	padding: 20px 25px 20px 25px;
 	min-width: 550px;
