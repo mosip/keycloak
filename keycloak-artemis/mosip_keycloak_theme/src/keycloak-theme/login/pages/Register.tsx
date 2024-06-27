@@ -438,11 +438,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         )}
                     >
                         <div className={getClassName("kcLabelWrapperClass")}>
-                            <label htmlFor="username" className={(getClassName("kcLabelClass"), 'mb-1 font-bold font-inter text-xl text-hTextColor flex flex-row items-center')}>
+                            <label htmlFor="username" className={(getClassName("kcLabelClass"), 'mb-1 font-bold font-inter text-xl text-hTextColor')}>
                                 {msg("username")}
-                                <ToolTip tooltip={msgStr('userNamePolicy')} dir={locale?.currentLanguageTag}>
+                                {/* <ToolTip tooltip={msgStr('userNamePolicy')} dir={locale?.currentLanguageTag}>
                                     <img className={"mx-2 cursor-pointer"} alt="info" src={info} />
-                                </ToolTip>
+                                </ToolTip> */}
                             </label>
                         </div>
                         <div className={getClassName("kcInputWrapperClass")}>
