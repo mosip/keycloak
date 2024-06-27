@@ -74,7 +74,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 </a>
                                 {!isLocaleOpen && <img alt="" src={polygon} />}
                                 {isLocaleOpen && <img alt="" src={polygonRev} />}
-                                {isLocaleOpen && (<div className={`max-h-[400px] min-w-[200px] bg-white overflow-auto rounded-xl lang-dropDown font-inter ${currentLanguageTag === 'ar' ? 'mr-[-140px]' : 'ml-[-100px]'}`}>
+                                {isLocaleOpen && (<div className={`max-h-[400px] min-w-[200px] bg-white overflow-auto rounded-xl lang-dropDown font-inter ${currentLanguageTag === 'ar' ? 'mr-[-140px]' : 'ml-[-110px]'}`}>
                                     <>
                                         <span className="text-[#0D3077] text-xl font-bold px-[14px] py-[10px] flex content-center justify-between">
                                             <span>{labelBySupportedLanguageTag[currentLanguageTag]}</span>
