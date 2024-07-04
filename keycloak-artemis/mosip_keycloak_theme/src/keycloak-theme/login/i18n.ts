@@ -74,7 +74,13 @@ export const { useI18n } = createUseI18n({
         lastName: "Last Name",
         phoneNumber: "Phone Number",
         invalidUserName: "Username does not meet the minimum requirements.",
-        userNamePolicy: "Alphanumeric characters and symbols ( _ ) are allowed. First character should be always a letter."
+        userNamePolicy: "Alphanumeric characters and symbols ( _ ) are allowed. First character should be always a letter.",
+        locale_hin: "हिंदी",
+        locale_tam: "தமிழ்",
+        locale_kan: "ಕನ್ನಡ",
+        doForgotPassword: "Forgot Password?",
+        password: "Password",
+        doRegister: "Register"
     },
     fr: {
         /* spell-checker: disable */
@@ -144,14 +150,18 @@ export const { useI18n } = createUseI18n({
         lastName: "Nom de famille",
         phoneNumber: "Numéro de téléphone",
         invalidUserName: "Le nom d'utilisateur ne répond pas aux exigences minimales.",
-        userNamePolicy: "Les caractères alphanumériques et les symboles ( _ ) sont autorisés. Le premier caractère doit toujours être une lettre."
+        userNamePolicy: "Les caractères alphanumériques et les symboles ( _ ) sont autorisés. Le premier caractère doit toujours être une lettre.",
+        locale_hin: "हिंदी",
+        locale_tam: "தமிழ்",
+        locale_kan: "ಕನ್ನಡ",
+        doForgotPassword: "Mot de passe oublié?",
+        password: "Mot de passe",
+        doRegister: "Registre"
         /* spell-checker: enable */
     },
     ar: {
         alphanumericalCharsOnly: "الحروف الأبجدية الرقمية فقط",
         gender: "جنس",
-        // Here we overwrite the default english value for the message "doForgotPassword"
-        // that is "Forgot Password?" see: https://github.com/InseeFrLab/keycloakify/blob/f0ae5ea908e0aa42391af323b6d5e2fd371af851/src/lib/i18n/generated_messages/18.0.1/login/en.ts#L17
         invalidUserMessage: "خطأ في اسم المستخدم أو كلمة مرور.",
         usernameOrEmail: "اسم المستخدم",
         doLogIn: "تسجيل الدخول",
@@ -216,7 +226,13 @@ export const { useI18n } = createUseI18n({
         lastName: "اسم العائلة",
         phoneNumber: "رقم التليفون",
         invalidUserName: "اسم المستخدم لا يلبي الحد الأدنى من المتطلبات.",
-        userNamePolicy: "يُسمح باستخدام الأحرف الأبجدية الرقمية والرموز (_). يجب أن يكون الحرف الأول دائمًا حرفًا."
+        userNamePolicy: "يُسمح باستخدام الأحرف الأبجدية الرقمية والرموز (_). يجب أن يكون الحرف الأول دائمًا حرفًا.",
+        locale_hin: "हिंदी",
+        locale_tam: "தமிழ்",
+        locale_kan: "ಕನ್ನಡ",
+        doForgotPassword: "هل نسيت كلمة السر؟",
+        password: "كلمة المرور",
+        doRegister: "يسجل"
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -285,7 +301,13 @@ export const { useI18n } = createUseI18n({
         lastName: "अंतिम नाम",
         phoneNumber: "फोन नंबर",
         invalidUserName: "उपयोगकर्ता नाम न्यूनतम आवश्यकताओं को पूरा नहीं करता है।",
-        userNamePolicy: "अल्फ़ान्यूमेरिक वर्ण और प्रतीक ( _ ) की अनुमति है। पहला अक्षर हमेशा एक अक्षर होना चाहिए।"
+        userNamePolicy: "अल्फ़ान्यूमेरिक वर्ण और प्रतीक ( _ ) की अनुमति है। पहला अक्षर हमेशा एक अक्षर होना चाहिए।",
+        locale_hin: "हिंदी",
+        locale_tam: "தமிழ்",
+        locale_kan: "ಕನ್ನಡ",
+        doForgotPassword: "पासवर्ड भूल गए?",
+        password: "पासवर्ड",
+        doRegister: "पंजीकरण करवाना"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -354,7 +376,13 @@ export const { useI18n } = createUseI18n({
         lastName: "கடைசிப்பெயர்",
         phoneNumber: "தொலைபேசி எண்",
         invalidUserName: "பயனர் பெயர் குறைந்தபட்ச தேவைகளை பூர்த்தி செய்யவில்லை.",
-        userNamePolicy: "எழுத்தெண்கள் மற்றும் சின்னங்கள் ( _ ) அனுமதிக்கப்படும். முதல் எழுத்து எப்போதும் ஒரு எழுத்தாக இருக்க வேண்டும்."
+        userNamePolicy: "எழுத்தெண்கள் மற்றும் சின்னங்கள் ( _ ) அனுமதிக்கப்படும். முதல் எழுத்து எப்போதும் ஒரு எழுத்தாக இருக்க வேண்டும்.",
+        locale_hin: "हिंदी",
+        locale_tam: "தமிழ்",
+        locale_kan: "ಕನ್ನಡ",
+        doForgotPassword: "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
+        password: "கடவுச்சொல்",
+        doRegister: "பதிவு"
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -423,7 +451,13 @@ export const { useI18n } = createUseI18n({
         lastName: "ಕೊನೆಯ ಹೆಸರು",
         phoneNumber: "ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
         invalidUserName: "ಬಳಕೆದಾರ ಹೆಸರು ಕನಿಷ್ಠ ಅಗತ್ಯಗಳನ್ನು ಪೂರೈಸುತ್ತಿಲ್ಲ.",
-        userNamePolicy: "ಅಕ್ಷರಾಂಕ ಅಕ್ಷರಗಳು ಮತ್ತು ಸಂಕೇತಗಳು ( _ ) ಅನುಮತಿಸಲಾಗಿದೆ. ಮೊದಲ ಅಕ್ಷರ ಯಾವಾಗಲೂ ಒಂದು ಅಕ್ಷರವಾಗಿರಬೇಕು."
+        userNamePolicy: "ಅಕ್ಷರಾಂಕ ಅಕ್ಷರಗಳು ಮತ್ತು ಸಂಕೇತಗಳು ( _ ) ಅನುಮತಿಸಲಾಗಿದೆ. ಮೊದಲ ಅಕ್ಷರ ಯಾವಾಗಲೂ ಒಂದು ಅಕ್ಷರವಾಗಿರಬೇಕು.",
+        locale_hin: "हिंदी",
+        locale_tam: "தமிழ்",
+        locale_kan: "ಕನ್ನಡ",
+        doForgotPassword: "ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರಾ?",
+        password: "ಗುಪ್ತಪದ",
+        doRegister: "ನೋಂದಣಿ"
     }
        
 });
