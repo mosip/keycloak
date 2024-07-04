@@ -28,7 +28,6 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             return 'Do you want to leave this page?'
         }
     }
-    console.log(kcContext)
 
     return (
         <Template
