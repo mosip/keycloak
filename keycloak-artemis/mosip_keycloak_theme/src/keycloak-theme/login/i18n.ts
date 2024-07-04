@@ -80,7 +80,15 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "Forgot Password?",
         password: "Password",
-        doRegister: "Register"
+        doRegister: "Register",
+        registerTitle: "Register",
+        username: "Username",
+        doSubmit: "Submit",
+        emailSentMessage: "You should receive an email shortly with further instructions.",
+        confirmEmailAddressVerification: "Confirm validity of e-mail address {0}.",
+        emailVerifiedMessage: "Your email address has been verified.",
+        accountUpdatedMessage: "Your account has been updated.",
+        cookieNotFoundMessage: "Cookie not found. Please make sure cookies are enabled in your browser."
     },
     fr: {
         /* spell-checker: disable */
@@ -156,7 +164,15 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "Mot de passe oublié?",
         password: "Mot de passe",
-        doRegister: "Registre"
+        doRegister: "Registre",
+        registerTitle: "Registre",
+        username: "Nom d'utilisateur",
+        doSubmit: "Soumettre",
+        emailSentMessage: "Vous devriez recevoir un e-mail sous peu avec des instructions supplémentaires.",
+        confirmEmailAddressVerification: "Confirmez la validité de l'adresse e-mail {0}.",
+        emailVerifiedMessage: "Votre adresse e-mail a été vérifiée.",
+        accountUpdatedMessage: "Votre compte a été mis à jour.",
+        cookieNotFoundMessage: "Cookie non trouvé. Veuillez vous assurer que les cookies sont activés dans votre navigateur."
         /* spell-checker: enable */
     },
     ar: {
@@ -232,7 +248,15 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "هل نسيت كلمة السر؟",
         password: "كلمة المرور",
-        doRegister: "يسجل"
+        doRegister: "يسجل",
+        registerTitle: "يسجل",
+        username: "اسم المستخدم",
+        doSubmit: "يُقدِّم",
+        emailSentMessage: "من المفترض أن تتلقى بريدًا إلكترونيًا قريبًا يتضمن المزيد من التعليمات.",
+        confirmEmailAddressVerification: "تأكيد صحة عنوان البريد الإلكتروني {0}.",
+        emailVerifiedMessage: "تم التحقق من عنوان بريدك الإلكتروني.",
+        accountUpdatedMessage: "تم تحديث حسابك.",
+        cookieNotFoundMessage: "لم يتم العثور على ملف تعريف الارتباط. يرجى التأكد من تمكين ملفات تعريف الارتباط في متصفحك."
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -307,7 +331,15 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "पासवर्ड भूल गए?",
         password: "पासवर्ड",
-        doRegister: "पंजीकरण करवाना"
+        doRegister: "पंजीकरण करवाना",
+        registerTitle: "पंजीकरण करवाना",
+        username: "उपयोगकर्ता नाम",
+        doSubmit: "जमा करना",
+        emailSentMessage: "आपको शीघ्र ही आगे के निर्देशों के साथ एक ईमेल प्राप्त होगी।",
+        confirmEmailAddressVerification: "ईमेल पते की वैधता की पुष्टि करें {0}.",
+        emailVerifiedMessage: "आपका ईमेल पता सत्यापित हो गया है।",
+        accountUpdatedMessage: "आपका खाता अपडेट कर दिया गया है।",
+        cookieNotFoundMessage: "कुकी नहीं मिली। कृपया सुनिश्चित करें कि आपके ब्राउज़र में कुकीज़ सक्षम हैं।"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -382,7 +414,15 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
         password: "கடவுச்சொல்",
-        doRegister: "பதிவு"
+        doRegister: "பதிவு",
+        registerTitle: "பதிவு",
+        username: "பயனர் பெயர்",
+        doSubmit: "சமர்ப்பிக்கவும்",
+        emailSentMessage: "மேலதிக வழிமுறைகளுடன் கூடிய மின்னஞ்சலை விரைவில் பெறுவீர்கள்.",
+        confirmEmailAddressVerification: "மின்னஞ்சல் முகவரியின் செல்லுபடித்தன்மையை உறுதிப்படுத்தவும் {0}.",
+        emailVerifiedMessage: "உங்கள் மின்னஞ்சல் முகவரி சரிபார்க்கப்பட்டது.",
+        accountUpdatedMessage: "உங்கள் கணக்கு புதுப்பிக்கப்பட்டுள்ளது.",
+        cookieNotFoundMessage: "குக்கீ காணப்படவில்லை. உங்களின் உலாவியில் குக்கீகள் செயல்படுத்தப்பட்டுள்ளனவா எனச் சரிபார்க்கவும்."
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -457,7 +497,15 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರಾ?",
         password: "ಗುಪ್ತಪದ",
-        doRegister: "ನೋಂದಣಿ"
+        doRegister: "ನೋಂದಣಿ",
+        registerTitle: "ನೋಂದಣಿ",
+        username: "ಬಳಕೆದಾರ ಹೆಸರು",
+        doSubmit: "ಸಲ್ಲಿಸು",
+        emailSentMessage: "ಹೆಚ್ಚಿನ ಸೂಚನೆಗಳೊಂದಿಗೆ ನೀವು ಶೀಘ್ರದಲ್ಲೇ ಇಮೇಲ್ ಅನ್ನು ಸ್ವೀಕರಿಸಬೇಕು.",
+        confirmEmailAddressVerification: "ಇಮೇಲ್ ವಿಳಾಸದ ಮಾನ್ಯತೆಯನ್ನು ದೃಢೀಕರಿಸಿ {0}.",
+        emailVerifiedMessage: "ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
+        accountUpdatedMessage: "ನಿಮ್ಮ ಖಾತೆಯನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ.",
+        cookieNotFoundMessage: "ಕುಕೀ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕುಕೀಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿ."
     }
        
 });
