@@ -63,8 +63,6 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         classes
     });
 
-    // console.log(/^[a-zA-Z][a-zA-Z0-9_-]*$/.test('Rdfbfhbjfnj'))
-
     useEffect(() => {
         if (recaptchaRequired && recaptchaSiteKey) {
             const recaptchaScriptUrl = kcContext.scripts?.[0] || "https://www.google.com/recaptcha/api.js"; // fallback for Storybook
@@ -165,8 +163,6 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
     }
 
-    console.log(kcContext);
-    console.log(dummyFormData);
 
     window.addEventListener("click", (e) => {
         if (orgDropdown && !menuRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {

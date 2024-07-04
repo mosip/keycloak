@@ -37,7 +37,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     const [isLocaleOpen, setLocaleOpen] = useState(false)
 
     const { realm, locale, auth, url, message, isAppInitiatedAction, pageId } = kcContext;
-    console.log(kcContext)
     const { isReady } = usePrepareTemplate({
         "doFetchDefaultThemeResources": doUseDefaultCss,
         "styles": [
