@@ -62,7 +62,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     return (
         <div className={(getClassName("kcLoginClass"))} dir={currentLanguageTag === 'ar' ? 'rtl' : 'ltr'}>
-            <div id="kc-header" className={(getClassName("kcHeaderClass"), 'mb-10 flex flex-row justify-between items-center px-10')}>
+            <div id="kc-header" className={(getClassName("kcHeaderClass"), 'mb-10 flex flex-row justify-between items-center px-20')}>
                 <div><img className="h-20 w-30" alt="logo" src={mosipLogo} /></div>
                 <div> {realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1 && (
                     <div id="kc-locale">
@@ -74,7 +74,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 </a>
                                 {!isLocaleOpen && <img alt="" src={polygon} />}
                                 {isLocaleOpen && <img alt="" src={polygonRev} />}
-                                {isLocaleOpen && (<div className={`max-h-[400px] min-w-[200px] bg-white overflow-auto rounded-xl lang-dropDown font-inter ${currentLanguageTag === 'ar' ? 'mr-[-140px]' : 'ml-[-110px]'}`}>
+                                {isLocaleOpen && (<div className={`max-h-[400px] min-w-[200px] bg-white overflow-auto rounded-xl lang-dropDown font-inter shadow-langShadow ${currentLanguageTag === 'ar' ? 'mr-[-140px]' : 'ml-[-130px]'}`}>
                                     <>
                                         <span className="text-[#0D3077] text-xl font-bold px-[14px] py-[10px] flex content-center justify-between">
                                             <span>{labelBySupportedLanguageTag[currentLanguageTag]}</span>

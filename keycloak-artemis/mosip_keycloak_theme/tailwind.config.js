@@ -14,7 +14,8 @@ export default {
       },
       boxShadow: {
         errorShadow: '0px 3px 6px rgba(255, 0, 0, 0.15)',
-        errorShadowTwo: '0px 0px 6px rgba(255, 0, 0, 0.15)'
+        errorShadowTwo: '0px 0px 6px rgba(255, 0, 0, 0.15)',
+        langShadow: '5px 3px 4px #0000000F'
       },
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
