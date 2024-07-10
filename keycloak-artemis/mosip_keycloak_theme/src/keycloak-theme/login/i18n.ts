@@ -88,7 +88,11 @@ export const { useI18n } = createUseI18n({
         confirmEmailAddressVerification: "Confirm validity of e-mail address {0}.",
         emailVerifiedMessage: "Your email address has been verified.",
         accountUpdatedMessage: "Your account has been updated.",
-        cookieNotFoundMessage: "Cookie not found. Please make sure cookies are enabled in your browser."
+        cookieNotFoundMessage: "Cookie not found. Please make sure cookies are enabled in your browser.",
+        emailVerifiedAlreadyMessage:"Your email address has been verified already.",
+        lengthErrMessage: "Length must be between",
+        and: "and",
+        invalidInput: "Entered Invalid characters. Only letters and spaces are allowed."
     },
     fr: {
         /* spell-checker: disable */
@@ -172,7 +176,11 @@ export const { useI18n } = createUseI18n({
         confirmEmailAddressVerification: "Confirmez la validité de l'adresse e-mail {0}.",
         emailVerifiedMessage: "Votre adresse e-mail a été vérifiée.",
         accountUpdatedMessage: "Votre compte a été mis à jour.",
-        cookieNotFoundMessage: "Cookie non trouvé. Veuillez vous assurer que les cookies sont activés dans votre navigateur."
+        cookieNotFoundMessage: "Cookie non trouvé. Veuillez vous assurer que les cookies sont activés dans votre navigateur.",
+        emailVerifiedAlreadyMessage:"Votre adresse e-mail a déjà été vérifiée.",
+        lengthErrMessage: "La longueur doit être comprise entre",
+        and: "et",
+        invalidInput: "Caractères saisis non valides. Seules les lettres et les espaces sont autorisés."
         /* spell-checker: enable */
     },
     ar: {
@@ -256,7 +264,11 @@ export const { useI18n } = createUseI18n({
         confirmEmailAddressVerification: "تأكيد صحة عنوان البريد الإلكتروني {0}.",
         emailVerifiedMessage: "تم التحقق من عنوان بريدك الإلكتروني.",
         accountUpdatedMessage: "تم تحديث حسابك.",
-        cookieNotFoundMessage: "لم يتم العثور على ملف تعريف الارتباط. يرجى التأكد من تمكين ملفات تعريف الارتباط في متصفحك."
+        cookieNotFoundMessage: "لم يتم العثور على ملف تعريف الارتباط. يرجى التأكد من تمكين ملفات تعريف الارتباط في متصفحك.",
+        emailVerifiedAlreadyMessage:"لقد تم التحقق من عنوان بريدك الإلكتروني بالفعل.",
+        lengthErrMessage: "يجب أن يكون الطول بين",
+        and: "و",
+        invalidInput: "تم إدخال أحرف غير صالحة. يُسمح فقط بالأحرف والمسافات."
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -339,7 +351,11 @@ export const { useI18n } = createUseI18n({
         confirmEmailAddressVerification: "ईमेल पते की वैधता की पुष्टि करें {0}.",
         emailVerifiedMessage: "आपका ईमेल पता सत्यापित हो गया है।",
         accountUpdatedMessage: "आपका खाता अपडेट कर दिया गया है।",
-        cookieNotFoundMessage: "कुकी नहीं मिली। कृपया सुनिश्चित करें कि आपके ब्राउज़र में कुकीज़ सक्षम हैं।"
+        cookieNotFoundMessage: "कुकी नहीं मिली। कृपया सुनिश्चित करें कि आपके ब्राउज़र में कुकीज़ सक्षम हैं।",
+        emailVerifiedAlreadyMessage:"आपका ईमेल पता पहले ही सत्यापित किया जा चुका है.",
+        lengthErrMessage: "लंबाई बीच में होनी चाहिए",
+        and: "और",
+        invalidInput: "अमान्य वर्ण दर्ज किए गए. केवल अक्षर और रिक्त स्थान की अनुमति है."
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -422,7 +438,11 @@ export const { useI18n } = createUseI18n({
         confirmEmailAddressVerification: "மின்னஞ்சல் முகவரியின் செல்லுபடித்தன்மையை உறுதிப்படுத்தவும் {0}.",
         emailVerifiedMessage: "உங்கள் மின்னஞ்சல் முகவரி சரிபார்க்கப்பட்டது.",
         accountUpdatedMessage: "உங்கள் கணக்கு புதுப்பிக்கப்பட்டுள்ளது.",
-        cookieNotFoundMessage: "குக்கீ காணப்படவில்லை. உங்களின் உலாவியில் குக்கீகள் செயல்படுத்தப்பட்டுள்ளனவா எனச் சரிபார்க்கவும்."
+        cookieNotFoundMessage: "குக்கீ காணப்படவில்லை. உங்களின் உலாவியில் குக்கீகள் செயல்படுத்தப்பட்டுள்ளனவா எனச் சரிபார்க்கவும்.",
+        emailVerifiedAlreadyMessage:"உங்கள் மின்னஞ்சல் முகவரி ஏற்கனவே சரிபார்க்கப்பட்டது.",
+        lengthErrMessage: "இடையே நீளம் இருக்க வேண்டும்",
+        and: "மற்றும்",
+        invalidInput: "தவறான எழுத்துகள் உள்ளிடப்பட்டுள்ளன. கடிதங்கள் மற்றும் இடைவெளிகள் மட்டுமே அனுமதிக்கப்படுகின்றன."
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -505,7 +525,11 @@ export const { useI18n } = createUseI18n({
         confirmEmailAddressVerification: "ಇಮೇಲ್ ವಿಳಾಸದ ಮಾನ್ಯತೆಯನ್ನು ದೃಢೀಕರಿಸಿ {0}.",
         emailVerifiedMessage: "ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
         accountUpdatedMessage: "ನಿಮ್ಮ ಖಾತೆಯನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ.",
-        cookieNotFoundMessage: "ಕುಕೀ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕುಕೀಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿ."
+        cookieNotFoundMessage: "ಕುಕೀ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕುಕೀಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿ.",
+        emailVerifiedAlreadyMessage:"ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಈಗಾಗಲೇ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
+        lengthErrMessage: "ಉದ್ದವು ನಡುವೆ ಇರಬೇಕು",
+        and: "ಮತ್ತು",
+        invalidInput: "ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ. ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಥಳಗಳನ್ನು ಮಾತ್ರ ಅನುಮತಿಸಲಾಗಿದೆ."
     }
        
 });

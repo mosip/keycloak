@@ -53,7 +53,11 @@ export type KcContextExtension =
 				username:{
 					validators:{
 						pattern:{
-							pattern:RegExp
+							pattern:RegExp;
+						}
+						length:{
+							max:string;
+							min:string;
 						}
 					}
 				};

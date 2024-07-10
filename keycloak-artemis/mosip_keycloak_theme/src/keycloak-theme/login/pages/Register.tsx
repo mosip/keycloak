@@ -40,6 +40,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
     const organisationData = register?.attributesByName?.organisationName?.validators?.options?.options;
+    const max = Number(register?.attributesByName?.username?.validators.length?.max)
+    const min = Number(register?.attributesByName?.username?.validators.length?.min)
 
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
@@ -52,6 +54,9 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [ConfPasswordMatch, checkConfPasswordMatch] = useState(false);
     const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
     const [isReloadBtn, setReloadBtn] = useState(false);
+    const [minMaxLength, checkminMaxLength] = useState(false)
+    const [invalidFirstName, checkInvalidFirstName] = useState(false)
+    const [invalidLastName, checkInvalidLastName] = useState(false)
 
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -130,20 +135,31 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
     const handleFormData = (event: any) => {
         const { name, value } = event.target;
-        if (name === 'email' && value) {
-            checkInvalidEmail(!pattern.test(value))
+        const finalValue = value.trim()
+ 
+        if (name === 'email' && finalValue) {
+            checkInvalidEmail(!pattern.test(finalValue))
         }
-        if (name === 'phoneNumber' && value) {
-            checkInvalidPhoneNo(!phonePattern.test(String(value)))
+        if (name === 'phoneNumber' && finalValue) {
+            checkInvalidPhoneNo(!phonePattern.test(String(finalValue)))
         }
 
-        if(name === 'username' && value){
-            checkInvalidUserName(!userNamePattern.test(String(value)))
+        if(name === 'username' && finalValue){
+            userNamePattern.test(finalValue) ? checkInvalidUserName(false) : checkInvalidUserName(true);
+            (finalValue.length < (Number(min)) || finalValue.length > (Number(max) -1 )) ? checkminMaxLength(true) : checkminMaxLength(false);
+        }
+
+        if(name === 'firstName' && finalValue){
+            /^[A-Za-z\s]+$/.test(finalValue) ? checkInvalidFirstName(false) : checkInvalidFirstName(true)
+        }
+
+        if(name === 'lastName' && finalValue){
+            /^[A-Za-z\s]+$/.test(finalValue) ? checkInvalidLastName(false) : checkInvalidLastName(true);
         }
 
         if (name === 'orgName' && organisationData) {
             let newOrgData = organisationData.filter(item => {
-                if (item.toLowerCase().includes(value.toLowerCase()))
+                if (item.toLowerCase().includes(finalValue.toLowerCase()))
                     return item
             })
             setOrgData(newOrgData)
@@ -151,11 +167,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
         addFormDataValue(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: finalValue
         }))
 
         if (name === 'password-confirm' && dummyFormData.password) {
-            if (value !== dummyFormData.password) {
+            if (finalValue !== dummyFormData.password) {
                 checkConfPasswordMatch(true)
             } else {
                 checkConfPasswordMatch(false)
@@ -268,13 +284,16 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="firstName"
-                            className={(getClassName("kcInputClass"), (dummyFormData.firstName === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.firstName === '' || invalidFirstName)? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
                             name="firstName"
                             placeholder={msgStr("firstNamePH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.firstName ?? ""}
                         />
-                        {dummyFormData.firstName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("firstName")}</span></span>}
+                        {<span className="text-[#C61818] mb-0 font-semibold font-inter">
+                            {dummyFormData.firstName === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("firstName")}</span></span>}
+                            {invalidFirstName && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg("invalidInput")}</span></span>}
+                        </span>}
                     </div>
                 </div>
 
@@ -293,13 +312,16 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="lastName"
-                            className={(getClassName("kcInputClass"), (dummyFormData.lastName === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.lastName === '' || invalidLastName)? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
                             name="lastName"
                             placeholder={msgStr("lastNamePH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.lastName ?? ""}
                         />
-                        {dummyFormData.lastName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("lastName")}</span></span>}
+                        {<span className="text-[#C61818] mb-0 font-semibold font-inter">
+                            {dummyFormData.lastName === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("lastName")}</span></span>}
+                            {invalidLastName && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg("invalidInput")}</span></span>}
+                        </span>}
                     </div>
                 </div>
 
@@ -445,16 +467,18 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <input
                                 type="text"
                                 id="username"
-                                className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.username === '' || invalidUserName) ? 'shadow-errorShadow border-[#C61818]' : 'border-bColor'}`)}
+                                className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.username === '' || invalidUserName || minMaxLength) ? 'shadow-errorShadow border-[#C61818]' : 'border-bColor'}`)}
                                 name="username"
                                 placeholder={msgStr("userNamePH")}
                                 onBlur={handleFormData}
                                 defaultValue={register.formData.username ?? ""}
                                 autoComplete="username"
+                                maxLength={Number(max)}
                             />
                             {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                                 {dummyFormData.username === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("username")}</span></span>}
                                 {(invalidUserName && dummyFormData.username !== '') && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('invalidUserName')}</span></span>}
+                                {minMaxLength && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('lengthErrMessage')} {min} {msg('and')} {max}</span></span>}
                             </span>}
                         </div>
                     </div>
@@ -557,7 +581,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             type="submit"
                             value={msgStr("doRegister")}
                             onClick={() => setReloadBtn(true)}
-                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || ConfPasswordMatch}
+                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || ConfPasswordMatch || invalidFirstName || invalidLastName || minMaxLength}
                         />
                     </div>
                 </div>
