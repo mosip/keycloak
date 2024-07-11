@@ -12,7 +12,7 @@ import eyeIconOff from '../assets/visibility_off.svg';
 import info from '../assets/info.svg';
 import error from '../assets/error.svg'
 import ToolTip from "./shared/Tooltip";
-import arrowRight from "../assets/arrow_right_rtl.svg"
+import arrowRight from "../assets/arrow_right_rtl.svg";
 
 declare global {
     interface Window {
@@ -54,9 +54,10 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [confPasswordMatch, checkConfPasswordMatch] = useState(false);
     const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
     const [isReloadBtn, setReloadBtn] = useState(false);
-    const [minMaxLength, checkminMaxLength] = useState(false)
-    const [invalidFirstName, checkInvalidFirstName] = useState(false)
-    const [invalidLastName, checkInvalidLastName] = useState(false)
+    const [minMaxLength, checkminMaxLength] = useState(false);
+    const [invalidFirstName, checkInvalidFirstName] = useState(false);
+    const [invalidLastName, checkInvalidLastName] = useState(false);
+    const [errorMessage, setErrorMsg] = useState({...message});
 
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -206,6 +207,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
     }
 
+    if(errorMessage.summary){
+        delete dummyFormData.password
+        delete dummyFormData["password-confirm"]
+        setErrorMsg({})
+    }
+
     const { msg, msgStr } = i18n;
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={
@@ -263,13 +270,18 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         </div>
                         {partnerTypesMenu && (
                             <div ref={partnerTypesMenuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
-                                <ul className="py-1 px-5 text-xl text-[#031640] font-inter" role="none" >
-                                    <li onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">Device Provider</li>
-                                    <li onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-2 cursor-pointer border-b" role="menuitem">FTM Provider</li>
-                                    <li onClick={() => selectedPartnerTypeValue('Authentication_Partner')} className="block py-2 cursor-pointer border-b" role="menuitem">Authentication Partner</li>
-                                    <li onClick={() => selectedPartnerTypeValue('Credential_Partner_or_ISP')} className="block py-2 cursor-pointer border-b" role="menuitem">Credential Partner or ISP</li>
-                                    <li onClick={() => selectedPartnerTypeValue('ABIS_Partner')} className="block py-2 cursor-pointer border-b" role="menuitem">ABIS Partner</li>
-                                    <li onClick={() => selectedPartnerTypeValue('SDK_Partner')} className="block py-2 cursor-pointer" role="menuitem">SDK Partner</li>
+                                <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
+                                    <li onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Device Provider</li>
+                                    <hr className="mx-4 border-[#D8D8D8]" />
+                                    <li onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">FTM Provider</li>
+                                    <hr className="mx-4 border-[#D8D8D8]" />
+                                    <li onClick={() => selectedPartnerTypeValue('Authentication_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Authentication Partner</li>
+                                    <hr className="mx-4 border-[#D8D8D8]" />
+                                    <li onClick={() => selectedPartnerTypeValue('Credential_Partner_or_ISP')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Credential Partner or ISP</li>
+                                    <hr className="mx-4 border-[#D8D8D8]"/>
+                                    <li onClick={() => selectedPartnerTypeValue('ABIS_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">ABIS Partner</li>
+                                    <hr className="mx-4 border-[#D8D8D8]" />
+                                    <li onClick={() => selectedPartnerTypeValue('SDK_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">SDK Partner</li>
                                 </ul>
                             </div>
                         )}
