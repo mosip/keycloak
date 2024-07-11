@@ -38,7 +38,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div id="kc-form-options">
                         <div className={getClassName("kcFormOptionsWrapperClass")}>
                             <span>
-                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrowright" src={arrowRight}/> :  <img alt="arrow" src={arrow} />}{msg("backToLogin")}</a></button>
+                                <button  onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrowright" src={arrowRight}/> :  <img alt="arrow" src={arrow} />}&nbsp;{msg("backToLogin")}</a></button>
                             </span>
                         </div>
                     </div>

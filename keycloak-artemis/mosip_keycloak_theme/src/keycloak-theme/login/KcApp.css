@@ -147,7 +147,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 @media (max-width: 840px) {
     .login-pf-page .card-pf {
-        max-width: 500px;
+        width: 500px;
 		min-width: auto;
 	}
 }

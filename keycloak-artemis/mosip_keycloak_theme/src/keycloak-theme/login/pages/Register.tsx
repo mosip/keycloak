@@ -51,7 +51,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [invalidEmail, checkInvalidEmail] = useState(false);
     const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false);
     const [invalidUserName, checkInvalidUserName] = useState(false);
-    const [ConfPasswordMatch, checkConfPasswordMatch] = useState(false);
+    const [confPasswordMatch, checkConfPasswordMatch] = useState(false);
     const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
     const [isReloadBtn, setReloadBtn] = useState(false);
     const [minMaxLength, checkminMaxLength] = useState(false)
@@ -135,7 +135,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
     const handleFormData = (event: any) => {
         const { name, value } = event.target;
-        const finalValue = value.trim()
+        const finalValue = value.trim();
  
         if (name === 'email' && finalValue) {
             checkInvalidEmail(!pattern.test(finalValue))
@@ -171,7 +171,14 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }))
 
         if (name === 'password-confirm' && dummyFormData.password) {
-            if (finalValue !== dummyFormData.password) {
+            if (value !== dummyFormData.password) {
+                checkConfPasswordMatch(true)
+            } else {
+                checkConfPasswordMatch(false)
+            }
+        }
+        if (name === 'password' && dummyFormData['password-confirm']) {
+            if (value !== dummyFormData['password-confirm']) {
                 checkConfPasswordMatch(true)
             } else {
                 checkConfPasswordMatch(false)
@@ -206,7 +213,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 <div id="kc-form-options">
                     <div className={getClassName("kcFormOptionsWrapperClass")}>
                         <span>
-                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrow" src={arrowRight} /> :  <img alt="arrow" src={arrow} />}{msg("backToLogin")}</a></button>
+                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrow" src={arrowRight} /> :  <img alt="arrow" src={arrow} />}&nbsp;{msg("backToLogin")}</a></button>
                         </span>
                     </div>
                 </div>
@@ -507,7 +514,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                         name="password"
                                         placeholder={msgStr("passwordPlaceholder")}
-                                        onBlur={handleFormData}
+                                        onChange={handleFormData}
                                         autoComplete="new-password"
                                     />
                                     {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
@@ -531,17 +538,17 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
-                                <div className={`flex flex-row justify-between items-center border border-solid rounded-lg h-14 px-3 font-inter ${(dummyFormData["password-confirm"] === '' || ConfPasswordMatch) ? 'shadow-errorShadow  border-[#C61818] ' : ' border-bColor'}`}>
+                                <div className={`flex flex-row justify-between items-center border border-solid rounded-lg h-14 px-3 font-inter ${(dummyFormData["password-confirm"] === '' || confPasswordMatch) ? 'shadow-errorShadow  border-[#C61818] ' : ' border-bColor'}`}>
                                     <input type={confPasswordType}
                                         id="password-confirm"
                                         className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                         name="password-confirm"
-                                        onBlur={handleFormData}
+                                        onChange={handleFormData}
                                         placeholder={msgStr("passwordPlaceholder")}
                                     />
                                     {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIconOff} />}
                                 </div>
-                                {ConfPasswordMatch && <span className="flex items-center text-[#C61818] mb-0 font-semibold font-inter"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
+                                {(confPasswordMatch && dummyFormData["password-confirm"] !== '') && <span className="flex items-center text-[#C61818] mb-0 font-semibold font-inter"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
                                 {dummyFormData["password-confirm"] === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("passwordConfirm")}</span></span>}
                             </div>
                         </div>
@@ -581,7 +588,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             type="submit"
                             value={msgStr("doRegister")}
                             onClick={() => setReloadBtn(true)}
-                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || ConfPasswordMatch || invalidFirstName || invalidLastName || minMaxLength}
+                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || confPasswordMatch || invalidFirstName || invalidLastName || minMaxLength}
                         />
                     </div>
                 </div>
