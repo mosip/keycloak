@@ -85,7 +85,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                         <>
                                             {(currentLanguageTag !== languageTag) && (
                                                 <>
-                                                    <span key={languageTag} onClick={() => changeLocale(languageTag)} className="text-[#0D3077] px-[14px] py-[10px] flex content-center justify-between cursor-pointer">
+                                                    <span key={languageTag} onClick={() => changeLocale(languageTag)} className="text-[#0D3077] px-[14px] py-[10px] flex content-center justify-between cursor-pointer hover:bg-[#F4F8FF]">
                                                         <a href="#">
                                                             <span className="text-xl">{labelBySupportedLanguageTag[languageTag]}</span>
                                                         </a>
