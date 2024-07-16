@@ -59,6 +59,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         return null;
     }
 
+    console.log(kcContext)
     return (
         <div className={(getClassName("kcLoginClass"))} dir={currentLanguageTag === 'ar' ? 'rtl' : 'ltr'}>
             <div id="kc-header" className={(getClassName("kcHeaderClass"), 'mb-10 flex flex-row justify-between items-center px-20')}>
