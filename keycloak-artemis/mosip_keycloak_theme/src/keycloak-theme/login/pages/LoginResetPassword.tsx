@@ -5,7 +5,8 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import arrow from '../assets/expand_more_FILL0_wght300_GRAD0_opsz24 (1).svg';
-import arrowRight from '../assets/arrow_right_rtl.svg'
+import arrowRight from '../assets/arrow_right_rtl.svg';
+import error from '../assets/error.svg';
 
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -16,6 +17,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     });
 
     const [email, addEmail] = useState('')
+    const [isValidEmail, checkValidEamil] = useState(false)
 
     const { url, auth, locale } = kcContext;
 
@@ -27,6 +29,12 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
         if(!isReloadBtn){
             return 'Do you want to leave this page?'
         }
+    }
+
+    const getEmailId = (event:any) =>{
+        const {value} = event.target
+        checkValidEamil(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value));
+        addEmail(value)
     }
 
     return (
@@ -64,8 +72,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             placeholder={msgStr('emailPH')}
                             autoFocus
                             defaultValue={auth !== undefined && auth.showUsername ? auth.attemptedUsername : undefined}
-                            onChange={(event) =>{addEmail(event.target.value)}}
+                            onChange={getEmailId}
                         />
+                        {(!isValidEmail && email !== '' )&& <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('missingUsernameMessage')}</span></span>}
                     </div>
                 </div>
                 <div className={(clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass")), 'mt-10')}>
@@ -88,7 +97,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             type="submit"
                             onClick={() => setReloadBtn(true)}
                             value={msgStr("resetPassword")}
-                            disabled={!email}
+                            disabled={!isValidEmail}
                         />
                     </div>
                 </div>
