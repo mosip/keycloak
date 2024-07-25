@@ -80,10 +80,10 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                     name="username"
                     value={username}
                     readOnly={true}
-                    autoComplete="username"
+                    autoComplete="off"
                     style={{ display: "none" }}
                 />
-                <input type="password" id="password" name="password" autoComplete="current-password" style={{ display: "none" }} />
+                <input type="password" id="password" name="password" autoComplete="off" style={{ display: "none" }} />
 
                 <div
                     className={clsx(
@@ -105,8 +105,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 type={passwordType}
                                 id="password-new"
                                 name="password-new"
+                                autoComplete="off"
                                 autoFocus
-                                autoComplete="new-password"
                                 onChange={capturePassWordData}
                                 className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                 placeholder={msgStr('passwordPlaceholder')}
@@ -133,7 +133,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 type={confPasswordType}
                                 id="password-confirm"
                                 name="password-confirm"
-                                autoComplete="new-password"
+                                autoComplete="off"
                                 onChange={capturePassWordData}
                                 className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                 placeholder={msgStr('passwordPlaceholder')}

@@ -10,7 +10,7 @@ import arrow from '../assets/expand_more_FILL0_wght300_GRAD0_opsz24 (1).svg';
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
 import eyeIconOff from '../assets/visibility_off.svg';
 import info from '../assets/info.svg';
-import error from '../assets/error.svg'
+import error from '../assets/error.svg';
 import ToolTip from "./shared/Tooltip";
 import arrowRight from "../assets/arrow_right_rtl.svg";
 
@@ -40,8 +40,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
     const organisationData = register?.attributesByName?.organisationName?.validators?.options?.options;
-    const max = Number(register?.attributesByName?.username?.validators.length?.max)
-    const min = Number(register?.attributesByName?.username?.validators.length?.min)
+    const max = Number(register?.attributesByName?.username?.validators.length?.max);
+    const min = Number(register?.attributesByName?.username?.validators.length?.min);
 
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
@@ -308,6 +308,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             placeholder={msgStr("firstNamePH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.firstName ?? ""}
+                            autoComplete="off"
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {dummyFormData.firstName === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("firstName")}</span></span>}
@@ -335,6 +336,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             name="lastName"
                             placeholder={msgStr("lastNamePH")}
                             onBlur={handleFormData}
+                            autoComplete="off"
                             defaultValue={register.formData.lastName ?? ""}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
@@ -403,6 +405,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.address === '' ? 'shadow-errorShadow border-[#C61818]' : ' border-bColor'}`)}
                             name="address"
                             placeholder={msgStr("addressPH")}
+                            autoComplete="off"
                             onBlur={handleFormData}
                             defaultValue={register.formData.address ?? ""}
                         />
@@ -430,7 +433,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             placeholder={msgStr("emailPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.email ?? ""}
-                            autoComplete="email"
+                            autoComplete="off"
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {/* {(errorSummary?.includes("Email already exists.") || errorSummary?.includes("Username already exists.")) && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('existingEmailErr')}</span>} */}
@@ -460,6 +463,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             placeholder={msgStr("phoneNumberPH")}
                             onBlur={handleFormData}
                             defaultValue={register.formData.phoneNumber ?? ""}
+                            autoComplete="off"
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {(invalidPhoneNo && dummyFormData.phoneNumber !== '')&& <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
@@ -491,7 +495,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 placeholder={msgStr("userNamePH")}
                                 onBlur={handleFormData}
                                 defaultValue={register.formData.username ?? ""}
-                                autoComplete="username"
+                                autoComplete="off"
                                 maxLength={Number(max)}
                             />
                             {<span className="text-[#C61818] mb-0 font-semibold font-inter">
@@ -527,7 +531,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         name="password"
                                         placeholder={msgStr("passwordPlaceholder")}
                                         onChange={handleFormData}
-                                        autoComplete="new-password"
+                                        autoComplete="off"
                                     />
                                     {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
                                 </div>
@@ -557,6 +561,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         name="password-confirm"
                                         onChange={handleFormData}
                                         placeholder={msgStr("passwordPlaceholder")}
+                                        autoComplete="off"
                                     />
                                     {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIconOff} />}
                                 </div>

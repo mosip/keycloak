@@ -92,7 +92,9 @@ export const { useI18n } = createUseI18n({
         emailVerifiedAlreadyMessage:"Your email address has been verified already.",
         lengthErrMessage: "Length must be between",
         and: "and",
-        invalidInput: "Entered Invalid characters. Only letters and spaces are allowed."
+        invalidInput: "Entered Invalid characters. Only letters and spaces are allowed.",
+        UpdateDetailsDesc: "Please fill in the below fields to register as partner.",
+        loginProfileTitle: "Update Account Information"
     },
     fr: {
         /* spell-checker: disable */
@@ -180,7 +182,9 @@ export const { useI18n } = createUseI18n({
         emailVerifiedAlreadyMessage:"Votre adresse e-mail a déjà été vérifiée.",
         lengthErrMessage: "La longueur doit être comprise entre",
         and: "et",
-        invalidInput: "Caractères saisis non valides. Seules les lettres et les espaces sont autorisés."
+        invalidInput: "Caractères saisis non valides. Seules les lettres et les espaces sont autorisés.",
+        UpdateDetailsDesc: "Veuillez remplir les champs ci-dessous pour vous inscrire en tant que partenaire.",
+        loginProfileTitle: "Mettre à jour les informations du compte"
         /* spell-checker: enable */
     },
     ar: {
@@ -268,7 +272,9 @@ export const { useI18n } = createUseI18n({
         emailVerifiedAlreadyMessage:"لقد تم التحقق من عنوان بريدك الإلكتروني بالفعل.",
         lengthErrMessage: "يجب أن يكون الطول بين",
         and: "و",
-        invalidInput: "تم إدخال أحرف غير صالحة. يُسمح فقط بالأحرف والمسافات."
+        invalidInput: "تم إدخال أحرف غير صالحة. يُسمح فقط بالأحرف والمسافات.",
+        UpdateDetailsDesc: "يرجى ملء الحقول أدناه للتسجيل كشريك.",
+        loginProfileTitle: "تحديث معلومات الحساب"
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -355,7 +361,9 @@ export const { useI18n } = createUseI18n({
         emailVerifiedAlreadyMessage:"आपका ईमेल पता पहले ही सत्यापित किया जा चुका है.",
         lengthErrMessage: "लंबाई बीच में होनी चाहिए",
         and: "और",
-        invalidInput: "अमान्य वर्ण दर्ज किए गए. केवल अक्षर और रिक्त स्थान की अनुमति है."
+        invalidInput: "अमान्य वर्ण दर्ज किए गए. केवल अक्षर और रिक्त स्थान की अनुमति है.",
+        UpdateDetailsDesc: "भागीदार के रूप में पंजीकरण करने के लिए कृपया नीचे दिए गए फ़ील्ड भरें।",
+        loginProfileTitle: "लेखा जानकारी को अद्यतन बनाएं"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -442,7 +450,9 @@ export const { useI18n } = createUseI18n({
         emailVerifiedAlreadyMessage:"உங்கள் மின்னஞ்சல் முகவரி ஏற்கனவே சரிபார்க்கப்பட்டது.",
         lengthErrMessage: "இடையே நீளம் இருக்க வேண்டும்",
         and: "மற்றும்",
-        invalidInput: "தவறான எழுத்துகள் உள்ளிடப்பட்டுள்ளன. கடிதங்கள் மற்றும் இடைவெளிகள் மட்டுமே அனுமதிக்கப்படுகின்றன."
+        invalidInput: "தவறான எழுத்துகள் உள்ளிடப்பட்டுள்ளன. கடிதங்கள் மற்றும் இடைவெளிகள் மட்டுமே அனுமதிக்கப்படுகின்றன.",
+        UpdateDetailsDesc: "கூட்டாளராக பதிவு செய்ய கீழே உள்ள புலங்களை நிரப்பவும்.",
+        loginProfileTitle: "கணக்குத் தகவலைப் புதுப்பிக்கவும்"
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -529,7 +539,9 @@ export const { useI18n } = createUseI18n({
         emailVerifiedAlreadyMessage:"ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಈಗಾಗಲೇ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
         lengthErrMessage: "ಉದ್ದವು ನಡುವೆ ಇರಬೇಕು",
         and: "ಮತ್ತು",
-        invalidInput: "ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ. ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಥಳಗಳನ್ನು ಮಾತ್ರ ಅನುಮತಿಸಲಾಗಿದೆ."
+        invalidInput: "ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ. ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಥಳಗಳನ್ನು ಮಾತ್ರ ಅನುಮತಿಸಲಾಗಿದೆ.",
+        UpdateDetailsDesc: "ಪಾಲುದಾರರಾಗಿ ನೋಂದಾಯಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ.",
+        loginProfileTitle: "ಖಾತೆ ಮಾಹಿತಿಯನ್ನು ನವೀಕರಿಸಿ"
     }
        
 });
