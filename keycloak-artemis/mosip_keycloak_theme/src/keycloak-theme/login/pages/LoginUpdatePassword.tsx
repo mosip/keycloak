@@ -8,6 +8,8 @@ import info from '../assets/info.svg';
 import ToolTip from "./shared/Tooltip";
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
 import eyeIconOff from '../assets/visibility_off.svg';
+import error from '../assets/error.svg';
+
 type PasswordUpdate = {
     'password-new': string;
     'password-confirm': string;
@@ -15,12 +17,12 @@ type PasswordUpdate = {
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
     const { msg, msgStr } = i18n;
     const [isReloadBtn, setReloadBtn] = useState(false);
-    const [newPasswordData, getNewPasswordData] = useState<PasswordUpdate>({"password-new":"", "password-confirm":""})
+    const [newPasswordData, getNewPasswordData] = useState<PasswordUpdate>({"password-new":"", "password-confirm":""});
+    const [isSamePassword, checkisSamePassword] = useState(false);
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
@@ -41,8 +43,22 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             ...prevData,
             [name]:value
         }))
-    }
 
+        if (name === 'password-confirm' && newPasswordData['password-new']) {
+            if (value !== newPasswordData['password-new']) {
+                checkisSamePassword(true)
+            } else {
+                checkisSamePassword(false)
+            }
+        }
+        if (name === 'password-new' && newPasswordData['password-confirm']) {
+            if (value !== newPasswordData['password-confirm']) {
+                checkisSamePassword(true)
+            } else {
+                checkisSamePassword(false)
+            }
+        }
+    }
 
     window.onbeforeunload = function() {
         if(!isReloadBtn){
@@ -128,7 +144,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
-                        <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3 font-inter">
+                        <div className={`flex flex-row justify-between items-center border border-solid rounded-lg h-14 px-3 font-inter ${isSamePassword ? 'shadow-errorShadow  border-[#C61818] ' : ' border-bColor'}`}>
                             <input
                                 type={confPasswordType}
                                 id="password-confirm"
@@ -140,6 +156,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             />
                             {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={() => showPassword('confPassword')} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={() => showPassword('confPassword')} alt="" src={eyeIconOff} />}
                         </div>
+                        {isSamePassword && <span className="flex items-center text-[#C61818] mb-0 font-semibold font-inter"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
                     </div>
                 </div>
 
@@ -193,7 +210,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 type="submit"
                                 onClick={() => setReloadBtn(true)}
                                 value={msgStr("doSubmit")}
-                                disabled={!newPasswordData['password-new'] || !newPasswordData['password-confirm']}
+                                disabled={!newPasswordData['password-new'] || !newPasswordData['password-confirm'] || isSamePassword}
                             />
                         )}
                     </div>
