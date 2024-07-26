@@ -73,6 +73,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             autoFocus
                             defaultValue={auth !== undefined && auth.showUsername ? auth.attemptedUsername : undefined}
                             onChange={getEmailId}
+                            autoComplete="off"
                         />
                         {(!isValidEmail && email !== '' )&& <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('missingUsernameMessage')}</span></span>}
                     </div>
