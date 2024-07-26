@@ -194,10 +194,9 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 showOrgDropdown(false)
             }
         }
+
         if (!partnerTypeRef.current?.contains(e.target as Node) && !partnerTypesMenuRef.current?.contains(e.target as Node)) {
-            if (dummyFormData.partnerType) {
-                showPartnerTypeMenu(false)
-            }
+            showPartnerTypeMenu(false)
         }
     })
 
@@ -230,7 +229,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             </>
         }>
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
-                {message !== undefined && (
+                {message !== undefined&& (
                     <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
                         {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
@@ -250,7 +249,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
                         <div className={dummyFormData.partnerType === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3'}
                             onClick={() => {
-                                if (partnerTypesMenu && dummyFormData.partnerType) {
+                                if (partnerTypesMenu) {
                                     showPartnerTypeMenu(false);
                                 } else {
                                     showPartnerTypeMenu(true);
