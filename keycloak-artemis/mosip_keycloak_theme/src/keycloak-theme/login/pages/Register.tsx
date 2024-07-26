@@ -13,6 +13,7 @@ import info from '../assets/info.svg';
 import error from '../assets/error.svg';
 import ToolTip from "./shared/Tooltip";
 import arrowRight from "../assets/arrow_right_rtl.svg";
+import closeIcon from '../assets/close_icon.svg';
 
 declare global {
     interface Window {
@@ -58,6 +59,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [invalidFirstName, checkInvalidFirstName] = useState(false);
     const [invalidLastName, checkInvalidLastName] = useState(false);
     const [errorMessage, setErrorMsg] = useState({...message});
+    const [openErrTab, getOpenErrTab] = useState(true);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -229,11 +231,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             </>
         }>
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
-                {message !== undefined&& (
-                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3'>
+                {(message !== undefined && openErrTab)&& (
+                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 rounded-lg px-4'>
                         {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
+                        <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt=""src={closeIcon} />
                         <span className="kc-feedback-text"
                             dangerouslySetInnerHTML={{
                                 "__html": message.summary

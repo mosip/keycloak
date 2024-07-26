@@ -12,7 +12,8 @@ import mosipLogo from './assets/mosip_logo.png';
 import langIcon from './assets/language_FILL0_wght300_GRAD0_opsz24.svg';
 import polygon from './assets/Polygon.svg';
 import polygonRev from './assets/Polygon2.svg';
-import rightTick from './assets/check_circle_FILL0_wght400_GRAD0_opsz48.svg'
+import rightTick from './assets/check_circle_FILL0_wght400_GRAD0_opsz48.svg';
+import closeIcon from './assets/close_icon.svg'
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -34,7 +35,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     const { getClassName } = useGetClassName({ doUseDefaultCss, classes });
 
     const { msg, changeLocale, labelBySupportedLanguageTag, currentLanguageTag } = i18n;
-    const [isLocaleOpen, setLocaleOpen] = useState(false)
+    const [isLocaleOpen, setLocaleOpen] = useState(false);
+    const [openErrTab, getOpenErrTab] = useState(true);
 
     const { realm, locale, auth, url, message, isAppInitiatedAction, pageId } = kcContext;
     const { isReady } = usePrepareTemplate({
@@ -170,11 +172,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             <div id="kc-content">
                                 <div id="kc-content-wrapper">
                                     {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                                    {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
-                                        <div className={`min-h-11 p-2 text-center font-semibold mb-3 ${message.type === "error" && "bg-errorBg text-errorColor"} ${message.type === "success" && "bg-[#E7F2E2] text-[#2E6E0D]"} ${(message.type === "warning" || message.type === 'info') && "bg-[#FFF7E5] text-[#8B6105"}`}>
+                                    {displayMessage && openErrTab && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (pageId === 'login.ftl') && (
+                                        <div className={`min-h-11 p-2 text-center font-semibold mb-3 rounded-lg px-4 ${message.type === "error" && "bg-errorBg text-errorColor"} ${message.type === "success" && "bg-[#E7F2E2] text-[#2E6E0D]"} ${(message.type === "warning" || message.type === 'info') && "bg-[#FFF7E5] text-[#8B6105"}`}>
                                             {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
+                                            <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt=""src={closeIcon} />
                                             <span className="kc-feedback-text"
                                                 dangerouslySetInnerHTML={{
                                                     "__html": message.summary

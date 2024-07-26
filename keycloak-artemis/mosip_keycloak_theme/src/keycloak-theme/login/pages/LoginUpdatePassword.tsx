@@ -9,6 +9,7 @@ import ToolTip from "./shared/Tooltip";
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
 import eyeIconOff from '../assets/visibility_off.svg';
 import error from '../assets/error.svg';
+import closeIcon from '../assets/close_icon.svg';
 
 type PasswordUpdate = {
     'password-new': string;
@@ -23,6 +24,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     const [isReloadBtn, setReloadBtn] = useState(false);
     const [newPasswordData, getNewPasswordData] = useState<PasswordUpdate>({"password-new":"", "password-confirm":""});
     const [isSamePassword, checkisSamePassword] = useState(false);
+    const [openErrTab, getOpenErrTab] = useState(true);
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
@@ -78,11 +80,12 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             }
         >
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
-                {(message !== undefined && message.type !== 'warning')&& (
-                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 font-inter'>
+                {(message !== undefined && message.type !== 'warning' && openErrTab) && (
+                    <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 font-inter rounded-lg px-4'>
                         {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
+                        <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt=""src={closeIcon} />
                         <span className="kc-feedback-text"
                             dangerouslySetInnerHTML={{
                                 "__html": message.summary
