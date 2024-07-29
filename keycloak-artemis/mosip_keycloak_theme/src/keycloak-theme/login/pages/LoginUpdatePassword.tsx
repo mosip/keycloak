@@ -63,7 +63,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     }
 
     window.onbeforeunload = function() {
-        if(!isReloadBtn){
+        if(!isReloadBtn && !localStorage.getItem("isLocaleopen")){
             return 'Do you want to leave this page?'
         }
     }

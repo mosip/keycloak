@@ -26,7 +26,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     const [isReloadBtn, setReloadBtn] = useState(false);
 
     window.onbeforeunload = function() {
-        if(!isReloadBtn){
+        if(!isReloadBtn && !localStorage.getItem("isLocaleopen")){
             return 'Do you want to leave this page?'
         }
     }
@@ -106,7 +106,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     <div className={(getClassName("kcFormOptionsWrapperClass"), 'text-center font-inter')}>
                         <span>
                             <p className="inline">{msg('rememberPW')}</p>
-                            <a href={url.loginUrl} className="text-hLinkColor font-bold text-xl"> {msg("doLogIn")}</a>
+                            <a href={url.loginUrl} onClick={() => setReloadBtn(true)} className="text-hLinkColor font-bold text-xl"> {msg("doLogIn")}</a>
                         </span>
                     </div>
                 </div>
