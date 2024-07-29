@@ -39,7 +39,7 @@ export const { useI18n } = createUseI18n({
         passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character, and at least one number.",
         inputErrorMsg: "Please enter",
         orgInfoMsg: "Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate",
-        existingEmailErr: "The provided email address is already registered. Please provide a different email address.",
+        existingEmailErr: "Email already exists.",
         invalidEmailErr: "Invalid email address.",
         passwordConditions: "Password does not meet the minimum requirements. Please try again.",
         passwordNotMatch: "Password and Confirm password do not match. Try again.",
@@ -94,7 +94,8 @@ export const { useI18n } = createUseI18n({
         and: "and",
         invalidInput: "Entered Invalid characters. Only letters and spaces are allowed.",
         UpdateDetailsDesc: "Please fill in the below fields to register as partner.",
-        loginProfileTitle: "Update Account Information"
+        loginProfileTitle: "Update Account Information",
+        emailExistsMessage: "The provided email address is already registered. Please provide a different email address."
     },
     fr: {
         /* spell-checker: disable */
@@ -129,7 +130,7 @@ export const { useI18n } = createUseI18n({
         passwordInfo: "Utilisez 8 caractères ou plus avec au moins un alphabet majuscule et minuscule, au moins un caractère spécial et au moins un chiffre.",
         inputErrorMsg: "Entrez s'il vous plait",
         orgInfoMsg: "Entrez le nom de l'organisation tel que mentionné dans l'ATTRIBUT DE L'ORGANISATION du SUJET DU CERTIFICAT dans le certificat signé par l'autorité de certification.",
-        existingEmailErr: "LL'adresse e-mail fournie est déjà enregistrée. S'il vous plait entrez une adresse email différente.",
+        existingEmailErr: "L'email existe déjà.",
         invalidEmailErr: "Adresse e-mail invalide.",
         passwordConditions: "Le mot de passe ne répond pas aux exigences minimales. Veuillez réessayer.",
         passwordNotMatch: "Mot de passe et Confirmer le mot de passe ne correspondent pas. Essayer à nouveau.",
@@ -184,7 +185,8 @@ export const { useI18n } = createUseI18n({
         and: "et",
         invalidInput: "Caractères saisis non valides. Seules les lettres et les espaces sont autorisés.",
         UpdateDetailsDesc: "Veuillez remplir les champs ci-dessous pour vous inscrire en tant que partenaire.",
-        loginProfileTitle: "Mettre à jour les informations du compte"
+        loginProfileTitle: "Mettre à jour les informations du compte",
+        emailExistsMessage: "LL'adresse e-mail fournie est déjà enregistrée. S'il vous plait entrez une adresse email différente."
         /* spell-checker: enable */
     },
     ar: {
@@ -219,7 +221,7 @@ export const { useI18n } = createUseI18n({
         passwordInfo: "استخدم 8 أحرف أو أكثر مع أبجدية كبيرة وصغيرة واحدة على الأقل، وحرف خاص واحد على الأقل، ورقم واحد على الأقل.",
         inputErrorMsg: "تفضل",
         orgInfoMsg: "أدخل اسم المؤسسة كما هو مذكور في سمة المنظمة لموضوع الشهادة في الشهادة الموقعة من CA",
-        existingEmailErr: "عنوان البريد الإلكتروني المقدم مسجل بالفعل. يرجى تقديم عنوان بريد إلكتروني مختلف.",
+        existingEmailErr: "البريد الالكتروني موجود بالفعل.",
         invalidEmailErr: "عنوان البريد الإلكتروني غير صالح.",
         passwordConditions: "كلمة المرور لا تلبي الحد الأدنى من المتطلبات. حاول مرة اخرى.",
         passwordNotMatch: "كلمة المرور وتأكيد كلمة المرور غير متطابقين. حاول ثانية.",
@@ -274,7 +276,8 @@ export const { useI18n } = createUseI18n({
         and: "و",
         invalidInput: "تم إدخال أحرف غير صالحة. يُسمح فقط بالأحرف والمسافات.",
         UpdateDetailsDesc: "يرجى ملء الحقول أدناه للتسجيل كشريك.",
-        loginProfileTitle: "تحديث معلومات الحساب"
+        loginProfileTitle: "تحديث معلومات الحساب",
+        emailExistsMessage: "عنوان البريد الإلكتروني المقدم مسجل بالفعل. يرجى تقديم عنوان بريد إلكتروني مختلف."
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -308,7 +311,7 @@ export const { useI18n } = createUseI18n({
         passwordInfo: "कम से कम एक अपरकेस और लोअरकेस वर्णमाला, कम से कम एक विशेष वर्ण और कम से कम एक संख्या के साथ 8 या अधिक वर्णों का उपयोग करें।",
         inputErrorMsg: "कृपया दर्ज करें",
         orgInfoMsg: "संगठन का नाम दर्ज करें जैसा कि सीए हस्ताक्षरित प्रमाणपत्र के प्रमाणपत्र विषय में संगठन विशेषता में उल्लिखित है",
-        existingEmailErr: "प्रदान किया गया ईमेल पता पहले से ही पंजीकृत है। कृपया एक अन्य ईमेल पता उपलब्ध कराएं।",
+        existingEmailErr: "ईमेल पहले से ही मौजूद है।",
         invalidEmailErr: "अवैध ईमेल पता।",
         passwordConditions: "पासवर्ड न्यूनतम आवश्यकताओं को पूरा नहीं करता है। कृपया पुनः प्रयास करें।",
         passwordNotMatch: "पासवर्ड और पुष्टिकरण पासवर्ड मेल नहीं खाते। पुनः प्रयास करें।",
@@ -363,7 +366,8 @@ export const { useI18n } = createUseI18n({
         and: "और",
         invalidInput: "अमान्य वर्ण दर्ज किए गए. केवल अक्षर और रिक्त स्थान की अनुमति है.",
         UpdateDetailsDesc: "भागीदार के रूप में पंजीकरण करने के लिए कृपया नीचे दिए गए फ़ील्ड भरें।",
-        loginProfileTitle: "लेखा जानकारी को अद्यतन बनाएं"
+        loginProfileTitle: "लेखा जानकारी को अद्यतन बनाएं",
+        emailExistsMessage: "प्रदान किया गया ईमेल पता पहले से ही पंजीकृत है। कृपया एक अन्य ईमेल पता उपलब्ध कराएं।"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -397,7 +401,7 @@ export const { useI18n } = createUseI18n({
         passwordInfo: "குறைந்தபட்சம் ஒரு பெரிய மற்றும் சிறிய எழுத்துக்கள், குறைந்தபட்சம் ஒரு சிறப்பு எழுத்து மற்றும் குறைந்தபட்சம் ஒரு எண்ணுடன் 8 அல்லது அதற்கு மேற்பட்ட எழுத்துக்களைப் பயன்படுத்தவும்.",
         inputErrorMsg: "உள்ளிடவும்",
         orgInfoMsg: "CA கையெழுத்திடப்பட்ட சான்றிதழில் சான்றிதழ் பொருள் ORGANISATION ATTRIBUTE ல் குறிப்பிடப்பட்டுள்ளபடி அமைப்பின் பெயரை உள்ளிடவும்",
-        existingEmailErr: "வழங்கப்பட்ட மின்னஞ்சல் முகவரி ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது. தயவுசெய்து வேறு மின்னஞ்சல் முகவரியை வழங்கவும்.",
+        existingEmailErr: "மின்னஞ்சல் ஏற்கனவே உள்ளது.",
         invalidEmailErr: "தவறான மின்னஞ்சல் முகவரி.",
         passwordConditions: "கடவுச்சொல் குறைந்தபட்ச தேவைகளை பூர்த்தி செய்யவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.",
         passwordNotMatch: "கடவுச்சொல் மற்றும் உறுதிசெய்யும் கடவுச்சொல் பொருந்தவில்லை. மீண்டும் முயற்சிக்கவும்.",
@@ -452,7 +456,8 @@ export const { useI18n } = createUseI18n({
         and: "மற்றும்",
         invalidInput: "தவறான எழுத்துகள் உள்ளிடப்பட்டுள்ளன. கடிதங்கள் மற்றும் இடைவெளிகள் மட்டுமே அனுமதிக்கப்படுகின்றன.",
         UpdateDetailsDesc: "கூட்டாளராக பதிவு செய்ய கீழே உள்ள புலங்களை நிரப்பவும்.",
-        loginProfileTitle: "கணக்குத் தகவலைப் புதுப்பிக்கவும்"
+        loginProfileTitle: "கணக்குத் தகவலைப் புதுப்பிக்கவும்",
+        emailExistsMessage: "வழங்கப்பட்ட மின்னஞ்சல் முகவரி ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது. தயவுசெய்து வேறு மின்னஞ்சல் முகவரியை வழங்கவும்."
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -486,7 +491,7 @@ export const { useI18n } = createUseI18n({
         passwordInfo: "ಕನಿಷ್ಠ ಒಂದು ದೊಡ್ಡ ಮತ್ತು ಲೋವರ್ ಕೇಸ್ ವರ್ಣಮಾಲೆಯೊಂದಿಗೆ 8 ಅಥವಾ ಹೆಚ್ಚಿನ ಅಕ್ಷರಗಳನ್ನು ಬಳಸಿ, ಕನಿಷ್ಠ ಒಂದು ವಿಶೇಷ ಅಕ್ಷರ ಮತ್ತು ಕನಿಷ್ಠ ಒಂದು ಸಂಖ್ಯೆ.",
         inputErrorMsg: "ದಯವಿಟ್ಟು ನಮೂದಿಸಿ",
         orgInfoMsg: "CA ಸಹಿ ಮಾಡಿದ ಪ್ರಮಾಣಪತ್ರದಲ್ಲಿ ಪ್ರಮಾಣಪತ್ರ ವಿಷಯದ ORGANISATION ATTRIBUTE ನಲ್ಲಿ ಉಲ್ಲೇಖಿಸಿದಂತೆ ಸಂಸ್ಥೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
-        existingEmailErr: "ಒದಗಿಸಿದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಬೇರೆ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಒದಗಿಸಿ.",
+        existingEmailErr: "ಇಮೇಲ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ.",
         invalidEmailErr: "ಅಮಾನ್ಯವಾದ ಇಮೇಲ್ ವಿಳಾಸ.",
         passwordConditions: "ಪಾಸ್ವರ್ಡ್ ಕನಿಷ್ಠ ಅಗತ್ಯಗಳನ್ನು ಪೂರೈಸುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.",
         passwordNotMatch: "ಪಾಸ್ವರ್ಡ್ ಮತ್ತು ದೃಢೀಕರಣ ಪಾಸ್ವರ್ಡ್ ಹೊಂದುವುದಿಲ್ಲ. ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.",
@@ -541,7 +546,8 @@ export const { useI18n } = createUseI18n({
         and: "ಮತ್ತು",
         invalidInput: "ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ. ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಥಳಗಳನ್ನು ಮಾತ್ರ ಅನುಮತಿಸಲಾಗಿದೆ.",
         UpdateDetailsDesc: "ಪಾಲುದಾರರಾಗಿ ನೋಂದಾಯಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ.",
-        loginProfileTitle: "ಖಾತೆ ಮಾಹಿತಿಯನ್ನು ನವೀಕರಿಸಿ"
+        loginProfileTitle: "ಖಾತೆ ಮಾಹಿತಿಯನ್ನು ನವೀಕರಿಸಿ",
+        emailExistsMessage: "ಒದಗಿಸಿದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಬೇರೆ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಒದಗಿಸಿ."
     }
        
 });
