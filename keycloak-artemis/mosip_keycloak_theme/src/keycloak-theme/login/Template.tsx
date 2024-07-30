@@ -13,7 +13,7 @@ import langIcon from './assets/language_FILL0_wght300_GRAD0_opsz24.svg';
 import polygon from './assets/Polygon.svg';
 import polygonRev from './assets/Polygon2.svg';
 import rightTick from './assets/check_circle_FILL0_wght400_GRAD0_opsz48.svg';
-import closeIcon from './assets/close_icon.svg'
+import closeIcon from './assets/close_icon.svg';
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -54,6 +54,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     });
 
     useEffect(() => {
+        if(localStorage.getItem("isLocaleopen")){
+            localStorage.removeItem("isLocaleopen")
+        }
         console.log(`Value of MY_ENV_VARIABLE on the Keycloak server: "${kcContext.properties.MY_ENV_VARIABLE}"`);
     }, []);
 
@@ -69,7 +72,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <div> {realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1 && (
                     <div id="kc-locale">
                         <div id="kc-locale-wrapper" className={getClassName("kcLocaleWrapperClass")}>
-                            <div onMouseOver={() => { setLocaleOpen(true) }} onMouseOut={() => { setLocaleOpen(false) }} className="kc-dropdown flex flex-row content-center" id="kc-locale-dropdown">
+                            <div onMouseOver={() => { setLocaleOpen(true); localStorage.setItem("isLocaleopen", 'true') }} onMouseOut={() => { setLocaleOpen(false); localStorage.removeItem("isLocaleopen") }} className="kc-dropdown flex flex-row content-center" id="kc-locale-dropdown">
                                 <img alt="langIcon" src={langIcon} />
                                 <a className="font-semibold text-xl mx-2" href="#" id="kc-current-locale-link">
                                     {labelBySupportedLanguageTag[currentLanguageTag]}

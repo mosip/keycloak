@@ -53,7 +53,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     });
 
     window.onbeforeunload = function() {
-        if(!isReloadBtn){
+        if(!isReloadBtn && !localStorage.getItem("isLocaleopen")){
             return 'Do you want to leave this page?'
         }
     }
