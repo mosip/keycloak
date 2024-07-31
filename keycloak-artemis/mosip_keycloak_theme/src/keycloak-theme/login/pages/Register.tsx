@@ -192,7 +192,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     }
 
     const onlyNumbers = (event:any) =>{
-        if((["e", "E", "+", "-"].includes(event.key) || !/^\d+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight"){
+        if((["e", "E"].includes(event.key) || !/^[+\d().-]+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight"){
             event.preventDefault()
         }
     }
