@@ -43,7 +43,7 @@ export type KcContextExtension =
 						}
 					}
 				};
-				organisationName:{
+				orgName:{
 					validators:{
 						options:{
 							options: string[]
