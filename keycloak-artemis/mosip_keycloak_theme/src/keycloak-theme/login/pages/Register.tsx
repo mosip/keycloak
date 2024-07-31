@@ -40,7 +40,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
-    const organisationData = register?.attributesByName?.organisationName?.validators?.options?.options;
+    const organisationData = register?.attributesByName?.orgName?.validators?.options?.options;
     const max = Number(register?.attributesByName?.username?.validators.length?.max);
     const min = Number(register?.attributesByName?.username?.validators.length?.min);
 
@@ -55,7 +55,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [confPasswordMatch, checkConfPasswordMatch] = useState(false);
     const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
     const [isReloadBtn, setReloadBtn] = useState(false);
-    const [minMaxLength, checkminMaxLength] = useState(false);
+    const [minLength, checkminLength] = useState(false);
+    const [maxLength, checkMaxLength] = useState(false);
     const [invalidFirstName, checkInvalidFirstName] = useState(false);
     const [invalidLastName, checkInvalidLastName] = useState(false);
     const [errorMessage, setErrorMsg] = useState({...message});
@@ -149,7 +150,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
         if(name === 'username' && finalValue){
             userNamePattern.test(finalValue) ? checkInvalidUserName(false) : checkInvalidUserName(true);
-            (finalValue.length < (Number(min)) || finalValue.length > (Number(max) -1 )) ? checkminMaxLength(true) : checkminMaxLength(false);
+            finalValue.length < (Number(min)) ? checkminLength(true) : checkminLength(false);
+            finalValue.length === (Number(max)) ? checkMaxLength(true) : checkMaxLength(false);
         }
 
         if(name === 'firstName' && finalValue){
@@ -189,6 +191,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
     }
 
+    const onlyNumbers = (event:any) =>{
+        if((["e", "E"].includes(event.key) || !/^[+\d().-]+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight"){
+            event.preventDefault()
+        }
+    }
 
     window.addEventListener("click", (e) => {
         if (orgDropdown && !menuRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {
@@ -466,6 +473,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             onBlur={handleFormData}
                             defaultValue={register.formData.phoneNumber ?? ""}
                             autoComplete="off"
+                            min="0"
+                            onKeyDown={onlyNumbers}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {(invalidPhoneNo && dummyFormData.phoneNumber !== '')&& <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
@@ -492,10 +501,10 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <input
                                 type="text"
                                 id="username"
-                                className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.username === '' || invalidUserName || minMaxLength) ? 'shadow-errorShadow border-[#C61818]' : 'border-bColor'}`)}
+                                className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.username === '' || invalidUserName || minLength) ? 'shadow-errorShadow border-[#C61818]' : 'border-bColor'}`)}
                                 name="username"
                                 placeholder={msgStr("userNamePH")}
-                                onBlur={handleFormData}
+                                onChange={handleFormData}
                                 defaultValue={register.formData.username ?? ""}
                                 autoComplete="off"
                                 maxLength={Number(max)}
@@ -503,7 +512,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                                 {dummyFormData.username === '' && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("username")}</span></span>}
                                 {(invalidUserName && dummyFormData.username !== '') && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('invalidUserName')}</span></span>}
-                                {minMaxLength && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('lengthErrMessage')} {min} {msg('and')} {max}</span></span>}
+                                {(minLength && dummyFormData.username !== '') && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('lengthErrMessage')} {min} {msg('and')} {max}</span></span>}
+                                {maxLength && <span className="flex items-center text-[#8B6105]">{msg('maxLengthErrMsg')}&nbsp;{max}&nbsp;{msg('charactersText')}</span>}
                             </span>}
                         </div>
                     </div>
@@ -607,7 +617,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             type="submit"
                             value={msgStr("doRegister")}
                             onClick={() => setReloadBtn(true)}
-                            disabled={!dummyFormData.firstName || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || confPasswordMatch || invalidFirstName || invalidLastName || minMaxLength}
+                            disabled={!dummyFormData.firstName || !dummyFormData.username || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || confPasswordMatch || invalidFirstName || invalidLastName || minLength}
                         />
                     </div>
                 </div>

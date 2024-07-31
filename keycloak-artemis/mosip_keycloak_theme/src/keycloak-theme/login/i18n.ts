@@ -26,7 +26,7 @@ export const { useI18n } = createUseI18n({
         backToLogin: "Back",
         firstNamePH: "Enter First Name",
         lastNamePH: "Enter Last Name",
-        orgnamePH: "Enter Organisation Name",
+        orgnamePH: "Enter Organization Name",
         addressPH: "Enter Address",
         emailPH: "Enter Email Address",
         phoneNumberPH: "Enter Phone Number",
@@ -95,7 +95,15 @@ export const { useI18n } = createUseI18n({
         invalidInput: "Entered Invalid characters. Only letters and spaces are allowed.",
         UpdateDetailsDesc: "Please fill in the below fields to register as partner.",
         loginProfileTitle: "Update Account Information",
-        emailExistsMessage: "The provided email address is already registered. Please provide a different email address."
+        emailExistsMessage: "The provided email address is already registered. Please provide a different email address.",
+        maxLengthErrMsg: "Maximum length allowed is",
+        charactersText: "characters",
+        invalidPasswordMinLengthMessage: "Invalid password: minimum length must be {0}.",
+        invalidPasswordMaxLengthMessage: "Invalid password: maximum length allowed is {0}.",
+        invalidPasswordMinDigitsMessage: "Invalid password: must contain at least {0} numerical digits.",
+        invalidPasswordMinLowerCaseCharsMessage: "Invalid password: must contain at least {0} lower case characters.",
+        invalidPasswordMinUpperCaseCharsMessage: "Invalid password: must contain at least {0} upper case characters.",
+        invalidPasswordMinSpecialCharsMessage: "Invalid password: must contain at least {0} special characters."
     },
     fr: {
         /* spell-checker: disable */
@@ -186,7 +194,15 @@ export const { useI18n } = createUseI18n({
         invalidInput: "Caractères saisis non valides. Seules les lettres et les espaces sont autorisés.",
         UpdateDetailsDesc: "Veuillez remplir les champs ci-dessous pour vous inscrire en tant que partenaire.",
         loginProfileTitle: "Mettre à jour les informations du compte",
-        emailExistsMessage: "LL'adresse e-mail fournie est déjà enregistrée. S'il vous plait entrez une adresse email différente."
+        emailExistsMessage: "LL'adresse e-mail fournie est déjà enregistrée. S'il vous plait entrez une adresse email différente.",
+        maxLengthErrMsg: "La longueur maximale autorisée est",
+        charactersText: "personnages",
+        invalidPasswordMinLengthMessage: "Mot de passe invalide : la longueur minimale doit être de {0}.",
+        invalidPasswordMaxLengthMessage: "Mot de passe invalide : la longueur maximale autorisée est de {0}.",
+        invalidPasswordMinDigitsMessage: "Mot de passe invalide : doit contenir au moins {0} chiffres.",
+        invalidPasswordMinLowerCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères minuscules.",
+        invalidPasswordMinUpperCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères majuscules.",
+        invalidPasswordMinSpecialCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères spéciaux."
         /* spell-checker: enable */
     },
     ar: {
@@ -277,7 +293,15 @@ export const { useI18n } = createUseI18n({
         invalidInput: "تم إدخال أحرف غير صالحة. يُسمح فقط بالأحرف والمسافات.",
         UpdateDetailsDesc: "يرجى ملء الحقول أدناه للتسجيل كشريك.",
         loginProfileTitle: "تحديث معلومات الحساب",
-        emailExistsMessage: "عنوان البريد الإلكتروني المقدم مسجل بالفعل. يرجى تقديم عنوان بريد إلكتروني مختلف."
+        emailExistsMessage: "عنوان البريد الإلكتروني المقدم مسجل بالفعل. يرجى تقديم عنوان بريد إلكتروني مختلف.",
+        maxLengthErrMsg: "الحد الأقصى للطول المسموح به هو",
+        charactersText: "الشخصيات",
+        invalidPasswordMinLengthMessage: "كلمة المرور غير صالحة: يجب أن يكون الحد الأدنى للطول {0}.",
+        invalidPasswordMaxLengthMessage: "كلمة المرور غير صالحة: الحد الأقصى المسموح به للطول هو {0}.",
+        invalidPasswordMinDigitsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أرقام.",
+        invalidPasswordMinLowerCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف صغيرة.",
+        invalidPasswordMinUpperCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف كبيرة.",
+        invalidPasswordMinSpecialCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف خاصة."
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -367,7 +391,15 @@ export const { useI18n } = createUseI18n({
         invalidInput: "अमान्य वर्ण दर्ज किए गए. केवल अक्षर और रिक्त स्थान की अनुमति है.",
         UpdateDetailsDesc: "भागीदार के रूप में पंजीकरण करने के लिए कृपया नीचे दिए गए फ़ील्ड भरें।",
         loginProfileTitle: "लेखा जानकारी को अद्यतन बनाएं",
-        emailExistsMessage: "प्रदान किया गया ईमेल पता पहले से ही पंजीकृत है। कृपया एक अन्य ईमेल पता उपलब्ध कराएं।"
+        emailExistsMessage: "प्रदान किया गया ईमेल पता पहले से ही पंजीकृत है। कृपया एक अन्य ईमेल पता उपलब्ध कराएं।",
+        maxLengthErrMsg: "अनुमत अधिकतम लंबाई है",
+        charactersText: "पात्र",
+        invalidPasswordMinLengthMessage: "अमान्य पासवर्ड: न्यूनतम लंबाई {0} होनी चाहिए।",
+        invalidPasswordMaxLengthMessage: "अमान्य पासवर्ड: अधिकतम लंबाई {0} हो सकती है।",
+        invalidPasswordMinDigitsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} अंक होने चाहिए।",
+        invalidPasswordMinLowerCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} छोटे अक्षर होने चाहिए।",
+        invalidPasswordMinUpperCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} बड़े अक्षर होने चाहिए।",
+        invalidPasswordMinSpecialCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} विशेष अक्षर होने चाहिए।"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -457,7 +489,15 @@ export const { useI18n } = createUseI18n({
         invalidInput: "தவறான எழுத்துகள் உள்ளிடப்பட்டுள்ளன. கடிதங்கள் மற்றும் இடைவெளிகள் மட்டுமே அனுமதிக்கப்படுகின்றன.",
         UpdateDetailsDesc: "கூட்டாளராக பதிவு செய்ய கீழே உள்ள புலங்களை நிரப்பவும்.",
         loginProfileTitle: "கணக்குத் தகவலைப் புதுப்பிக்கவும்",
-        emailExistsMessage: "வழங்கப்பட்ட மின்னஞ்சல் முகவரி ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது. தயவுசெய்து வேறு மின்னஞ்சல் முகவரியை வழங்கவும்."
+        emailExistsMessage: "வழங்கப்பட்ட மின்னஞ்சல் முகவரி ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது. தயவுசெய்து வேறு மின்னஞ்சல் முகவரியை வழங்கவும்.",
+        maxLengthErrMsg: "அனுமதிக்கப்பட்ட அதிகபட்ச நீளம்",
+        charactersText: "பாத்திரங்கள்",
+        invalidPasswordMinLengthMessage: "தவறான கடவுச்சொல்: குறைந்தபட்ச நீளம் {0} ஆக இருக்க வேண்டும்.",
+        invalidPasswordMaxLengthMessage: "தவறான கடவுச்சொல்: அதிகபட்ச நீளம் {0} ஆக இருக்க அனுமதிக்கப்படுகிறது.",
+        invalidPasswordMinDigitsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} இலக்கங்கள் இருக்க வேண்டும்.",
+        invalidPasswordMinLowerCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறிய எழுத்துக்கள் இருக்க வேண்டும்.",
+        invalidPasswordMinUpperCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} பெரிய எழுத்துக்கள் இருக்க வேண்டும்.",
+        invalidPasswordMinSpecialCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறப்பு எழுத்துக்கள் இருக்க வேண்டும்."
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -547,7 +587,15 @@ export const { useI18n } = createUseI18n({
         invalidInput: "ಅಮಾನ್ಯ ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಲಾಗಿದೆ. ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಥಳಗಳನ್ನು ಮಾತ್ರ ಅನುಮತಿಸಲಾಗಿದೆ.",
         UpdateDetailsDesc: "ಪಾಲುದಾರರಾಗಿ ನೋಂದಾಯಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ.",
         loginProfileTitle: "ಖಾತೆ ಮಾಹಿತಿಯನ್ನು ನವೀಕರಿಸಿ",
-        emailExistsMessage: "ಒದಗಿಸಿದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಬೇರೆ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಒದಗಿಸಿ."
+        emailExistsMessage: "ಒದಗಿಸಿದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಬೇರೆ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಒದಗಿಸಿ.",
+        maxLengthErrMsg: "ಅನುಮತಿಸಲಾದ ಗರಿಷ್ಠ ಉದ್ದ",
+        charactersText: "ಪಾತ್ರಗಳು",
+        invalidPasswordMinLengthMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ ಉದ್ದ {0} ಇರಬೇಕು.",
+        invalidPasswordMaxLengthMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಗರಿಷ್ಠ ಉದ್ದ {0} ಇರಲು ಅನುಮತಿಸಲಾಗಿದೆ.",
+        invalidPasswordMinDigitsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ಸಂಖ್ಯೆಗಳು ಇರಬೇಕು.",
+        invalidPasswordMinLowerCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ಸಣ್ಣ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
+        invalidPasswordMinUpperCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ದೊಡ್ಡ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
+        invalidPasswordMinSpecialCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ವಿಶೇಷ ಅಕ್ಷರಗಳು ಇರಬೇಕು."
     }
        
 });
