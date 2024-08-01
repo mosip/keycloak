@@ -80,6 +80,7 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "Forgot Password?",
         password: "Password",
+        confPassword: "Confirm Password",
         doRegister: "Register",
         registerTitle: "Register",
         username: "Username",
@@ -103,7 +104,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinDigitsMessage: "Invalid password: must contain at least {0} numerical digits.",
         invalidPasswordMinLowerCaseCharsMessage: "Invalid password: must contain at least {0} lower case characters.",
         invalidPasswordMinUpperCaseCharsMessage: "Invalid password: must contain at least {0} upper case characters.",
-        invalidPasswordMinSpecialCharsMessage: "Invalid password: must contain at least {0} special characters."
+        invalidPasswordMinSpecialCharsMessage: "Invalid password: must contain at least {0} special characters.",
+        usernameExistsMessage: "Username already exists. Enter a different username"
     },
     fr: {
         /* spell-checker: disable */
@@ -179,6 +181,7 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "Mot de passe oublié?",
         password: "Mot de passe",
+        confPassword: "Confirmez le mot de passe",
         doRegister: "Registre",
         registerTitle: "Registre",
         username: "Nom d'utilisateur",
@@ -202,7 +205,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinDigitsMessage: "Mot de passe invalide : doit contenir au moins {0} chiffres.",
         invalidPasswordMinLowerCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères minuscules.",
         invalidPasswordMinUpperCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères majuscules.",
-        invalidPasswordMinSpecialCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères spéciaux."
+        invalidPasswordMinSpecialCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères spéciaux.",
+        usernameExistsMessage: "Ce nom d'utilisateur existe déjà. Entrez un autre nom d'utilisateur"
         /* spell-checker: enable */
     },
     ar: {
@@ -278,6 +282,7 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "هل نسيت كلمة السر؟",
         password: "كلمة المرور",
+        confPassword: "تأكيد كلمة المرور",
         doRegister: "يسجل",
         registerTitle: "يسجل",
         username: "اسم المستخدم",
@@ -301,7 +306,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinDigitsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أرقام.",
         invalidPasswordMinLowerCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف صغيرة.",
         invalidPasswordMinUpperCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف كبيرة.",
-        invalidPasswordMinSpecialCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف خاصة."
+        invalidPasswordMinSpecialCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف خاصة.",
+        usernameExistsMessage: "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلف"
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -376,6 +382,7 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "पासवर्ड भूल गए?",
         password: "पासवर्ड",
+        confPassword: "पासवर्ड की पुष्टि कीजिये",
         doRegister: "पंजीकरण करवाना",
         registerTitle: "पंजीकरण करवाना",
         username: "उपयोगकर्ता नाम",
@@ -399,7 +406,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinDigitsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} अंक होने चाहिए।",
         invalidPasswordMinLowerCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} छोटे अक्षर होने चाहिए।",
         invalidPasswordMinUpperCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} बड़े अक्षर होने चाहिए।",
-        invalidPasswordMinSpecialCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} विशेष अक्षर होने चाहिए।"
+        invalidPasswordMinSpecialCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} विशेष अक्षर होने चाहिए।",
+        usernameExistsMessage: "उपयोगकर्ता का नाम पहले से मौजूद है। कोई भिन्न उपयोक्तानाम दर्ज करें"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -474,6 +482,7 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
         password: "கடவுச்சொல்",
+        confPassword: "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
         doRegister: "பதிவு",
         registerTitle: "பதிவு",
         username: "பயனர் பெயர்",
@@ -497,7 +506,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinDigitsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} இலக்கங்கள் இருக்க வேண்டும்.",
         invalidPasswordMinLowerCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறிய எழுத்துக்கள் இருக்க வேண்டும்.",
         invalidPasswordMinUpperCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} பெரிய எழுத்துக்கள் இருக்க வேண்டும்.",
-        invalidPasswordMinSpecialCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறப்பு எழுத்துக்கள் இருக்க வேண்டும்."
+        invalidPasswordMinSpecialCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறப்பு எழுத்துக்கள் இருக்க வேண்டும்.",
+        usernameExistsMessage: "பெயர் ஏற்கனவே உள்ளது. வேறு பயனர்பெயரை உள்ளிடவும்"
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -572,6 +582,7 @@ export const { useI18n } = createUseI18n({
         locale_kan: "ಕನ್ನಡ",
         doForgotPassword: "ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರಾ?",
         password: "ಗುಪ್ತಪದ",
+        confPassword: "ಪಾಸ್ವರ್ಡ್ ದೃಢೀಕರಿಸಿ",
         doRegister: "ನೋಂದಣಿ",
         registerTitle: "ನೋಂದಣಿ",
         username: "ಬಳಕೆದಾರ ಹೆಸರು",
@@ -595,7 +606,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinDigitsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ಸಂಖ್ಯೆಗಳು ಇರಬೇಕು.",
         invalidPasswordMinLowerCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ಸಣ್ಣ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
         invalidPasswordMinUpperCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ದೊಡ್ಡ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
-        invalidPasswordMinSpecialCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ವಿಶೇಷ ಅಕ್ಷರಗಳು ಇರಬೇಕು."
+        invalidPasswordMinSpecialCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ವಿಶೇಷ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
+        usernameExistsMessage: "ಬಳಕೆದಾರಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ಬೇರೆ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
     }
        
 });
