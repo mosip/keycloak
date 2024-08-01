@@ -61,6 +61,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [invalidLastName, checkInvalidLastName] = useState(false);
     const [errorMessage, setErrorMsg] = useState({...message});
     const [openErrTab, getOpenErrTab] = useState(true);
+    const [invalidOrgValue, checkInvalidOrgVal] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -162,12 +163,15 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             /^[A-Za-z\s]+$/.test(finalValue) ? checkInvalidLastName(false) : checkInvalidLastName(true);
         }
 
-        if (name === 'orgName' && organisationData) {
-            let newOrgData = organisationData.filter(item => {
+        if (name === 'orgName') {
+            checkInvalidOrgVal(!/^[a-zA-Z0-9\- ]*$/.test(finalValue));
+            if(organisationData){
+                let newOrgData = organisationData.filter(item => {
                 if (item.toLowerCase().includes(finalValue.toLowerCase()))
                     return item
-            })
-            setOrgData(newOrgData)
+                })
+                setOrgData(newOrgData)
+            }
         }
 
         addFormDataValue(prevState => ({
@@ -393,6 +397,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             <span className="text-[#8B6105] font-semibold">{msg('orgInfoMsg')}</span>
                         </div>
                         {dummyFormData.orgName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("orgName")}</span></span>}
+                        {invalidOrgValue && dummyFormData.orgName !== '' && <span className="text-[#C61818] mb-0 font-semibold flex items-center font-inter"><img className="inline" alt='' src={error} />&nbsp;<span>{msg('invalidOrgVal')}</span></span>}
                     </div>
                 </div>
 
@@ -528,7 +533,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor flex flex-row items-center mb-1 font-bold font-inter text-xl')}>
-                                    {msg("newPassword")}
+                                    {msg("password")}
                                     <ToolTip tooltip={msgStr('passwordInfo')} dir={locale?.currentLanguageTag}>
                                         <img className="mx-2 cursor-pointer" alt="info" src={info} />
                                     </ToolTip>
@@ -562,7 +567,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             <div className={getClassName("kcLabelWrapperClass")}>
                                 <label htmlFor="password-confirm" className={(getClassName("kcLabelClass"), 'mb-1 font-bold font-inter text-xl text-hTextColor')}>
-                                    {msg("confNewPassword")}
+                                    {msg("confPassword")}
                                 </label>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
@@ -617,7 +622,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             type="submit"
                             value={msgStr("doRegister")}
                             onClick={() => setReloadBtn(true)}
-                            disabled={!dummyFormData.firstName || !dummyFormData.username || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || confPasswordMatch || invalidFirstName || invalidLastName || minLength}
+                            disabled={!dummyFormData.firstName || !dummyFormData.username || !dummyFormData.lastName || !dummyFormData.address || !dummyFormData.email || !dummyFormData.orgName || !dummyFormData.partnerType || !dummyFormData["password-confirm"] || !dummyFormData.password || !dummyFormData.phoneNumber || (recaptchaRequired && !dummyFormData["g-recaptcha-response"]) || invalidEmail || invalidPhoneNo || invalidUserName || confPasswordMatch || invalidFirstName || invalidLastName || minLength || invalidOrgValue}
                         />
                     </div>
                 </div>

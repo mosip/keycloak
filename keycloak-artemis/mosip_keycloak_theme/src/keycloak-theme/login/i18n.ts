@@ -20,7 +20,7 @@ export const { useI18n } = createUseI18n({
         noAccount: "Not a member yet?",
         partnerType: "Partner Type",
         selectAnOption: "Select Partner Type",
-        orgName: "Organisation Name",
+        orgName: "Organization Name",
         address: "Address",
         email: "Email Address",
         backToLogin: "Back",
@@ -105,7 +105,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinLowerCaseCharsMessage: "Invalid password: must contain at least {0} lower case characters.",
         invalidPasswordMinUpperCaseCharsMessage: "Invalid password: must contain at least {0} upper case characters.",
         invalidPasswordMinSpecialCharsMessage: "Invalid password: must contain at least {0} special characters.",
-        usernameExistsMessage: "Username already exists. Enter a different username"
+        usernameExistsMessage: "Username already exists. Enter a different username",
+        invalidOrgVal: "Please Enter valid Organization"
     },
     fr: {
         /* spell-checker: disable */
@@ -206,7 +207,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinLowerCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères minuscules.",
         invalidPasswordMinUpperCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères majuscules.",
         invalidPasswordMinSpecialCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères spéciaux.",
-        usernameExistsMessage: "Ce nom d'utilisateur existe déjà. Entrez un autre nom d'utilisateur"
+        usernameExistsMessage: "Ce nom d'utilisateur existe déjà. Entrez un autre nom d'utilisateur",
+        invalidOrgVal: "Veuillez entrer une organisation valide"
         /* spell-checker: enable */
     },
     ar: {
@@ -307,7 +309,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinLowerCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف صغيرة.",
         invalidPasswordMinUpperCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف كبيرة.",
         invalidPasswordMinSpecialCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف خاصة.",
-        usernameExistsMessage: "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلف"
+        usernameExistsMessage: "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلف",
+        invalidOrgVal: "الرجاء إدخال منظمة صالحة"
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -407,7 +410,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinLowerCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} छोटे अक्षर होने चाहिए।",
         invalidPasswordMinUpperCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} बड़े अक्षर होने चाहिए।",
         invalidPasswordMinSpecialCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} विशेष अक्षर होने चाहिए।",
-        usernameExistsMessage: "उपयोगकर्ता का नाम पहले से मौजूद है। कोई भिन्न उपयोक्तानाम दर्ज करें"
+        usernameExistsMessage: "उपयोगकर्ता का नाम पहले से मौजूद है। कोई भिन्न उपयोक्तानाम दर्ज करें",
+        invalidOrgVal: "कृपया वैध संगठन दर्ज करें"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -507,7 +511,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinLowerCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறிய எழுத்துக்கள் இருக்க வேண்டும்.",
         invalidPasswordMinUpperCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} பெரிய எழுத்துக்கள் இருக்க வேண்டும்.",
         invalidPasswordMinSpecialCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறப்பு எழுத்துக்கள் இருக்க வேண்டும்.",
-        usernameExistsMessage: "பெயர் ஏற்கனவே உள்ளது. வேறு பயனர்பெயரை உள்ளிடவும்"
+        usernameExistsMessage: "பெயர் ஏற்கனவே உள்ளது. வேறு பயனர்பெயரை உள்ளிடவும்",
+        invalidOrgVal: "சரியான நிறுவனத்தை உள்ளிடவும்"
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -607,7 +612,8 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinLowerCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ಸಣ್ಣ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
         invalidPasswordMinUpperCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ದೊಡ್ಡ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
         invalidPasswordMinSpecialCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ವಿಶೇಷ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
-        usernameExistsMessage: "ಬಳಕೆದಾರಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ಬೇರೆ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ"
+        usernameExistsMessage: "ಬಳಕೆದಾರಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ಬೇರೆ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+        invalidOrgVal: "ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಸಂಸ್ಥೆಯನ್ನು ನಮೂದಿಸಿ"
     }
        
 });
