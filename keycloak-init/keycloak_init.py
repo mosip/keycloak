@@ -494,6 +494,28 @@ class KeycloakSession:
 
         self.keycloak_admin.realm_name = 'master' # restore
 
+    def assign_client_role(self, realm, client, role_name, role_description=None):
+        self.keycloak_admin.realm_name = realm
+        try:
+            client_id = self.keycloak_admin.get_client_id(client)
+            role_representation = {
+                "name": role_name,
+                "description": role_description
+            }
+            
+            # Prepare URL and payload for raw_post
+            URL = 'admin/realms/{realm-name}/clients/{client_id}/roles'
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "client-id": client_id}
+            payload = json.dumps(role_representation)
+            
+            # Perform the POST request
+            print(f'Creating role {role_name} for client {client}')
+            data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=payload)
+            return self.raise_error_from_response(data_raw, KeycloakGetError)
+        except Exception as e:
+            self.keycloak_admin.realm_name = 'master'  # restore the realm
+            raise e
+
     def assign_client_roles_to_user(self, realm, username, client, client_roles=None):
         self.keycloak_admin.realm_name = realm
         try:
@@ -723,6 +745,13 @@ def main():
                     print("\tCreating mappers for %s client " % client['name'])
                     for mapper in mappers:
                         ks.create_mapper(realm, client['name'], mapper)
+
+                if 'new_role' in client:
+                    new_role = client('new_role', {})
+                    role_name = new_role('role_name')
+                    role_description = new_roles('role_description')
+                    print("\tCreating new role for %s client " % client['name'])
+                    ks.create_new_role(realm, client['name'], role_name, role_description)
 
                 if 'sa_client_roles' in client:
                     sa_client_roles = client['sa_client_roles']
