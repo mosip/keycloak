@@ -508,7 +508,7 @@ class KeycloakSession:
             params_path = {"realm-name": self.keycloak_admin.realm_name, "client-id": client_id}
             payload = json.dumps(role_representation)
             
-            # Perform the POST request
+            # Perform the POST requests
             print(f'Creating role {role_name} for client {client}')
             data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=payload)
             return self.raise_error_from_response(data_raw, KeycloakGetError)
