@@ -747,9 +747,9 @@ def main():
                         ks.create_mapper(realm, client['name'], mapper)
 
                 if 'new_role' in client:
-                    new_role = client('new_role', {})
-                    role_name = new_role('role_name')
-                    role_description = new_roles('role_description')
+                    new_role = client['new_role']
+                    role_name = new_role['role_name']
+                    role_description = new_roles['role_description']
                     print("\tCreating new role for %s client " % client['name'])
                     ks.create_new_role(realm, client['name'], role_name, role_description)
 
