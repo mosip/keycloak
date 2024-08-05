@@ -511,10 +511,10 @@ class KeycloakSession:
             # Perform the POST requests
             print(f'Creating role {role_name} for client {client}')
             data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=payload)
-            return self.raise_error_from_response(data_raw, KeycloakGetError)
-        except Exception as e:
-            self.keycloak_admin.realm_name = 'master'  # restore the realm
-            raise e
+            return raise_error_from_response(data_raw, KeycloakGetError)
+        except:
+            self.keycloak_admin.realm_name = 'master' # restore
+            raise
 
     def assign_client_roles_to_user(self, realm, username, client, client_roles=None):
         self.keycloak_admin.realm_name = realm
