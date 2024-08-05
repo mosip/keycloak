@@ -26,7 +26,7 @@ export type KcContextExtension =
 				phoneNumber?: string;
 				password?: string;
 				'password-confirm'?: string;
-				'g-recaptcha-response'?: string;
+				'g-recaptcha-response'?: any;
 			};
 			attributesByName:{
 				email: {
