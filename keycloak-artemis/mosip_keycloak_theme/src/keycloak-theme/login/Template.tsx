@@ -1,6 +1,6 @@
 // Copy pasted from: https://github.com/InseeFrLab/keycloakify/blob/main/src/login/Template.tsx
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { assert } from "keycloakify/tools/assert";
 import { clsx } from "keycloakify/tools/clsx";
 import { usePrepareTemplate } from "keycloakify/lib/usePrepareTemplate";
@@ -39,6 +39,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     const [openErrTab, getOpenErrTab] = useState(true);
 
     const { realm, locale, auth, url, message, isAppInitiatedAction, pageId } = kcContext;
+    const langCardRef = useRef<HTMLDivElement>(null);
+
     const { isReady } = usePrepareTemplate({
         "doFetchDefaultThemeResources": doUseDefaultCss,
         "styles": [
@@ -54,17 +56,29 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     });
 
     useEffect(() => {
-        if(localStorage.getItem("isLocaleopen")){
-            localStorage.removeItem("isLocaleopen")
-        }
+        if(localStorage.getItem("isLocaleopen"))
+            localStorage.removeItem("isLocaleopen");
         console.log(`Value of MY_ENV_VARIABLE on the Keycloak server: "${kcContext.properties.MY_ENV_VARIABLE}"`);
     }, []);
+
+    const openLangCard = () =>{
+        setLocaleOpen(!isLocaleOpen);
+        !isLocaleOpen ? localStorage.setItem("isLocaleopen", 'true') : localStorage.removeItem("isLocaleopen");
+    }
 
     if (!isReady) {
         return null;
     }
 
     console.log(kcContext)
+    window.addEventListener("click", (e) => {
+        if (!langCardRef.current?.contains(e.target as Node)) {
+            setLocaleOpen(false)
+            if(localStorage.getItem("isLocaleopen"))
+                localStorage.removeItem("isLocaleopen")
+        }
+    })
+
     return (
         <div className={(getClassName("kcLoginClass"))} dir={currentLanguageTag === 'ar' ? 'rtl' : 'ltr'}>
             <div id="kc-header" className={(getClassName("kcHeaderClass"), 'mb-10 flex flex-row justify-between items-center px-20')}>
@@ -72,7 +86,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <div> {realm.internationalizationEnabled && (assert(locale !== undefined), true) && locale.supported.length > 1 && (
                     <div id="kc-locale">
                         <div id="kc-locale-wrapper" className={getClassName("kcLocaleWrapperClass")}>
-                            <div onMouseOver={() => { setLocaleOpen(true); localStorage.setItem("isLocaleopen", 'true') }} onMouseOut={() => { setLocaleOpen(false); localStorage.removeItem("isLocaleopen") }} className="kc-dropdown flex flex-row content-center" id="kc-locale-dropdown">
+                            <div ref={langCardRef}  onClick={openLangCard} className="kc-dropdown flex flex-row content-center" id="kc-locale-dropdown">
                                 <img alt="langIcon" src={langIcon} />
                                 <a className="font-semibold text-xl mx-2" href="#" id="kc-current-locale-link">
                                     {labelBySupportedLanguageTag[currentLanguageTag]}
