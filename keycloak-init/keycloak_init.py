@@ -505,7 +505,7 @@ class KeycloakSession:
             
             # Prepare URL and payload for raw_post
             URL = 'admin/realms/{realm-name}/clients/{client_id}/roles'
-            params_path = {"realm-name": self.keycloak_admin.realm_name, "client-id": client_id}
+            params_path = {"realm-name": self.keycloak_admin.realm_name, "client_id": client_id}
             payload = json.dumps(role_representation)
             
             # Perform the POST requests
