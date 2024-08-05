@@ -494,14 +494,15 @@ class KeycloakSession:
 
         self.keycloak_admin.realm_name = 'master' # restore
 
-    def assign_client_roles(self, realm, client, role_name, role_description=None):
+    def assign_client_roles(self, realm, client, new_role):
         self.keycloak_admin.realm_name = realm
         try:
             client_id = self.keycloak_admin.get_client_id(client)
-            role_representation = {
-                "name": role_name,
-                "description": role_description
-            }
+            for role in new_role:
+                role_representation = {
+                    "name": role['role_name'],
+                    "description": role['role_description', None]
+                }
             
             # Prepare URL and payload for raw_post
             URL = 'admin/realms/{realm-name}/clients/{client-id}/roles'
@@ -509,7 +510,7 @@ class KeycloakSession:
             payload = json.dumps(role_representation)
             
             # Perform the POST requests
-            print(f'Creating role {role_name} for client {client}')
+            print(f'Creating role {role["name"]} for client {client}')
             data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=payload)
             return raise_error_from_response(data_raw, KeycloakGetError)
         except:
@@ -748,10 +749,8 @@ def main():
 
                 if 'new_role' in client:
                     new_role = client['new_role']
-                    role_name = new_role['role_name']
-                    role_description = new_role['role_description']
                     print("\tCreating new role for %s client " % client['name'])
-                    ks.assign_client_roles(realm, client['name'], role_name, role_description)
+                    ks.assign_client_roles(realm, client['name'], new_role)
 
                 if 'sa_client_roles' in client:
                     sa_client_roles = client['sa_client_roles']
