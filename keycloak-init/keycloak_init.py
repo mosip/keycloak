@@ -494,7 +494,7 @@ class KeycloakSession:
 
         self.keycloak_admin.realm_name = 'master' # restore
 
-    def assign_client_role(self, realm, client, role_name, role_description=None):
+    def assign_client_roles(self, realm, client, role_name, role_description=None):
         self.keycloak_admin.realm_name = realm
         try:
             client_id = self.keycloak_admin.get_client_id(client)
@@ -751,7 +751,7 @@ def main():
                     role_name = new_role['role_name']
                     role_description = new_role['role_description']
                     print("\tCreating new role for %s client " % client['name'])
-                    ks.create_new_role(realm, client['name'], role_name, role_description)
+                    ks.assign_client_roles(realm, client['name'], role_name, role_description)
 
                 if 'sa_client_roles' in client:
                     sa_client_roles = client['sa_client_roles']
