@@ -501,7 +501,7 @@ class KeycloakSession:
             for role in new_role:
                 role_representation = {
                     "name": role["role_name"],
-                    "description": role["role_description", ""]
+                    "description": role.get("role_description", "")
                 }
             
             # Prepare URL and payload for raw_post
