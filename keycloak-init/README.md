@@ -57,7 +57,7 @@ Below is the configuration on how to assign roles to client directly using value
     - name: mosip-test-client  \
       mappers: []  \
       saroles: []
-      new_role:
+      roles:
         - role_name: "test_role1"
           role_description: "This is a new role1 for the client."
         - role_name: "test_role2"
