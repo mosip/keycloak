@@ -746,10 +746,10 @@ def main():
                     for mapper in mappers:
                         ks.create_mapper(realm, client['name'], mapper)
 
-                if 'new_role' in client:
-                    new_role = client['new_role']
+                if 'roles' in client:
+                    roles = client['roles']
                     print("\tCreating new role for %s client " % client['name'])
-                    for role in new_role:
+                    for role in roles:
                         ks.assign_client_roles(realm, client['name'], role)
 
                 if 'sa_client_roles' in client:
