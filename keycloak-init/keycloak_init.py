@@ -500,8 +500,8 @@ class KeycloakSession:
             client_id = self.keycloak_admin.get_client_id(client)
             for role in new_role:
                 role_representation = {
-                    "name": role["name"],
-                    "description": role["description", ""]
+                    "name": role["role_name"],
+                    "description": role["role_description", ""]
                 }
             
             # Prepare URL and payload for raw_post
