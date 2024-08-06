@@ -45,7 +45,26 @@ Keycloak will feature the Mosip theme as the default theme. To apply a customize
 
 Note: We are adding theme as a part of keycloak_init
 
-# Keycloak Client Roles Assignment
+# Keycloak Roles Assignment to Client 
+This "assign_client_roles" method within the script is used to assign roles to clients within a specified realm in Keycloak using keycloak admin API. This method handles retrieving the roles from the values.yaml file, fetching the client ID, and assigning the specified roles within the values.yaml file to the client directly.
+
+Note: Assigning roles to the service account of a client in Keycloak is functionally equivalent to assigning roles directly to the client. The service account acts as the client’s identity within Keycloak, and its roles determine what the client is allowed to do. We need to only specify roles for the client when you want to directly assign roles to client without using service account.
+
+Below is the configuration on how to assign roles to client directly using values.yaml file:
+
+```yaml
+ clients:
+    - name: mosip-test-client  \
+      mappers: []  \
+      saroles: []
+      new_role:
+        - role_name: "test_role1"
+          role_description: "This is a new role1 for the client."
+        - role_name: "test_role2"
+          role_description: "This is a new role2 for the client."
+```
+
+# Keycloak Client Roles Assignment to User
 This "assign_client_roles_to_user" method within the script is designed to assign client roles to a user in a specified realm using the Keycloak admin API. This method handles retrieving the user ID based on the username, fetching the client ID, and assigning the specified roles to the user.
 
 ## Parameters
