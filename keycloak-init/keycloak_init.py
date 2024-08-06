@@ -510,7 +510,7 @@ class KeycloakSession:
             payload = json.dumps(role_representation)
             
             # Perform the POST requests
-            print(f'Creating role {role["name"]} for client {client}')
+            print(f'Creating role {role["role_name"]} for client {client}')
             data_raw = self.keycloak_admin.connection.raw_post(URL.format(**params_path), data=payload)
             return raise_error_from_response(data_raw, KeycloakGetError)
         except:
