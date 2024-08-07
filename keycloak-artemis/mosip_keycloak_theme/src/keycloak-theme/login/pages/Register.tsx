@@ -118,12 +118,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         showPartnerTypeMenu(false)
     }
 
-    const showPassword = () => {
-        passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')
-    }
-
-    const showConfPassword = () => {
-        confPasswordType === 'password' ? setConfPasswordType('text') : setConfPasswordType('password')
+    const showPassword = (fieldType:string) => {
+        if(fieldType === 'password'){
+            passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')
+        }else{
+            confPasswordType === 'password' ? setConfPasswordType('text') : setConfPasswordType('password')
+        }
     }
 
     const displayOrgDropdown = () => {
@@ -167,8 +167,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             checkInvalidOrgVal(!/^[a-zA-Z0-9\- ]*$/.test(finalValue));
             if(organisationData){
                 let newOrgData = organisationData.filter(item => {
-                if (item.toLowerCase().includes(finalValue.toLowerCase()))
-                    return item
+                    if (item.toLowerCase().includes(finalValue.toLowerCase()))
+                        return item
                 })
                 setOrgData(newOrgData)
             }
@@ -196,7 +196,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     }
 
     const onlyNumbers = (event:any) =>{
-        if((["e", "E"].includes(event.key) || !/^[+\d().-]+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight"){
+        if((["e", "E"].includes(event.key) || !/^[+\d().-]+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Tab") {
             event.preventDefault()
         }
     }
@@ -229,6 +229,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }));
     };
 
+    const getTabEvents = (e: any, method: any) => {
+        if (e.key === 'Enter') {
+            return method();
+        }
+    };
+
     const { msg, msgStr } = i18n;
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={
@@ -236,7 +242,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 <div id="kc-form-options">
                     <div className={getClassName("kcFormOptionsWrapperClass")}>
                         <span>
-                            <button onClick={() => setReloadBtn(true)}> <a href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> { locale?.currentLanguageTag === 'ar' ? <img alt="arrow" src={arrowRight} /> :  <img alt="arrow" src={arrow} />}&nbsp;{msg("backToLogin")}</a></button>
+                            <button tabIndex={-1} onClick={() => setReloadBtn(true)}> <a tabIndex={0} href={url.loginUrl} className="flex flex-row items-center text-hLinkColor font-bold text-2xl font-inter"> {locale?.currentLanguageTag === 'ar' ? <img alt="arrow" src={arrowRight} /> : <img alt="arrow" src={arrow} />}&nbsp;{msg("backToLogin")}</a></button>
                         </span>
                     </div>
                 </div>
@@ -264,8 +270,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <label htmlFor="partnerType" className={(getClassName("kcLabelClass"), 'mb-1 font-bold font-inter text-xl text-hTextColor')}>{msg("partnerType")}</label>
                     </div>
                     <div className={getClassName('kcInputWrapperClass')}>
-
-                        <div className={dummyFormData.partnerType === '' ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3' : 'outline-none border border-bColor border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3'}
+                        <div tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => showPartnerTypeMenu(true))} className={dummyFormData.partnerType === '' ? 'shadow-errorShadow border border-[#C61818] border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3' : 'border border-bColor border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3'}
                             onClick={() => {
                                 if (partnerTypesMenu) {
                                     showPartnerTypeMenu(false);
@@ -274,6 +279,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 }
                             }}>
                             <input
+                                tabIndex={-1}
                                 type="text"
                                 id="partnerType"
                                 name="partnerType"
@@ -288,17 +294,17 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         {partnerTypesMenu && (
                             <div ref={partnerTypesMenuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
                                 <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
-                                    <li onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Device Provider</li>
+                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('Device_Provider'))} onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Device Provider</li>
                                     <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">FTM Provider</li>
+                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('FTM_Provider'))} onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">FTM Provider</li>
                                     <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li onClick={() => selectedPartnerTypeValue('Authentication_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Authentication Partner</li>
+                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('Authentication_Partner'))} onClick={() => selectedPartnerTypeValue('Authentication_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Authentication Partner</li>
                                     <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li onClick={() => selectedPartnerTypeValue('Credential_Partner_or_ISP')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Credential Partner or ISP</li>
-                                    <hr className="mx-4 border-[#D8D8D8]"/>
-                                    <li onClick={() => selectedPartnerTypeValue('ABIS_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">ABIS Partner</li>
+                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('Credential_Partner_or_ISP'))} onClick={() => selectedPartnerTypeValue('Credential_Partner_or_ISP')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Credential Partner or ISP</li>
                                     <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li onClick={() => selectedPartnerTypeValue('SDK_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">SDK Partner</li>
+                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('ABIS_Partner'))} onClick={() => selectedPartnerTypeValue('ABIS_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">ABIS Partner</li>
+                                    <hr className="mx-4 border-[#D8D8D8]" />
+                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('SDK_Partner'))} onClick={() => selectedPartnerTypeValue('SDK_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">SDK Partner</li>
                                 </ul>
                             </div>
                         )}
@@ -320,7 +326,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="firstName"
-                            className={(getClassName("kcInputClass"), ((dummyFormData.firstName === '' || invalidFirstName)? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.firstName === '' || invalidFirstName) ? 'shadow-errorShadow border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
                             name="firstName"
                             placeholder={msgStr("firstNamePH")}
                             onBlur={handleFormData}
@@ -349,7 +355,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="lastName"
-                            className={(getClassName("kcInputClass"), ((dummyFormData.lastName === '' || invalidLastName)? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.lastName === '' || invalidLastName) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
                             name="lastName"
                             placeholder={msgStr("lastNamePH")}
                             onBlur={handleFormData}
@@ -378,7 +384,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="orgName"
-                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.orgName === '' ? 'shadow-errorShadowTwo  border-[#C61818]' : 'border-bColor' }`)}
+                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.orgName === '' ? 'shadow-errorShadowTwo  border-[#C61818]' : 'border-bColor'}`)}
                             name="orgName"
                             placeholder={msgStr("orgnamePH")}
                             value={dummyFormData.orgName ?? ''}
@@ -387,7 +393,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             onClick={displayOrgDropdown}
                             ref={inputRef}
                         />
-                        {(orgDropdown && organisationData )&&
+                        {(orgDropdown && organisationData) &&
                             (<div ref={menuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
                                 {(orgData?.length) ?
                                     <ul className="py-1 px-5 text-xl text-[#031640] font-inter" role="none" >
@@ -486,7 +492,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             onKeyDown={onlyNumbers}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
-                            {(invalidPhoneNo && dummyFormData.phoneNumber !== '')&& <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
+                            {(invalidPhoneNo && dummyFormData.phoneNumber !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
                             {dummyFormData.phoneNumber === '' && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp; {msg('inputErrorMsg')} &nbsp; {msg("phoneNumber")}</span>}
                         </span>}
                     </div>
@@ -554,7 +560,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         onChange={handleFormData}
                                         autoComplete="off"
                                     />
-                                    {passwordType === 'password' ? <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showPassword} alt="" src={eyeIconOff} />}
+                                    {passwordType === 'password' ? <img tabIndex={0} className="cursor-pointer" onClick={() => showPassword('password')} onKeyDown={(e) => getTabEvents(e, () => showPassword('password'))} alt="" src={eyeIcon} /> : <img tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => showPassword('password'))} className="cursor-pointer" onClick={() => showPassword('password')} alt="" src={eyeIconOff} />}
                                 </div>
                                 {/* { && <span className="flex items-center"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordConditions')}</span>} */}
                                 {/* {ConfPasswordMatch && <span className="flex items-center text-[#C61818] mb-0 font-semibold"> <img className="inline" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>} */}
@@ -584,7 +590,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         placeholder={msgStr("passwordPlaceholder")}
                                         autoComplete="off"
                                     />
-                                    {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={showConfPassword} alt="" src={eyeIconOff} />}
+                                    {confPasswordType === 'password' ? <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, ()=> showPassword('password-confirm')) } alt="" src={eyeIcon} /> : <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, ()=>showPassword('password-confirm'))} alt="" src={eyeIconOff} />}
                                 </div>
                                 {(confPasswordMatch && dummyFormData["password-confirm"] !== '') && <span className="flex items-start text-[#C61818] mb-0 font-semibold font-inter"> <img className="inline mt-1" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
                                 {dummyFormData["password-confirm"] === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("passwordConfirm")}</span></span>}
