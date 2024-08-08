@@ -15,6 +15,10 @@ import ToolTip from "./shared/Tooltip";
 import arrowRight from "../assets/arrow_right_rtl.svg";
 import closeIcon from '../assets/close_icon.svg';
 
+type LocalOrgData = {
+    [key: string]:string[]
+}
+
 declare global {
     interface Window {
         grecaptcha: {
@@ -40,10 +44,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
-    const organisationData = register?.attributesByName?.orgName?.validators?.options?.options;
     const max = Number(register?.attributesByName?.username?.validators.length?.max);
     const min = Number(register?.attributesByName?.username?.validators.length?.min);
-
+    let localOrgData: LocalOrgData = {en:["IIITB", "Indian Government", "CyberPWN", "Jio Networks", "Airtel"],ar:["IIITB", "الحكومة الهندية", "CyberPWN", "شبكات جنينيو", "ايرتل"], fr:["IIITB", "Gouvernement indien", "CyberPWN", "Réseaux Jio", "Airtel"], tam:["IIITB", "இந்திய அரசு", "சைபர்PWN", "ஜியோ நெட்வொர்க்குகள்", "ஏர்டெல்"],kan:["IIITB", "ಭಾರತ ಸರ್ಕಾರ", "ಸೈಬರ್ ಪಿಡಬ್ಲ್ಯೂಎನ್", "ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್", "ಏರ್ಟೆಲ್"], hin:["IIITB", "भारत सरकार", "साइबरपीडब्ल्यूएन", "जियो नेटवर्क", "एयरटेल"]}
+    
+    const [organisationData, setOrgdata] = useState<any|null>(null);
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
     const [orgDropdown, showOrgDropdown] = useState(false);
@@ -53,7 +58,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false);
     const [invalidUserName, checkInvalidUserName] = useState(false);
     const [confPasswordMatch, checkConfPasswordMatch] = useState(false);
-    const [orgData, setOrgData] = useState(organisationData ? organisationData.slice() : undefined);
+    const [orgData, setFilterOrgData] = useState<any>([]);
     const [isReloadBtn, setReloadBtn] = useState(false);
     const [minLength, checkminLength] = useState(false);
     const [maxLength, checkMaxLength] = useState(false);
@@ -72,6 +77,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         doUseDefaultCss,
         classes
     });
+
+    console.log(kcContext)
 
     useEffect(() => {
         if (recaptchaRequired && recaptchaSiteKey) {
@@ -107,6 +114,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                 }
             };
         }
+
+       
+        if(locale?.currentLanguageTag && localOrgData){
+            setOrgdata(localOrgData[locale?.currentLanguageTag])
+            setFilterOrgData(localOrgData[locale?.currentLanguageTag])
+        }
+
     }, [recaptchaRequired, recaptchaSiteKey, kcContext.scripts]);
 
     const selectedPartnerTypeValue = (value: any) => {
@@ -127,7 +141,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     }
 
     const displayOrgDropdown = () => {
-        showOrgDropdown(true)
+        showOrgDropdown(!orgDropdown)
     }
 
     const selectOrgName = (val: any) => {
@@ -140,7 +154,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
     const handleFormData = (event: any) => {
         const { name, value } = event.target;
-        const finalValue = value.trim();
+        const finalValue = value.trimStart();
  
         if (name === 'email' && finalValue) {
             checkInvalidEmail(!pattern.test(finalValue))
@@ -165,12 +179,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
         if (name === 'orgName') {
             checkInvalidOrgVal(!/^[a-zA-Z0-9\- ]*$/.test(finalValue));
-            if(organisationData){
-                let newOrgData = organisationData.filter(item => {
+            if(organisationData && finalValue.length){
+                let newOrgData = organisationData.filter((item:string) => {
                     if (item.toLowerCase().includes(finalValue.toLowerCase()))
                         return item
                 })
-                setOrgData(newOrgData)
+                setFilterOrgData(newOrgData)
             }
         }
 
@@ -203,9 +217,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
     window.addEventListener("click", (e) => {
         if (orgDropdown && !menuRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {
-            if (dummyFormData.orgName) {
-                showOrgDropdown(false)
-            }
+            showOrgDropdown(false)
         }
 
         if (!partnerTypeRef.current?.contains(e.target as Node) && !partnerTypesMenuRef.current?.contains(e.target as Node)) {
@@ -326,11 +338,11 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <input
                             type="text"
                             id="firstName"
-                            className={(getClassName("kcInputClass"), ((dummyFormData.firstName === '' || invalidFirstName) ? 'shadow-errorShadow border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
+                            className={(getClassName("kcInputClass"), ((dummyFormData.firstName === '' || invalidFirstName) ? 'shadow-errorShadow border border-[#C61818] border-solid outline-none h-14 rounded-lg w-full px-3 font-inter' : 'border border-bColor border-solid outline-none h-14 rounded-lg w-full px-3 font-inter'))}
                             name="firstName"
                             placeholder={msgStr("firstNamePH")}
-                            onBlur={handleFormData}
-                            defaultValue={register.formData.firstName ?? ""}
+                            onChange={handleFormData}
+                            value={dummyFormData.firstName ?? ""}
                             autoComplete="off"
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
@@ -358,9 +370,9 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             className={(getClassName("kcInputClass"), ((dummyFormData.lastName === '' || invalidLastName) ? 'shadow-errorShadow outline-none border border-[#C61818] border-solid h-14 rounded-lg w-full px-3 font-inter' : 'outline-none border border-bColor border-solid h-14 rounded-lg w-full px-3 font-inter'))}
                             name="lastName"
                             placeholder={msgStr("lastNamePH")}
-                            onBlur={handleFormData}
+                            onChange={handleFormData}
                             autoComplete="off"
-                            defaultValue={register.formData.lastName ?? ""}
+                            value={dummyFormData.lastName ?? ""}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {dummyFormData.lastName === '' && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("lastName")}</span></span>}
@@ -393,12 +405,15 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             onClick={displayOrgDropdown}
                             ref={inputRef}
                         />
-                        {(orgDropdown && organisationData) &&
+                        {(orgDropdown && orgData) &&
                             (<div ref={menuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
                                 {(orgData?.length) ?
-                                    <ul className="py-1 px-5 text-xl text-[#031640] font-inter" role="none" >
-                                        {orgData.map((item, index) => (
-                                            <li key={item} id={'orgName' + index} onClick={() => selectOrgName(item)} className="block py-2 cursor-pointer border-b last-of-type:border-none" role="menuitem">{item}</li>
+                                    <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
+                                        {orgData.map((item:any, index:any) => (
+                                            <>
+                                              <li tabIndex={0} key={item} id={'orgName' + index} onClick={() => selectOrgName(item)} onKeyDown={(e) => getTabEvents(e, () => selectOrgName(item))}  className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">{item}</li>
+                                              <hr className="mx-4 border-[#D8D8D8] last-of-type:hidden" />
+                                            </>
                                         ))}
                                     </ul> : (<p className="py-1 px-3 text-xl text-[#031640] font-semibold">{msg('nosearchData')}</p>)}
                             </div>)
@@ -430,8 +445,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             name="address"
                             placeholder={msgStr("addressPH")}
                             autoComplete="off"
-                            onBlur={handleFormData}
-                            defaultValue={register.formData.address ?? ""}
+                            onChange={handleFormData}
+                            value={dummyFormData.address ?? ""}
                         />
                         {dummyFormData.address === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("address")}</span></span>}
                     </div>
@@ -455,8 +470,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.email === '' || invalidEmail) ? 'shadow-errorShadow border-[#C61818]' : ' border-bColor'}`)}
                             name="email"
                             placeholder={msgStr("emailPH")}
-                            onBlur={handleFormData}
-                            defaultValue={register.formData.email ?? ""}
+                            onChange={handleFormData}
+                            value={dummyFormData.email ?? ""}
                             autoComplete="off"
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
@@ -485,8 +500,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${(dummyFormData.phoneNumber === '' || invalidPhoneNo) ? 'shadow-errorShadow  border-[#C61818] ' : 'border-bColor'}`)}
                             name="phoneNumber"
                             placeholder={msgStr("phoneNumberPH")}
-                            onBlur={handleFormData}
-                            defaultValue={register.formData.phoneNumber ?? ""}
+                            onChange={handleFormData}
+                            value={dummyFormData.phoneNumber ?? ""}
                             autoComplete="off"
                             min="0"
                             onKeyDown={onlyNumbers}
@@ -520,7 +535,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 name="username"
                                 placeholder={msgStr("userNamePH")}
                                 onChange={handleFormData}
-                                defaultValue={register.formData.username ?? ""}
+                                value={dummyFormData.username ?? ""}
                                 autoComplete="off"
                                 maxLength={Number(max)}
                             />
