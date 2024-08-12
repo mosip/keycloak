@@ -106,7 +106,9 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinUpperCaseCharsMessage: "Invalid password: must contain at least {0} upper case characters.",
         invalidPasswordMinSpecialCharsMessage: "Invalid password: must contain at least {0} special characters.",
         usernameExistsMessage: "Username already exists. Enter a different username",
-        invalidOrgVal: "Please Enter valid Organization"
+        invalidOrgVal: "Please Enter valid Organization",
+        partnerTypeData:'[{"id":"Device_Provider", "value":"Device Provider"}, {"id":"FTM_Provider", "value":"FTM Provider"}, {"id":"Authentication_Partner", "value":"Authentication Partner"}, {"id":"Credential_Partner_or_ISP", "value":"Credential partner or ISP"}, {"id":"ABIS_Partner", "value":"ABIS partner"}, {"id":"SDK_Partner", "value":"SDK partner"}]',
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Indian Government"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Jio Networks"}, {"id":"Airtel", "value":"Airtel"}]'
     },
     fr: {
         /* spell-checker: disable */
@@ -208,7 +210,9 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinUpperCaseCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères majuscules.",
         invalidPasswordMinSpecialCharsMessage: "Mot de passe invalide : doit contenir au moins {0} caractères spéciaux.",
         usernameExistsMessage: "Ce nom d'utilisateur existe déjà. Entrez un autre nom d'utilisateur",
-        invalidOrgVal: "Veuillez entrer une organisation valide"
+        invalidOrgVal: "Veuillez entrer une organisation valide",
+        partnerTypeData:'[{"id":"Device_Provider", "value":"Fournisseur d\'appareil"}, {"id":"FTM_Provider", "value":"Fournisseur FTM"}, {"id":"Authentication_Partner", "value":"Partenaire d\'authentification"}, {"id":"Credential_Partner_or_ISP", "value":"Partenaire d\'identification ou FAI"}, {"id":"ABIS_Partner", "value":"Partenaire ABIS"}, {"id":"SDK_Partner", "value":"Partenaire SDK"}]',
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Gouvernement indien"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Réseaux Jio"}, {"id":"Airtel", "value":"Airtel"}]'
         /* spell-checker: enable */
     },
     ar: {
@@ -310,7 +314,9 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinUpperCaseCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف كبيرة.",
         invalidPasswordMinSpecialCharsMessage: "كلمة المرور غير صالحة: يجب أن تحتوي على الأقل على {0} أحرف خاصة.",
         usernameExistsMessage: "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلف",
-        invalidOrgVal: "الرجاء إدخال منظمة صالحة"
+        invalidOrgVal: "الرجاء إدخال منظمة صالحة",
+        partnerTypeData:'[{"id":"Device_Provider", "value":"مزود الجهاز"}, {"id":"FTM_Provider", "value":"مزود FTM"}, {"id":"Authentication_Partner", "value":"شريك المصادقة"}, {"id":"Credential_Partner_or_ISP", "value":"شريك الاعتماد أو مزود خدمة الإنترنت"}, {"id":"ABIS_Partner", "value":"شريك ABIS"}, {"id":"SDK_Partner", "value":"شريك SDK"}]',
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"الحكومة الهندية"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"شبكات جنينيو"}, {"id":"Airtel", "value":"ايرتل"}]'
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -411,7 +417,9 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinUpperCaseCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} बड़े अक्षर होने चाहिए।",
         invalidPasswordMinSpecialCharsMessage: "अमान्य पासवर्ड: इसमें कम से कम {0} विशेष अक्षर होने चाहिए।",
         usernameExistsMessage: "उपयोगकर्ता का नाम पहले से मौजूद है। कोई भिन्न उपयोक्तानाम दर्ज करें",
-        invalidOrgVal: "कृपया वैध संगठन दर्ज करें"
+        invalidOrgVal: "कृपया वैध संगठन दर्ज करें",
+        partnerTypeData:'[{"id":"Device_Provider", "value":"डिवाइस प्रदाता"}, {"id":"FTM_Provider", "value":"एफटीएम प्रदाता"}, {"id":"Authentication_Partner", "value":"प्रमाणीकरण भागीदार"}, {"id":"Credential_Partner_or_ISP", "value":"क्रेडेंशियल पार्टनर या आईएसपी"}, {"id":"ABIS_Partner", "value":"ABIS भागीदार"}, {"id":"SDK_Partner", "value":"SDK भागीदार"}]',
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"भारत सरकार"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"जियो नेटवर्क"}, {"id":"Airtel", "value":"एयरटेल"}]'
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -512,7 +520,9 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinUpperCaseCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} பெரிய எழுத்துக்கள் இருக்க வேண்டும்.",
         invalidPasswordMinSpecialCharsMessage: "தவறான கடவுச்சொல்: குறைந்தபட்சம் {0} சிறப்பு எழுத்துக்கள் இருக்க வேண்டும்.",
         usernameExistsMessage: "பெயர் ஏற்கனவே உள்ளது. வேறு பயனர்பெயரை உள்ளிடவும்",
-        invalidOrgVal: "சரியான நிறுவனத்தை உள்ளிடவும்"
+        invalidOrgVal: "சரியான நிறுவனத்தை உள்ளிடவும்",
+        partnerTypeData:'[{"id":"Device_Provider", "value":"சாதன வழங்குநர்"}, {"id":"FTM_Provider", "value":"FTM வழங்குநர்"}, {"id":"Authentication_Partner", "value":"அங்கீகார கூட்டாளர்"}, {"id":"Credential_Partner_or_ISP", "value":"நற்சான்றிதழ் பங்குதாரர் அல்லது ISP"}, {"id":"ABIS_Partner", "value":"ABIS பார்ட்னர்"}, {"id":"SDK_Partner", "value":"SDK பார்ட்னர்"}]',
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"இந்திய அரசு"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ஜியோ நெட்வொர்க்குகள்"}, {"id":"Airtel", "value":"ஏர்டெல்"}]'
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -613,7 +623,9 @@ export const { useI18n } = createUseI18n({
         invalidPasswordMinUpperCaseCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ದೊಡ್ಡ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
         invalidPasswordMinSpecialCharsMessage: "ಅಮಾನ್ಯವಾದ ಪಾಸ್‌ವರ್ಡ್: ಕನಿಷ್ಠ {0} ವಿಶೇಷ ಅಕ್ಷರಗಳು ಇರಬೇಕು.",
         usernameExistsMessage: "ಬಳಕೆದಾರಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ಬೇರೆ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
-        invalidOrgVal: "ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಸಂಸ್ಥೆಯನ್ನು ನಮೂದಿಸಿ"
+        invalidOrgVal: "ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಸಂಸ್ಥೆಯನ್ನು ನಮೂದಿಸಿ",
+        partnerTypeData:'[{"id":"Device_Provider", "value":"ಸಾಧನ ಪೂರೈಕೆದಾರ"}, {"id":"FTM_Provider", "value":"FTM ಪೂರೈಕೆದಾರ"}, {"id":"Authentication_Partner", "value":"ದೃಢೀಕರಣ ಪಾಲುದಾರ"}, {"id":"Credential_Partner_or_ISP", "value":"ರುಜುವಾತು ಪಾಲುದಾರ ಅಥವಾ ISP"}, {"id":"ABIS_Partner", "value":"ABIS ಪಾಲುದಾರ"}, {"id":"SDK_Partner", "value":"SDK ಪಾಲುದಾರ"}]',
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"ಭಾರತ ಸರ್ಕಾರ"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್"}, {"id":"Airtel", "value":"ಏರ್ಟೆಲ್"}]'
     }
        
 });
