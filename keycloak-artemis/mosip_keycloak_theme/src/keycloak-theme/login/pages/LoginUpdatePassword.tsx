@@ -110,13 +110,13 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                         messagesPerField.printIfExists("password", getClassName("kcFormGroupErrorClass"))
                     )}
                 >
-                    <div className={getClassName("kcLabelWrapperClass")}>
+                    <div className={(getClassName("kcLabelWrapperClass"), 'flex px-[20px]')}>
                         <label htmlFor="password-new" className={(getClassName("kcLabelClass"), 'text-pTextColor font-bold flex flex-row items-center font-inter')}>
                             <span className="text-xl">{msg("newPassword")}</span>
-                            <ToolTip tooltip={msgStr('passwordInfo')}>
-                                <img className="ml-2 cursor-pointer" alt="info" src={info} />
-                            </ToolTip>
                         </label>
+                        <ToolTip tooltip={msgStr('passwordInfo')}>
+                            {info}
+                        </ToolTip>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
                         <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 px-3 font-inter">
