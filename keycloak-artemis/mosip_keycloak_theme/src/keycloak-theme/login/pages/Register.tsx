@@ -15,10 +15,6 @@ import ToolTip from "./shared/Tooltip";
 import arrowRight from "../assets/arrow_right_rtl.svg";
 import closeIcon from '../assets/close_icon.svg';
 
-type LocalOrgData = {
-    [key: string]:string[]
-}
-
 declare global {
     interface Window {
         grecaptcha: {
@@ -41,44 +37,42 @@ declare global {
 export default function Register(props: PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
     const { url, messagesPerField, register, realm, passwordRequired, recaptchaRequired, recaptchaSiteKey, message, locale } = kcContext;
+    const { msg, msgStr } = i18n;
+
     const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
     const max = Number(register?.attributesByName?.username?.validators.length?.max);
     const min = Number(register?.attributesByName?.username?.validators.length?.min);
-    let localOrgData: LocalOrgData = {en:["IIITB", "Indian Government", "CyberPWN", "Jio Networks", "Airtel"],ar:["IIITB", "الحكومة الهندية", "CyberPWN", "شبكات جنينيو", "ايرتل"], fr:["IIITB", "Gouvernement indien", "CyberPWN", "Réseaux Jio", "Airtel"], tam:["IIITB", "இந்திய அரசு", "சைபர்PWN", "ஜியோ நெட்வொர்க்குகள்", "ஏர்டெல்"],kan:["IIITB", "ಭಾರತ ಸರ್ಕಾರ", "ಸೈಬರ್ ಪಿಡಬ್ಲ್ಯೂಎನ್", "ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್", "ಏರ್ಟೆಲ್"], hin:["IIITB", "भारत सरकार", "साइबरपीडब्ल्यूएन", "जियो नेटवर्क", "एयरटेल"]}
-    
-    const [organisationData, setOrgdata] = useState<any|null>(null);
+
+    const organisationData = JSON.parse(msgStr("organization"));
     const [passwordType, setPasswordType] = useState('password');
     const [confPasswordType, setConfPasswordType] = useState('password');
     const [orgDropdown, showOrgDropdown] = useState(false);
-    const [partnerTypesMenu, showPartnerTypeMenu] = useState(false);
     const [dummyFormData, addFormDataValue] = useState(register.formData);
     const [invalidEmail, checkInvalidEmail] = useState(false);
     const [invalidPhoneNo, checkInvalidPhoneNo] = useState(false);
     const [invalidUserName, checkInvalidUserName] = useState(false);
     const [confPasswordMatch, checkConfPasswordMatch] = useState(false);
-    const [orgData, setFilterOrgData] = useState<any>([]);
+    const [orgData, setFilterOrgData] = useState(organisationData);
     const [isReloadBtn, setReloadBtn] = useState(false);
     const [minLength, checkminLength] = useState(false);
     const [maxLength, checkMaxLength] = useState(false);
     const [invalidFirstName, checkInvalidFirstName] = useState(false);
     const [invalidLastName, checkInvalidLastName] = useState(false);
-    const [errorMessage, setErrorMsg] = useState({...message});
+    const [errorMessage, setErrorMsg] = useState({ ...message });
     const [openErrTab, getOpenErrTab] = useState(true);
     const [invalidOrgValue, checkInvalidOrgVal] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const partnerTypeRef = useRef<HTMLInputElement>(null);
-    const partnerTypesMenuRef = useRef<HTMLDivElement>(null);
 
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
         classes
     });
 
-    console.log(kcContext)
+    
 
     useEffect(() => {
         if (recaptchaRequired && recaptchaSiteKey) {
@@ -116,32 +110,22 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
 
        
-        if(locale?.currentLanguageTag && localOrgData){
-            setOrgdata(localOrgData[locale?.currentLanguageTag])
-            setFilterOrgData(localOrgData[locale?.currentLanguageTag])
-        }
 
     }, [recaptchaRequired, recaptchaSiteKey, kcContext.scripts]);
 
-    const selectedPartnerTypeValue = (value: any) => {
-        // setPartnerType(value)
+    const selectedPartnerTypeValue = (e: any) => {
         addFormDataValue(prevState => ({
             ...prevState,
-            partnerType: value
+            partnerType: e.target.value
         }))
-        showPartnerTypeMenu(false)
     }
 
-    const showPassword = (fieldType:string) => {
-        if(fieldType === 'password'){
+    const showPassword = (fieldType: string) => {
+        if (fieldType === 'password') {
             passwordType === 'password' ? setPasswordType('text') : setPasswordType('password')
-        }else{
+        } else {
             confPasswordType === 'password' ? setConfPasswordType('text') : setConfPasswordType('password')
         }
-    }
-
-    const displayOrgDropdown = () => {
-        showOrgDropdown(!orgDropdown)
     }
 
     const selectOrgName = (val: any) => {
@@ -163,25 +147,25 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             checkInvalidPhoneNo(!phonePattern.test(String(finalValue)))
         }
 
-        if(name === 'username' && finalValue){
+        if (name === 'username' && finalValue) {
             userNamePattern.test(finalValue) ? checkInvalidUserName(false) : checkInvalidUserName(true);
             finalValue.length < (Number(min)) ? checkminLength(true) : checkminLength(false);
             finalValue.length === (Number(max)) ? checkMaxLength(true) : checkMaxLength(false);
         }
 
-        if(name === 'firstName' && finalValue){
+        if (name === 'firstName' && finalValue) {
             /^[A-Za-z\s]+$/.test(finalValue) ? checkInvalidFirstName(false) : checkInvalidFirstName(true)
         }
 
-        if(name === 'lastName' && finalValue){
+        if (name === 'lastName' && finalValue) {
             /^[A-Za-z\s]+$/.test(finalValue) ? checkInvalidLastName(false) : checkInvalidLastName(true);
         }
 
         if (name === 'orgName') {
             checkInvalidOrgVal(!/^[a-zA-Z0-9\- ]*$/.test(finalValue));
-            if(organisationData && finalValue.length){
-                let newOrgData = organisationData.filter((item:string) => {
-                    if (item.toLowerCase().includes(finalValue.toLowerCase()))
+            if (organisationData && finalValue.length) {
+                let newOrgData = organisationData.filter((item: any) => {
+                    if (item.value.toLowerCase().includes(finalValue.toLowerCase()))
                         return item
                 })
                 setFilterOrgData(newOrgData)
@@ -209,8 +193,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
     }
 
-    const onlyNumbers = (event:any) =>{
-        if((["e", "E"].includes(event.key) || !/^[+\d().-]+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Tab") {
+    const onlyNumbers = (event: any) => {
+        if ((["e", "E"].includes(event.key) || !/^[+\d().-]+$/.test(event.key)) && event.key !== 'Backspace' && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Tab") {
             event.preventDefault()
         }
     }
@@ -220,18 +204,16 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             showOrgDropdown(false)
         }
 
-        if (!partnerTypeRef.current?.contains(e.target as Node) && !partnerTypesMenuRef.current?.contains(e.target as Node)) {
-            showPartnerTypeMenu(false)
-        }
+         
     })
 
-    window.onbeforeunload = function() {
-        if(!isReloadBtn && !localStorage.getItem("isLocaleopen")){
+    window.onbeforeunload = function () {
+        if (!isReloadBtn && !localStorage.getItem("isLocaleopen")) {
             return 'Do you want to leave this page?'
         }
     }
 
-    if(errorMessage.summary){
+    if (errorMessage.summary) {
         delete dummyFormData.password;
         delete dummyFormData["password-confirm"];
         setErrorMsg({});
@@ -247,7 +229,6 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
         }
     };
 
-    const { msg, msgStr } = i18n;
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={
             <>
@@ -264,12 +245,9 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
             </>
         }>
             <form id="kc-register-form" className={getClassName("kcFormClass")} action={url.registrationAction} method="post">
-                {(message !== undefined && openErrTab)&& (
+                {(message !== undefined && openErrTab) && (
                     <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 rounded-lg px-4'>
-                        {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
-                                    {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
-                                    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
-                        <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt=""src={closeIcon} />
+                        <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt="" src={closeIcon} />
                         <span className="kc-feedback-text"
                             dangerouslySetInnerHTML={{
                                 "__html": message.summary
@@ -282,45 +260,16 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         <label htmlFor="partnerType" className={(getClassName("kcLabelClass"), 'mb-1 font-bold font-inter text-xl text-hTextColor')}>{msg("partnerType")}</label>
                     </div>
                     <div className={getClassName('kcInputWrapperClass')}>
-                        <div tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => showPartnerTypeMenu(true))} className={dummyFormData.partnerType === '' ? 'shadow-errorShadow border border-[#C61818] border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3' : 'border border-bColor border-solid h-14 rounded-lg flex justify-between items-center cursor-pointer px-3'}
-                            onClick={() => {
-                                if (partnerTypesMenu) {
-                                    showPartnerTypeMenu(false);
-                                } else {
-                                    showPartnerTypeMenu(true);
-                                }
-                            }}>
-                            <input
-                                tabIndex={-1}
-                                type="text"
-                                id="partnerType"
-                                name="partnerType"
-                                placeholder={msgStr("selectAnOption")}
-                                className='w-full border-none outline-none cursor-pointer h-full font-inter'
-                                readOnly
-                                value={dummyFormData.partnerType ?? ''}
-                                ref={partnerTypeRef}
-                            />
-                            <div className="w-0 h-0 border-[5px] border-solid border-transparent border-t-black"></div>
-                        </div>
-                        {partnerTypesMenu && (
-                            <div ref={partnerTypesMenuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px]" >
-                                <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
-                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('Device_Provider'))} onClick={() => selectedPartnerTypeValue('Device_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Device Provider</li>
-                                    <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('FTM_Provider'))} onClick={() => selectedPartnerTypeValue('FTM_Provider')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">FTM Provider</li>
-                                    <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('Authentication_Partner'))} onClick={() => selectedPartnerTypeValue('Authentication_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Authentication Partner</li>
-                                    <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('Credential_Partner_or_ISP'))} onClick={() => selectedPartnerTypeValue('Credential_Partner_or_ISP')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">Credential Partner or ISP</li>
-                                    <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('ABIS_Partner'))} onClick={() => selectedPartnerTypeValue('ABIS_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">ABIS Partner</li>
-                                    <hr className="mx-4 border-[#D8D8D8]" />
-                                    <li tabIndex={0} onKeyDown={(e) => getTabEvents(e, () => selectedPartnerTypeValue('SDK_Partner'))} onClick={() => selectedPartnerTypeValue('SDK_Partner')} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">SDK Partner</li>
-                                </ul>
+                        <div tabIndex={0} className={`border border-solid h-14 rounded-lg flex justify-between items-center ${dummyFormData.partnerType === '' ? 'shadow-errorShadow border-[#C61818]' : 'border-bColor'}`}>
+                            <div className="w-full h-[87%] cursor-pointer">
+                                <select value={dummyFormData.partnerType ?? ''} onChange={(e) => selectedPartnerTypeValue(e)} id="partnerType" name="partnerType" className="w-full h-full font-inter cursor-pointer outline-none px-2">
+                                    <option value="" disabled>{msgStr("selectAnOption")}</option>
+                                    {JSON.parse(msgStr('partnerTypeData')).map((item: any) => {
+                                        return (<option value={item.id} key={item.id} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]">{item.value}</option>)
+                                    })}
+                                </select>
                             </div>
-                        )}
-                        {dummyFormData.partnerType === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("partnerType")}</span></span>}
+                        </div>
                     </div>
                 </div>
                 <div
@@ -393,39 +342,38 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         </label>
                     </div>
                     <div className={getClassName("kcInputWrapperClass")}>
-                        <input
-                            type="text"
-                            id="orgName"
-                            className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.orgName === '' ? 'shadow-errorShadowTwo  border-[#C61818]' : 'border-bColor'}`)}
-                            name="orgName"
-                            placeholder={msgStr("orgnamePH")}
-                            value={dummyFormData.orgName ?? ''}
-                            autoComplete="off"
-                            onChange={handleFormData}
-                            onClick={displayOrgDropdown}
-                            ref={inputRef}
-                        />
-                        {(orgDropdown && orgData) &&
-                            (<div ref={menuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
-                                {(orgData?.length) ?
-                                    <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
-                                        {orgData.map((item:any, index:any) => (
-                                            <>
-                                              <li tabIndex={0} key={item} id={'orgName' + index} onClick={() => selectOrgName(item)} onKeyDown={(e) => getTabEvents(e, () => selectOrgName(item))}  className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">{item}</li>
-                                              <hr className="mx-4 border-[#D8D8D8] last-of-type:hidden" />
-                                            </>
-                                        ))}
-                                    </ul> : (<p className="py-1 px-3 text-xl text-[#031640] font-semibold">{msg('nosearchData')}</p>)}
-                            </div>)
-                        }
-                        <div className="border border-[#EDDCAF] border-t-0 rounded-b-lg p-3 -mt-2 bg-[#FFF7E5] font-inter">
-                            <span className="text-[#8B6105] font-semibold">{msg('orgInfoMsg')}</span>
-                        </div>
-                        {dummyFormData.orgName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("orgName")}</span></span>}
-                        {invalidOrgValue && dummyFormData.orgName !== '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('invalidOrgVal')}</span></span>}
+                    <input
+                        type="text"
+                        id="orgName"
+                        className={(getClassName("kcInputClass"), `outline-none border border-solid h-14 rounded-lg w-full px-3 font-inter ${dummyFormData.orgName === '' ? 'shadow-errorShadowTwo  border-[#C61818]' : 'border-bColor'}`)}
+                        name="orgName"
+                        placeholder={msgStr("orgnamePH")}
+                        value={dummyFormData.orgName ?? ''}
+                        autoComplete="off"
+                        onChange={handleFormData}
+                        onClick={() => showOrgDropdown(!orgDropdown)}
+                        ref={inputRef}
+                    />
+                    {(orgDropdown && orgData) &&
+                        (<div ref={menuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
+                            {(orgData?.length) ?
+                                <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
+                                    {orgData.map((item: any, index: any) => (
+                                        <>
+                                            <li tabIndex={0} key={item.id} id={'orgName' + index} onClick={() => selectOrgName(item.value)} onKeyDown={(e) => getTabEvents(e, () => selectOrgName(item.value))} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">{item.value}</li>
+                                            <hr className="mx-4 border-[#D8D8D8] last-of-type:hidden" />
+                                        </>
+                                    ))}
+                                </ul> : (<p className="py-1 px-3 text-xl text-[#031640] font-semibold">{msg('nosearchData')}</p>)}
+                        </div>)
+                    }
+                    <div className="border border-[#EDDCAF] border-t-0 rounded-b-lg p-3 -mt-2 bg-[#FFF7E5] font-inter">
+                        <span className="text-[#8B6105] font-semibold">{msg('orgInfoMsg')}</span>
                     </div>
+                    {dummyFormData.orgName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("orgName")}</span></span>}
+                    {invalidOrgValue && dummyFormData.orgName !== '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('invalidOrgVal')}</span></span>}
                 </div>
-
+                </div>
                 <div
                     className={clsx(
                         getClassName("kcFormGroupClass"),
@@ -556,13 +504,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 messagesPerField.printIfExists("password", getClassName("kcFormGroupErrorClass"))
                             )}
                         >
-                            <div className={getClassName("kcLabelWrapperClass")}>
+                            <div className={(getClassName("kcLabelWrapperClass"), 'flex px-[20px]')}>
                                 <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor flex flex-row items-center mb-1 font-bold font-inter text-xl')}>
                                     {msg("password")}
-                                    <ToolTip tooltip={msgStr('passwordInfo')} dir={locale?.currentLanguageTag}>
-                                        <img className="mx-2 cursor-pointer" alt="info" src={info} />
-                                    </ToolTip>
                                 </label>
+                                <ToolTip tooltip={msgStr('passwordInfo')} dir={locale?.currentLanguageTag}>
+                                    {info}
+                                </ToolTip>
                             </div>
                             <div className={getClassName("kcInputWrapperClass")}>
                                 <div className={`border flex flex-row justify-between items-center border-solid rounded-lg h-14 px-3 font-inter ${dummyFormData.password === '' ? 'shadow-errorShadow border-[#C61818] ' : ' border-bColor'}`}>
@@ -605,7 +553,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         placeholder={msgStr("passwordPlaceholder")}
                                         autoComplete="off"
                                     />
-                                    {confPasswordType === 'password' ? <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, ()=> showPassword('password-confirm')) } alt="" src={eyeIcon} /> : <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, ()=>showPassword('password-confirm'))} alt="" src={eyeIconOff} />}
+                                    {confPasswordType === 'password' ? <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, () => showPassword('password-confirm'))} alt="" src={eyeIcon} /> : <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, () => showPassword('password-confirm'))} alt="" src={eyeIconOff} />}
                                 </div>
                                 {(confPasswordMatch && dummyFormData["password-confirm"] !== '') && <span className="flex items-start text-[#C61818] mb-0 font-semibold font-inter"> <img className="inline mt-1" alt='' src={error} />&nbsp;{msg('passwordNotMatch')}</span>}
                                 {dummyFormData["password-confirm"] === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("passwordConfirm")}</span></span>}

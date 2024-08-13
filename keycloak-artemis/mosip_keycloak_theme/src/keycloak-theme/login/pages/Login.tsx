@@ -7,8 +7,6 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import eyeIcon from '../assets/visibility_FILL0_wght400_GRAD0_opsz48.svg';
 import eyeIconOff from '../assets/visibility_off.svg'
-import info from '../assets/info.svg';
-import ToolTip from "./shared/Tooltip";
 
 const my_custom_param = new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -23,7 +21,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         doUseDefaultCss,
         classes
     });
-    const { social, realm, url, usernameHidden, login, auth, registrationDisabled, locale } = kcContext;
+    const { social, realm, url, usernameHidden, login, auth, registrationDisabled } = kcContext;
     const { msg, msgStr } = i18n;
 
     // const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
@@ -139,9 +137,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             <div className={getClassName("kcFormGroupClass")}>
                                 <label htmlFor="password" className={(getClassName("kcLabelClass"), 'text-hTextColor text-xl flex flex-row items-center font-inter')}>
                                     <span>{msg("password")} </span>
-                                    <ToolTip tooltip={msgStr('passwordInfo')} dir={locale?.currentLanguageTag}>
-                                        <img className="mx-2 cursor-pointer" alt="info" src={info} />
-                                    </ToolTip>
                                 </label>
                                 <div className="flex flex-row justify-between items-center border border-bColor border-solid rounded-lg h-14 p-2 font-inter">
                                     <input
