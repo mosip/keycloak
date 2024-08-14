@@ -42,8 +42,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const pattern = new RegExp(register?.attributesByName?.email?.validators?.pattern?.pattern);
     const phonePattern = new RegExp(register?.attributesByName?.phoneNumber?.validators?.pattern?.pattern);
     const userNamePattern = new RegExp(register?.attributesByName?.username?.validators?.pattern?.pattern);
-    const max = Number(register?.attributesByName?.username?.validators.length?.max);
-    const min = Number(register?.attributesByName?.username?.validators.length?.min);
+    const userNameMax = Number(register?.attributesByName?.username?.validators.length?.max);
+    const userNameMin = Number(register?.attributesByName?.username?.validators.length?.min);
+    const emailMax = Number(register?.attributesByName?.email?.validators.length?.max);
+    const phoneNoMax = Number(register?.attributesByName?.phoneNumber?.validators.length?.max);
+    const orgNameMax = Number(register?.attributesByName?.orgName?.validators.length?.max);
+    const addressMax = Number(register?.attributesByName?.address?.validators.length?.max);
 
     const organisationData = JSON.parse(msgStr("organization"));
     const [passwordType, setPasswordType] = useState('password');
@@ -57,7 +61,6 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
     const [orgData, setFilterOrgData] = useState(organisationData);
     const [isReloadBtn, setReloadBtn] = useState(false);
     const [minLength, checkminLength] = useState(false);
-    const [maxLength, checkMaxLength] = useState(false);
     const [invalidFirstName, checkInvalidFirstName] = useState(false);
     const [invalidLastName, checkInvalidLastName] = useState(false);
     const [errorMessage, setErrorMsg] = useState({ ...message });
@@ -149,8 +152,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
 
         if (name === 'username' && finalValue) {
             userNamePattern.test(finalValue) ? checkInvalidUserName(false) : checkInvalidUserName(true);
-            finalValue.length < (Number(min)) ? checkminLength(true) : checkminLength(false);
-            finalValue.length === (Number(max)) ? checkMaxLength(true) : checkMaxLength(false);
+            finalValue.length < (userNameMin) ? checkminLength(true) : checkminLength(false);
         }
 
         if (name === 'firstName' && finalValue) {
@@ -353,6 +355,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                         onChange={handleFormData}
                         onClick={() => showOrgDropdown(!orgDropdown)}
                         ref={inputRef}
+                        maxLength={orgNameMax ? orgNameMax : 2048}
                     />
                     {(orgDropdown && orgData) &&
                         (<div ref={menuRef} className="absolute max-[490px]:w-[88%] max-[840px]:w-[91.5%] w-[93.5%] z-10 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-bColor mt-[2px] font-inter" >
@@ -372,6 +375,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                     </div>
                     {dummyFormData.orgName === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("orgName")}</span></span>}
                     {invalidOrgValue && dummyFormData.orgName !== '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('invalidOrgVal')}</span></span>}
+                    {(orgNameMax === dummyFormData.orgName?.length) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{orgNameMax}&nbsp;{msg('charactersText')}</span>}
                 </div>
                 </div>
                 <div
@@ -395,8 +399,10 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             autoComplete="off"
                             onChange={handleFormData}
                             value={dummyFormData.address ?? ""}
+                            maxLength={addressMax}
                         />
                         {dummyFormData.address === '' && <span className="text-[#C61818] mb-0 font-semibold flex items-start font-inter"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("address")}</span></span>}
+                        {(addressMax === dummyFormData.address?.length) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{addressMax}&nbsp;{msg('charactersText')}</span>}
                     </div>
                 </div>
 
@@ -421,11 +427,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             onChange={handleFormData}
                             value={dummyFormData.email ?? ""}
                             autoComplete="off"
+                            maxLength={emailMax ? emailMax : 2048}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {/* {(errorSummary?.includes("Email already exists.") || errorSummary?.includes("Username already exists.")) && <span className="flex items-center"><img className="inline" alt='' src={error} />&nbsp;{msgStr('existingEmailErr')}</span>} */}
                             {(invalidEmail && dummyFormData.email !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msgStr('invalidEmailErr')}</span>}
                             {dummyFormData.email === '' && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msg('inputErrorMsg')} &nbsp;{msg("email")}</span>}
+                            {(emailMax === dummyFormData.email?.length) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{emailMax}&nbsp;{msg('charactersText')}</span>}
                         </span>}
                     </div>
                 </div>
@@ -453,10 +461,12 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             autoComplete="off"
                             min="0"
                             onKeyDown={onlyNumbers}
+                            maxLength={phoneNoMax}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                             {(invalidPhoneNo && dummyFormData.phoneNumber !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
                             {dummyFormData.phoneNumber === '' && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp; {msg('inputErrorMsg')} &nbsp; {msg("phoneNumber")}</span>}
+                            {(phoneNoMax === dummyFormData.phoneNumber?.length && !invalidPhoneNo) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{emailMax}&nbsp;{msg('charactersText')}</span>}
                         </span>}
                     </div>
                 </div>
@@ -485,13 +495,13 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 onChange={handleFormData}
                                 value={dummyFormData.username ?? ""}
                                 autoComplete="off"
-                                maxLength={Number(max)}
+                                maxLength={userNameMax ? userNameMax : 2048}
                             />
                             {<span className="text-[#C61818] mb-0 font-semibold font-inter">
                                 {dummyFormData.username === '' && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('inputErrorMsg')} {msg("username")}</span></span>}
                                 {(invalidUserName && dummyFormData.username !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('invalidUserName')}</span></span>}
-                                {(minLength && dummyFormData.username !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('lengthErrMessage')} {min} {msg('and')} {max}</span></span>}
-                                {maxLength && <span className="flex items-start text-[#8B6105]">{msg('maxLengthErrMsg')}&nbsp;{max}&nbsp;{msg('charactersText')}</span>}
+                                {(minLength && dummyFormData.username !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;<span>{msg('lengthErrMessage')} {userNameMin} {msg('and')} {userNameMax}</span></span>}
+                                {(userNameMax === dummyFormData.username?.length) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{userNameMax}&nbsp;{msg('charactersText')}</span>}
                             </span>}
                         </div>
                     </div>

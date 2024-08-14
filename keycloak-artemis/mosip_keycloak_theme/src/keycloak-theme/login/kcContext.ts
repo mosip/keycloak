@@ -34,12 +34,20 @@ export type KcContextExtension =
 						pattern:{
 							pattern:RegExp
 						}
+						length:{
+							max:string;
+							min:string;
+						}
 					}
 				};
 				phoneNumber:{
 					validators:{
 						pattern:{
 							pattern:RegExp
+						}
+						length:{
+							max:string;
+							min:string;
 						}
 					}
 				};
@@ -48,9 +56,24 @@ export type KcContextExtension =
 						options:{
 							options: string[]
 						}
+						length:{
+							max:string;
+							min:string;
+						}
 					}
 				};
 				username:{
+					validators:{
+						pattern:{
+							pattern:RegExp;
+						}
+						length:{
+							max:string;
+							min:string;
+						}
+					}
+				};
+				address:{
 					validators:{
 						pattern:{
 							pattern:RegExp;
