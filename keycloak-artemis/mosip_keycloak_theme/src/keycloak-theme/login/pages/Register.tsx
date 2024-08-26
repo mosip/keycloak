@@ -560,7 +560,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                         className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
                                         name="password-confirm"
                                         onChange={handleFormData}
-                                        placeholder={msgStr("passwordPlaceholder")}
+                                        placeholder={msgStr("confPasswordPlaceholder")}
                                         autoComplete="off"
                                     />
                                     {confPasswordType === 'password' ? <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, () => showPassword('password-confirm'))} alt="" src={eyeIcon} /> : <img className="cursor-pointer" tabIndex={0} onClick={() => showPassword('password-confirm')} onKeyDown={(e) => getTabEvents(e, () => showPassword('password-confirm'))} alt="" src={eyeIconOff} />}
