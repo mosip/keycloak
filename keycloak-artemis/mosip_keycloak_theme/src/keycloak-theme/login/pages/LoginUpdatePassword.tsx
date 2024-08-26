@@ -128,7 +128,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 autoFocus
                                 onChange={capturePassWordData}
                                 className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
-                                placeholder={msgStr('passwordPlaceholder')}
+                                placeholder={msgStr('passwordUpdatePlaceholder')}
                             />
                             {passwordType === 'password' ? <img className="cursor-pointer" onClick={() => showPassword('password')} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={() => showPassword('password')} alt="" src={eyeIconOff} />}
                         </div>
@@ -155,7 +155,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 autoComplete="off"
                                 onChange={capturePassWordData}
                                 className={(getClassName("kcInputClass"), 'border-none w-11/12 outline-none')}
-                                placeholder={msgStr('passwordPlaceholder')}
+                                placeholder={msgStr('confPasswordUpdatePlaceholder')}
                             />
                             {confPasswordType === 'password' ? <img className="cursor-pointer" onClick={() => showPassword('confPassword')} alt="" src={eyeIcon} /> : <img className="cursor-pointer" onClick={() => showPassword('confPassword')} alt="" src={eyeIconOff} />}
                         </div>
