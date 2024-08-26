@@ -267,7 +267,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 <select value={dummyFormData.partnerType ?? ''} onChange={(e) => selectedPartnerTypeValue(e)} id="partnerType" name="partnerType" className="w-full h-full font-inter cursor-pointer outline-none px-2">
                                     <option value="" disabled>{msgStr("selectAnOption")}</option>
                                     {JSON.parse(msgStr('partnerTypeData')).map((item: any) => {
-                                        return (<option value={item.id} key={item.id} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]">{item.value}</option>)
+                                        return (<option value={item.id} key={item.id} className="block py-3 px-5 cursor-pointer hover:bg-gray-100">{item.value}</option>)
                                     })}
                                 </select>
                             </div>
@@ -363,7 +363,7 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                                 <ul className="py-[1px] text-xl text-[#031640] font-inter" role="none" >
                                     {orgData.map((item: any, index: any) => (
                                         <>
-                                            <li tabIndex={0} key={item.id} id={'orgName' + index} onClick={() => selectOrgName(item.value)} onKeyDown={(e) => getTabEvents(e, () => selectOrgName(item.value))} className="block py-3 px-5 cursor-pointer hover:bg-[#F4F8FF]" role="menuitem">{item.value}</li>
+                                            <li tabIndex={0} key={item.id} id={'orgName' + index} onClick={() => selectOrgName(item.value)} onKeyDown={(e) => getTabEvents(e, () => selectOrgName(item.value))} className="block py-3 px-5 cursor-pointer hover:bg-gray-200" role="menuitem">{item.value}</li>
                                             <hr className="mx-4 border-[#D8D8D8] last-of-type:hidden" />
                                         </>
                                     ))}
