@@ -49,16 +49,14 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                     //     <a href={actionUri}>{msg("proceedWithAction")}</a>
                     // </p>
                 ) : (
-                    client.baseUrl !== undefined && (
-                        <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl info-a-link">
-                            <a id="backToApplication" className="text-[#ffffff] block w-full h-full pt-3" href={client.baseUrl ? client.baseUrl : url.loginRestartFlowUrl}>
-                                {msg("backToApplication")}
-                            </a>
-                        </button>
-                        // <p>
-                        //     <a href={client.baseUrl}>{msg("backToApplication")}</a>
-                        // </p>
-                    )
+                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl info-a-link">
+                        <a id="backToApplication" className="text-[#ffffff] block w-full h-full pt-3" href={client.baseUrl ? client.baseUrl : url.loginUrl}>
+                            {msg("backToApplication")}
+                        </a>
+                    </button>
+                    // <p>
+                    //     <a href={client.baseUrl}>{msg("backToApplication")}</a>
+                    // </p>
                 )}
             </div>
         </Template>
