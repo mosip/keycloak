@@ -208,7 +208,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     type="submit"
                                     value={msgStr("doLogIn")}
                                     onClick={() => setReloadBtn(true)}
-                                    disabled={(!dirtyLoginData[autoCompleteHelper] && !dirtyLoginData?.username) || !dirtyLoginData.password}
+                                    disabled={(!dirtyLoginData[autoCompleteHelper] && !dirtyLoginData?.username && !auth.attemptedUsername) || !dirtyLoginData.password}
                                 />
                             </div>
                         </form>
