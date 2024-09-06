@@ -464,8 +464,8 @@ export default function Register(props: PageProps<Extract<KcContext, { pageId: "
                             maxLength={phoneNoMax}
                         />
                         {<span className="text-[#C61818] mb-0 font-semibold font-inter">
-                            {(phoneNoMax === dummyFormData.phoneNumber?.length) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{emailMax}&nbsp;{msg('charactersText')}</span>}
-                            {(invalidPhoneNo && dummyFormData.phoneNumber !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}</span>}
+                            {(phoneNoMax === dummyFormData.phoneNumber?.length) && <span className="flex items-start text-[#8B6105] font-semibold">{msg('maxLengthErrMsg')}&nbsp;{phoneNoMax}&nbsp;{msg('charactersText')}</span>}
+                            {(invalidPhoneNo && dummyFormData.phoneNumber !== '') && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp;{msg('invalidPhoneNo')}&nbsp;{phoneNoMax}&nbsp;{msg('invalidPhoneNoTwo')}</span>}
                             {dummyFormData.phoneNumber === '' && <span className="flex items-start"><img className="inline mt-1" alt='' src={error} />&nbsp; {msg('inputErrorMsg')} &nbsp; {msg("phoneNumber")}</span>}
                         </span>}
                     </div>
