@@ -31,7 +31,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                     {message?.summary}
                 </p>
                 {!skipLink && pageRedirectUri !== undefined ? (
-                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl info-a-link">
+                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-10 rounded-xl info-a-link">
                         <a id="backToApplication" className="text-[#ffffff] block w-full h-full pt-3" href={pageRedirectUri}>
                             {msg("backToApplication")}
                         </a>
@@ -40,7 +40,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                     //     <a href={pageRedirectUri}>{msg("backToApplication")}</a>
                     // </p>
                 ) : actionUri !== undefined ? (
-                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl info-a-link">
+                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-10 rounded-xl info-a-link">
                         <a id="backToApplication" className="text-[#ffffff] block w-full h-full pt-3" href={actionUri}>
                             {msg("proceedWithAction")}
                         </a>
@@ -49,7 +49,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                     //     <a href={actionUri}>{msg("proceedWithAction")}</a>
                     // </p>
                 ) : (
-                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl info-a-link">
+                    <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-10 rounded-xl info-a-link">
                         <a id="backToApplication" className="text-[#ffffff] block w-full h-full pt-3" href={client.baseUrl ? client.baseUrl : url.loginUrl}>
                             {msg("backToApplication")}
                         </a>
