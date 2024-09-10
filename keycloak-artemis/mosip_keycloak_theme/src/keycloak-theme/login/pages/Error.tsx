@@ -20,7 +20,7 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
             <div id="kc-error-message" className="text-center w-100% font-inter">
                 <p className="instruction">{message.summary}</p>
                 <button className="bg-hLinkColor w-9/12 h-16 text-[#ffffff] mt-9 rounded-xl">
-                    <a id="backToApplication" className="text-[#ffffff]" href={client.baseUrl ? client.baseUrl : url.loginUrl}>
+                    <a id="backToApplication" className="text-[#ffffff] block w-full h-full pt-4" href={client.baseUrl ? client.baseUrl : url.loginUrl}>
                         {msg("backToApplication")}
                     </a>
                 </button>
