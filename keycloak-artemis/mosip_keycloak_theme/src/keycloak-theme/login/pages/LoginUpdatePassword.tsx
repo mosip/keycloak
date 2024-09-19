@@ -22,7 +22,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     const [confPasswordType, setConfPasswordType] = useState('password');
     const { msg, msgStr } = i18n;
     const [isReloadBtn, setReloadBtn] = useState(false);
-    const [newPasswordData, getNewPasswordData] = useState<PasswordUpdate>({"password-new":"", "password-confirm":""});
+    const [newPasswordData, getNewPasswordData] = useState<PasswordUpdate>({ "password-new": "", "password-confirm": "" });
     const [isSamePassword, checkisSamePassword] = useState(false);
     const [openErrTab, getOpenErrTab] = useState(true);
 
@@ -39,11 +39,11 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         }
     }
 
-    const capturePassWordData = (event:any) =>{
-        const {name, value} = event.target 
-        getNewPasswordData(prevData =>({
+    const capturePassWordData = (event: any) => {
+        const { name, value } = event.target
+        getNewPasswordData(prevData => ({
             ...prevData,
-            [name]:value
+            [name]: value
         }))
 
         if (name === 'password-confirm' && newPasswordData['password-new']) {
@@ -62,8 +62,22 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         }
     }
 
-    window.onbeforeunload = function() {
-        if(!isReloadBtn && !localStorage.getItem("isLocaleopen")){
+    const showSuccessMsg = () => {
+        setReloadBtn(true);
+    }
+
+    // const moveToDashBoard = () => {
+    //     const formElement = document.getElementById("kc-passwd-update-form") as HTMLFormElement | null;
+
+    //     if (formElement) {
+    //         formElement.action = url.loginAction;
+    //     } else {
+    //         console.error("Form element not found");
+    //     }
+    // }
+
+    window.onbeforeunload = function () {
+        if (!isReloadBtn && !localStorage.getItem("isLocaleopen")) {
             return 'Do you want to leave this page?'
         }
     }
@@ -79,13 +93,13 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 </>
             }
         >
-            <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
+            {!isReloadBtn && <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
                 {(message !== undefined && message.type !== 'warning' && openErrTab) && (
                     <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 font-inter rounded-lg px-4'>
                         {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
                                     {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
                                     {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>} */}
-                        <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt=""src={closeIcon} />
+                        <img onClick={() => getOpenErrTab(!openErrTab)} className="h-4 w-4 float-right cursor-pointer" alt="" src={closeIcon} />
                         <span className="kc-feedback-text"
                             dangerouslySetInnerHTML={{
                                 "__html": message.summary
@@ -210,15 +224,22 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                     getClassName("kcButtonBlockClass"),
                                     getClassName("kcButtonLargeClass")
                                 )}
-                                type="submit"
-                                onClick={() => setReloadBtn(true)}
+                                // type="submit"
+                                // onClick={() => setReloadBtn(true)}
+                                onClick={showSuccessMsg}
                                 value={msgStr("doSubmit")}
                                 disabled={!newPasswordData['password-new'] || !newPasswordData['password-confirm'] || isSamePassword}
                             />
                         )}
                     </div>
                 </div>
-            </form>
+            </form>}
+            {isReloadBtn &&
+                <form action={url.loginAction} className="flex text-center flex-col">
+                    <p>Email verification successful!</p>
+                    <button type="submit" className="text-[#1447B2]">Go to Dashboard</button>
+                </form>
+            }
         </Template>
     );
 }
