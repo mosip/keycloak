@@ -112,7 +112,8 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "Username already exists. Enter a different username",
         invalidOrgVal: "Please Enter valid Organization",
         partnerTypeData:'[{"id":"Device_Provider", "value":"Device Provider"}, {"id":"FTM_Provider", "value":"FTM Provider"}, {"id":"Authentication_Partner", "value":"Authentication Partner"}, {"id":"Credential_Partner_or_ISP", "value":"Credential partner or ISP"}, {"id":"ABIS_Partner", "value":"ABIS partner"}, {"id":"SDK_Partner", "value":"SDK partner"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Indian Government"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Jio Networks"}, {"id":"Airtel", "value":"Airtel"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Indian Government"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Jio Networks"}, {"id":"Airtel", "value":"Airtel"}]',
+        goToDashboard:"Go to Dashboard"
     },
     fr: {
         /* spell-checker: disable */
@@ -220,7 +221,8 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "Ce nom d'utilisateur existe déjà. Entrez un autre nom d'utilisateur",
         invalidOrgVal: "Veuillez entrer une organisation valide",
         partnerTypeData:'[{"id":"Device_Provider", "value":"Fournisseur d\'appareil"}, {"id":"FTM_Provider", "value":"Fournisseur FTM"}, {"id":"Authentication_Partner", "value":"Partenaire d\'authentification"}, {"id":"Credential_Partner_or_ISP", "value":"Partenaire d\'identification ou FAI"}, {"id":"ABIS_Partner", "value":"Partenaire ABIS"}, {"id":"SDK_Partner", "value":"Partenaire SDK"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Gouvernement indien"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Réseaux Jio"}, {"id":"Airtel", "value":"Airtel"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Gouvernement indien"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Réseaux Jio"}, {"id":"Airtel", "value":"Airtel"}]',
+        goToDashboard:"Accéder au tableau de bord"
         /* spell-checker: enable */
     },
     ar: {
@@ -328,7 +330,8 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلف",
         invalidOrgVal: "الرجاء إدخال منظمة صالحة",
         partnerTypeData:'[{"id":"Device_Provider", "value":"مزود الجهاز"}, {"id":"FTM_Provider", "value":"مزود FTM"}, {"id":"Authentication_Partner", "value":"شريك المصادقة"}, {"id":"Credential_Partner_or_ISP", "value":"شريك الاعتماد أو مزود خدمة الإنترنت"}, {"id":"ABIS_Partner", "value":"شريك ABIS"}, {"id":"SDK_Partner", "value":"شريك SDK"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"الحكومة الهندية"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"شبكات جنينيو"}, {"id":"Airtel", "value":"ايرتل"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"الحكومة الهندية"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"شبكات جنينيو"}, {"id":"Airtel", "value":"ايرتل"}]',
+        goToDashboard:"انتقل إلى لوحة التحكم"
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -435,7 +438,8 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "उपयोगकर्ता का नाम पहले से मौजूद है। कोई भिन्न उपयोक्तानाम दर्ज करें",
         invalidOrgVal: "कृपया वैध संगठन दर्ज करें",
         partnerTypeData:'[{"id":"Device_Provider", "value":"डिवाइस प्रदाता"}, {"id":"FTM_Provider", "value":"एफटीएम प्रदाता"}, {"id":"Authentication_Partner", "value":"प्रमाणीकरण भागीदार"}, {"id":"Credential_Partner_or_ISP", "value":"क्रेडेंशियल पार्टनर या आईएसपी"}, {"id":"ABIS_Partner", "value":"ABIS भागीदार"}, {"id":"SDK_Partner", "value":"SDK भागीदार"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"भारत सरकार"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"जियो नेटवर्क"}, {"id":"Airtel", "value":"एयरटेल"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"भारत सरकार"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"जियो नेटवर्क"}, {"id":"Airtel", "value":"एयरटेल"}]',
+        goToDashboard:"डैशबोर्ड पर जाएँ"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -542,7 +546,8 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "பெயர் ஏற்கனவே உள்ளது. வேறு பயனர்பெயரை உள்ளிடவும்",
         invalidOrgVal: "சரியான நிறுவனத்தை உள்ளிடவும்",
         partnerTypeData:'[{"id":"Device_Provider", "value":"சாதன வழங்குநர்"}, {"id":"FTM_Provider", "value":"FTM வழங்குநர்"}, {"id":"Authentication_Partner", "value":"அங்கீகார கூட்டாளர்"}, {"id":"Credential_Partner_or_ISP", "value":"நற்சான்றிதழ் பங்குதாரர் அல்லது ISP"}, {"id":"ABIS_Partner", "value":"ABIS பார்ட்னர்"}, {"id":"SDK_Partner", "value":"SDK பார்ட்னர்"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"இந்திய அரசு"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ஜியோ நெட்வொர்க்குகள்"}, {"id":"Airtel", "value":"ஏர்டெல்"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"இந்திய அரசு"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ஜியோ நெட்வொர்க்குகள்"}, {"id":"Airtel", "value":"ஏர்டெல்"}]',
+        goToDashboard:"டாஷ்போர்டுக்குச் செல்லவும்"
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -649,7 +654,8 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "ಬಳಕೆದಾರಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ಬೇರೆ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
         invalidOrgVal: "ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಸಂಸ್ಥೆಯನ್ನು ನಮೂದಿಸಿ",
         partnerTypeData:'[{"id":"Device_Provider", "value":"ಸಾಧನ ಪೂರೈಕೆದಾರ"}, {"id":"FTM_Provider", "value":"FTM ಪೂರೈಕೆದಾರ"}, {"id":"Authentication_Partner", "value":"ದೃಢೀಕರಣ ಪಾಲುದಾರ"}, {"id":"Credential_Partner_or_ISP", "value":"ರುಜುವಾತು ಪಾಲುದಾರ ಅಥವಾ ISP"}, {"id":"ABIS_Partner", "value":"ABIS ಪಾಲುದಾರ"}, {"id":"SDK_Partner", "value":"SDK ಪಾಲುದಾರ"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"ಭಾರತ ಸರ್ಕಾರ"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್"}, {"id":"Airtel", "value":"ಏರ್ಟೆಲ್"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"ಭಾರತ ಸರ್ಕಾರ"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್"}, {"id":"Airtel", "value":"ಏರ್ಟೆಲ್"}]',
+        goToDashboard:"ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗಿ"
     }
        
 });
