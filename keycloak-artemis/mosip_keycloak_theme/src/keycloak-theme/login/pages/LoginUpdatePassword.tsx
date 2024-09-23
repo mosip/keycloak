@@ -95,7 +95,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             }
         >
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
-                {!isReloadBtn && <>
+                <div className={`${!isReloadBtn ? "visible -mb-[240px]" : "invisible -mt-[230px]"}`}>
                     {(message !== undefined && message.type !== 'warning' && openErrTab) && (
                         <div className='bg-errorBg min-h-11 p-2 text-center text-errorColor font-semibold mb-3 font-inter rounded-lg px-4'>
                             {/* {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
@@ -235,22 +235,19 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             )}
                         </div>
                     </div>
-                </>}
-                {isReloadBtn && (
-                    <div className="flex items-center flex-col font-inter">
-                        <span><img className="h-[10rem] w-[10rem]" src={successIcon} /></span>
-                        <p className="font-bold text-[14px] text-[#000000]">Password reset completed successfully!</p>
-                        <hr className="w-[90%] m-8 border-[#D8D8D8]" />
-                        <input
-                           className="text-[#1447B2] font-bold text-[13px]"
-                            type="submit"
-                            // onClick={() => setReloadBtn(true)}
-                            onClick={showSuccessMsg}
-                            value={msgStr("goToDashboard")}
-                        />
-                    </div>
-                )}
-
+                </div>
+                <div className={`flex items-center flex-col font-inter ${isReloadBtn ? "visible" : "invisible"}`}>
+                    <span><img className="h-[10rem] w-[10rem]" src={successIcon} /></span>
+                    <p className="font-bold text-[14px] text-[#000000]">Password reset completed successfully!</p>
+                    <hr className="w-[90%] m-8 border-[#D8D8D8]" />
+                    <input
+                        className="text-[#1447B2] font-bold text-[13px]"
+                        type="submit"
+                        // onClick={() => setReloadBtn(true)}
+                        onClick={showSuccessMsg}
+                        value={msgStr("goToDashboard")}
+                    />
+                </div>
             </form>
         </Template>
     );
