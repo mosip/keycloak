@@ -238,7 +238,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 </div>
                 <div className={`flex items-center flex-col font-inter ${isReloadBtn ? "visible" : "invisible"}`}>
                     <span><img className="h-[10rem] w-[10rem]" src={successIcon} /></span>
-                    <p className="font-bold text-[14px] text-[#000000]">Password reset completed successfully!</p>
+                    <p className="font-bold text-[14px] text-[#000000]">{msg("passwordResetSuccessMsg")}</p>
                     <hr className="w-[90%] m-8 border-[#D8D8D8]" />
                     <input
                         className="text-[#1447B2] font-bold text-[13px]"
