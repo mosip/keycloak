@@ -41,7 +41,7 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "Please fill all the required fields",
         passwordInfo: "Use 8 or more characters with at least one upper and lower case alphabet, atleast one special character, and at least one number.",
         inputErrorMsg: "Please enter",
-        orgInfoMsg: "Enter the organisation name as mentioned in ORGANISATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate",
+        orgInfoMsg: "Enter the organization name as mentioned in ORGANIZATION ATTRIBUTE of CERTIFICATE SUBJECT in CA Signed Certificate",
         existingEmailErr: "Email already exists.",
         invalidEmailErr: "Invalid email address.",
         passwordConditions: "Password does not meet the minimum requirements. Please try again.",
@@ -112,7 +112,9 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "Username already exists. Enter a different username",
         invalidOrgVal: "Please Enter valid Organisation",
         partnerTypeData:'[{"id":"Device_Provider", "value":"Device Provider"}, {"id":"FTM_Provider", "value":"FTM Provider"}, {"id":"Authentication_Partner", "value":"Authentication Partner"}, {"id":"Credential_Partner_or_ISP", "value":"Credential partner or ISP"}, {"id":"ABIS_Partner", "value":"ABIS partner"}, {"id":"SDK_Partner", "value":"SDK partner"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Indian Government"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Jio Networks"}, {"id":"Airtel", "value":"Airtel"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Indian Government"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Jio Networks"}, {"id":"Airtel", "value":"Airtel"}]',
+        goToDashboard:"Go to Dashboard",
+        passwordResetSuccessMsg: "Password reset completed successfully!"
     },
     fr: {
         /* spell-checker: disable */
@@ -137,7 +139,7 @@ export const { useI18n } = createUseI18n({
         backToLogin: "Dos",
         firstNamePH: "Entrez votre prénom",
         lastNamePH: "Entrer le nom de famille",
-        orgnamePH: "Entrez le nom de l'organisation",
+        orgnamePH: "Entrez le nom de l'organisation partenaire",
         addressPH: "Entrer l'adresse",
         emailPH: "Entrer l'adresse e-mail",
         phoneNumberPH: "Entrez le numéro de téléphone",
@@ -149,7 +151,7 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "Veuillez remplir tous les champs obligatoires",
         passwordInfo: "Utilisez 8 caractères ou plus avec au moins un alphabet majuscule et minuscule, au moins un caractère spécial et au moins un chiffre.",
         inputErrorMsg: "Entrez s'il vous plait",
-        orgInfoMsg: "Entrez le nom de l'organisation tel que mentionné dans l'ATTRIBUT DE L'ORGANISATION du SUJET DU CERTIFICAT dans le certificat signé par l'autorité de certification.",
+        orgInfoMsg: "Entrez le nom de l'organisation tel que mentionné dans l'ATTRIBUT D'ORGANISATION du SUJET DU CERTIFICAT dans le certificat signé par l'autorité de certification.",
         existingEmailErr: "L'email existe déjà.",
         invalidEmailErr: "Adresse e-mail invalide.",
         passwordConditions: "Le mot de passe ne répond pas aux exigences minimales. Veuillez réessayer.",
@@ -220,7 +222,9 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "Ce nom d'utilisateur existe déjà. Entrez un autre nom d'utilisateur",
         invalidOrgVal: "Veuillez entrer une organisation valide",
         partnerTypeData:'[{"id":"Device_Provider", "value":"Fournisseur d\'appareil"}, {"id":"FTM_Provider", "value":"Fournisseur FTM"}, {"id":"Authentication_Partner", "value":"Partenaire d\'authentification"}, {"id":"Credential_Partner_or_ISP", "value":"Partenaire d\'identification ou FAI"}, {"id":"ABIS_Partner", "value":"Partenaire ABIS"}, {"id":"SDK_Partner", "value":"Partenaire SDK"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Gouvernement indien"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Réseaux Jio"}, {"id":"Airtel", "value":"Airtel"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"Gouvernement indien"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"Réseaux Jio"}, {"id":"Airtel", "value":"Airtel"}]',
+        goToDashboard:"Accéder au tableau de bord",
+        passwordResetSuccessMsg: "La réinitialisation du mot de passe a été effectuée avec succès !"
         /* spell-checker: enable */
     },
     ar: {
@@ -245,7 +249,7 @@ export const { useI18n } = createUseI18n({
         backToLogin: "خلف",
         firstNamePH: "أدخل الاسم الأول",
         lastNamePH: "إدخال اسم آخر",
-        orgnamePH: "أدخل اسم المنظمة",
+        orgnamePH: "أدخل اسم المنظمة الشريكة",
         addressPH: "أدخل العنوان",
         emailPH: "أدخل عنوان البريد الالكتروني",
         phoneNumberPH: "أدخل رقم الهاتف",
@@ -257,7 +261,7 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "يرجى ملء كافة الحقول المطلوبة",
         passwordInfo: "استخدم 8 أحرف أو أكثر مع أبجدية كبيرة وصغيرة واحدة على الأقل، وحرف خاص واحد على الأقل، ورقم واحد على الأقل.",
         inputErrorMsg: "تفضل",
-        orgInfoMsg: "أدخل اسم المؤسسة كما هو مذكور في سمة المنظمة لموضوع الشهادة في الشهادة الموقعة من CA",
+        orgInfoMsg: "أدخل اسم المنظمة كما هو مذكور في سمة المنظمة لموضوع الشهادة في شهادة CA الموقعة.",
         existingEmailErr: "البريد الالكتروني موجود بالفعل.",
         invalidEmailErr: "عنوان البريد الإلكتروني غير صالح.",
         passwordConditions: "كلمة المرور لا تلبي الحد الأدنى من المتطلبات. حاول مرة اخرى.",
@@ -328,7 +332,9 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "اسم المستخدم موجود بالفعل. أدخل اسم مستخدم مختلف",
         invalidOrgVal: "الرجاء إدخال منظمة صالحة",
         partnerTypeData:'[{"id":"Device_Provider", "value":"مزود الجهاز"}, {"id":"FTM_Provider", "value":"مزود FTM"}, {"id":"Authentication_Partner", "value":"شريك المصادقة"}, {"id":"Credential_Partner_or_ISP", "value":"شريك الاعتماد أو مزود خدمة الإنترنت"}, {"id":"ABIS_Partner", "value":"شريك ABIS"}, {"id":"SDK_Partner", "value":"شريك SDK"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"الحكومة الهندية"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"شبكات جنينيو"}, {"id":"Airtel", "value":"ايرتل"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"الحكومة الهندية"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"شبكات جنينيو"}, {"id":"Airtel", "value":"ايرتل"}]',
+        goToDashboard:"انتقل إلى لوحة التحكم",
+        passwordResetSuccessMsg: "تم إعادة تعيين كلمة المرور بنجاح!"
     },
     hin: {
         alphanumericalCharsOnly: "केवल अक्षरांकीय वर्ण",
@@ -352,7 +358,7 @@ export const { useI18n } = createUseI18n({
         backToLogin: "वापस",
         firstNamePH: "पहला नाम दर्ज करें",
         lastNamePH: "अंतिम नाम दर्ज करें",
-        orgnamePH: "संगठन का नाम दर्ज करें",
+        orgnamePH: "भागीदार संगठन का नाम दर्ज करें",
         addressPH: "पता दर्ज करें",
         emailPH: "ईमेल पता दर्ज करें",
         phoneNumberPH: "फोन नंबर दर्ज करें",
@@ -364,7 +370,7 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "कृपया सभी आवश्यक फ़ील्ड भरें",
         passwordInfo: "कम से कम एक अपरकेस और लोअरकेस वर्णमाला, कम से कम एक विशेष वर्ण और कम से कम एक संख्या के साथ 8 या अधिक वर्णों का उपयोग करें।",
         inputErrorMsg: "कृपया दर्ज करें",
-        orgInfoMsg: "संगठन का नाम दर्ज करें जैसा कि सीए हस्ताक्षरित प्रमाणपत्र के प्रमाणपत्र विषय में संगठन विशेषता में उल्लिखित है",
+        orgInfoMsg: "CA हस्ताक्षरित प्रमाणपत्र में प्रमाणपत्र विषय के संगठन विशेषता में उल्लिखित संगठन का नाम दर्ज करें।",
         existingEmailErr: "ईमेल पहले से ही मौजूद है।",
         invalidEmailErr: "अवैध ईमेल पता।",
         passwordConditions: "पासवर्ड न्यूनतम आवश्यकताओं को पूरा नहीं करता है। कृपया पुनः प्रयास करें।",
@@ -435,7 +441,9 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "उपयोगकर्ता का नाम पहले से मौजूद है। कोई भिन्न उपयोक्तानाम दर्ज करें",
         invalidOrgVal: "कृपया वैध संगठन दर्ज करें",
         partnerTypeData:'[{"id":"Device_Provider", "value":"डिवाइस प्रदाता"}, {"id":"FTM_Provider", "value":"एफटीएम प्रदाता"}, {"id":"Authentication_Partner", "value":"प्रमाणीकरण भागीदार"}, {"id":"Credential_Partner_or_ISP", "value":"क्रेडेंशियल पार्टनर या आईएसपी"}, {"id":"ABIS_Partner", "value":"ABIS भागीदार"}, {"id":"SDK_Partner", "value":"SDK भागीदार"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"भारत सरकार"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"जियो नेटवर्क"}, {"id":"Airtel", "value":"एयरटेल"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"भारत सरकार"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"जियो नेटवर्क"}, {"id":"Airtel", "value":"एयरटेल"}]',
+        goToDashboard:"डैशबोर्ड पर जाएँ",
+        passwordResetSuccessMsg: "पासवर्ड रीसेट सफलतापूर्वक पूरा हुआ!"
     },
     tam: {
         alphanumericalCharsOnly: "எழுத்தெண்கள் மட்டுமே",
@@ -459,7 +467,7 @@ export const { useI18n } = createUseI18n({
         backToLogin: "திரும்பச் செல்",
         firstNamePH: "முதற்பெயரை உள்ளிடவும்",
         lastNamePH: "கடைசி பெயரை உள்ளிடவும்",
-        orgnamePH: "அமைப்பின் பெயரை உள்ளிடவும்",
+        orgnamePH: "கூட்டாளர் நிறுவனத்தின் பெயரை உள்ளிடவும்",
         addressPH: "முகவரியை உள்ளிடவும்",
         emailPH: "மின்னஞ்சல் முகவரியை உள்ளிடவும்",
         phoneNumberPH: "தொலைபேசி எண்னை உள்ளிடவும்",
@@ -471,7 +479,7 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "அனைத்து தேவையான புலங்களை பூர்த்தி செய்யவும்",
         passwordInfo: "குறைந்தபட்சம் ஒரு பெரிய மற்றும் சிறிய எழுத்துக்கள், குறைந்தபட்சம் ஒரு சிறப்பு எழுத்து மற்றும் குறைந்தபட்சம் ஒரு எண்ணுடன் 8 அல்லது அதற்கு மேற்பட்ட எழுத்துக்களைப் பயன்படுத்தவும்.",
         inputErrorMsg: "உள்ளிடவும்",
-        orgInfoMsg: "CA கையெழுத்திடப்பட்ட சான்றிதழில் சான்றிதழ் பொருள் ORGANISATION ATTRIBUTE ல் குறிப்பிடப்பட்டுள்ளபடி அமைப்பின் பெயரை உள்ளிடவும்",
+        orgInfoMsg: "CA கையொப்பமிடப்பட்ட சான்றிதழில் சான்றிதழ் பாடத்தின் நிறுவன பண்புக்கூறில் குறிப்பிடப்பட்டுள்ளபடி நிறுவனத்தின் பெயரை உள்ளிடவும்.",
         existingEmailErr: "மின்னஞ்சல் ஏற்கனவே உள்ளது.",
         invalidEmailErr: "தவறான மின்னஞ்சல் முகவரி.",
         passwordConditions: "கடவுச்சொல் குறைந்தபட்ச தேவைகளை பூர்த்தி செய்யவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.",
@@ -542,7 +550,9 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "பெயர் ஏற்கனவே உள்ளது. வேறு பயனர்பெயரை உள்ளிடவும்",
         invalidOrgVal: "சரியான நிறுவனத்தை உள்ளிடவும்",
         partnerTypeData:'[{"id":"Device_Provider", "value":"சாதன வழங்குநர்"}, {"id":"FTM_Provider", "value":"FTM வழங்குநர்"}, {"id":"Authentication_Partner", "value":"அங்கீகார கூட்டாளர்"}, {"id":"Credential_Partner_or_ISP", "value":"நற்சான்றிதழ் பங்குதாரர் அல்லது ISP"}, {"id":"ABIS_Partner", "value":"ABIS பார்ட்னர்"}, {"id":"SDK_Partner", "value":"SDK பார்ட்னர்"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"இந்திய அரசு"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ஜியோ நெட்வொர்க்குகள்"}, {"id":"Airtel", "value":"ஏர்டெல்"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"இந்திய அரசு"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ஜியோ நெட்வொர்க்குகள்"}, {"id":"Airtel", "value":"ஏர்டெல்"}]',
+        goToDashboard:"டாஷ்போர்டுக்குச் செல்லவும்",
+        passwordResetSuccessMsg: "கடவுச்சொல் மீட்டமைப்பு வெற்றிகரமாக முடிந்தது!"
     },
     kan:{
         alphanumericalCharsOnly: "ಅಕ್ಷರಾಂಕ ಲಕ್ಷಣಗಳು ಮಾತ್ರ",
@@ -566,7 +576,7 @@ export const { useI18n } = createUseI18n({
         backToLogin: "ಹಿಂದಿರುಗಿ",
         firstNamePH: "ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
         lastNamePH: "ಕೊನೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
-        orgnamePH: "ಸಂಸ್ಥೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+        orgnamePH: "ಪಾಲುದಾರ ಸಂಸ್ಥೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
         addressPH: "ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ",
         emailPH: "ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ",
         phoneNumberPH: "ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
@@ -578,7 +588,7 @@ export const { useI18n } = createUseI18n({
         registerErrorMsg: "ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿಮಾಡಿ",
         passwordInfo: "ಕನಿಷ್ಠ ಒಂದು ದೊಡ್ಡ ಮತ್ತು ಲೋವರ್ ಕೇಸ್ ವರ್ಣಮಾಲೆಯೊಂದಿಗೆ 8 ಅಥವಾ ಹೆಚ್ಚಿನ ಅಕ್ಷರಗಳನ್ನು ಬಳಸಿ, ಕನಿಷ್ಠ ಒಂದು ವಿಶೇಷ ಅಕ್ಷರ ಮತ್ತು ಕನಿಷ್ಠ ಒಂದು ಸಂಖ್ಯೆ.",
         inputErrorMsg: "ದಯವಿಟ್ಟು ನಮೂದಿಸಿ",
-        orgInfoMsg: "CA ಸಹಿ ಮಾಡಿದ ಪ್ರಮಾಣಪತ್ರದಲ್ಲಿ ಪ್ರಮಾಣಪತ್ರ ವಿಷಯದ ORGANISATION ATTRIBUTE ನಲ್ಲಿ ಉಲ್ಲೇಖಿಸಿದಂತೆ ಸಂಸ್ಥೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+        orgInfoMsg: "CA ಸಹಿ ಮಾಡಿದ ಪ್ರಮಾಣಪತ್ರದಲ್ಲಿ ಪ್ರಮಾಣಪತ್ರ ವಿಷಯದ ಸಂಸ್ಥೆಯ ಗುಣಲಕ್ಷಣದಲ್ಲಿ ನಮೂದಿಸಿದಂತೆ ಸಂಸ್ಥೆಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.",
         existingEmailErr: "ಇಮೇಲ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ.",
         invalidEmailErr: "ಅಮಾನ್ಯವಾದ ಇಮೇಲ್ ವಿಳಾಸ.",
         passwordConditions: "ಪಾಸ್ವರ್ಡ್ ಕನಿಷ್ಠ ಅಗತ್ಯಗಳನ್ನು ಪೂರೈಸುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.",
@@ -649,7 +659,9 @@ export const { useI18n } = createUseI18n({
         usernameExistsMessage: "ಬಳಕೆದಾರಹೆಸರು ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ಬೇರೆ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
         invalidOrgVal: "ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಸಂಸ್ಥೆಯನ್ನು ನಮೂದಿಸಿ",
         partnerTypeData:'[{"id":"Device_Provider", "value":"ಸಾಧನ ಪೂರೈಕೆದಾರ"}, {"id":"FTM_Provider", "value":"FTM ಪೂರೈಕೆದಾರ"}, {"id":"Authentication_Partner", "value":"ದೃಢೀಕರಣ ಪಾಲುದಾರ"}, {"id":"Credential_Partner_or_ISP", "value":"ರುಜುವಾತು ಪಾಲುದಾರ ಅಥವಾ ISP"}, {"id":"ABIS_Partner", "value":"ABIS ಪಾಲುದಾರ"}, {"id":"SDK_Partner", "value":"SDK ಪಾಲುದಾರ"}]',
-        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"ಭಾರತ ಸರ್ಕಾರ"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್"}, {"id":"Airtel", "value":"ಏರ್ಟೆಲ್"}]'
+        organization: '[{"id":"IIITB", "value":"IIITB"},{"id":"Indian_Government", "value":"ಭಾರತ ಸರ್ಕಾರ"},{"id":"CyberPWN", "value":"CyberPWN"},{"id":"Jio_Networks", "value":"ಜಿಯೋ ನೆಟ್ವರ್ಕ್ಸ್"}, {"id":"Airtel", "value":"ಏರ್ಟೆಲ್"}]',
+        goToDashboard:"ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗಿ",
+        passwordResetSuccessMsg: "ಪಾಸ್ವರ್ಡ್ ರೀಸೆಟ್ ಯಶಸ್ವಿಯಾಗಿ ಪೂರ್ಣಗೊಂಡಿದೆ!"
     }
        
 });
