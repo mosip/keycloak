@@ -25,8 +25,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - SERVICE_LOCATION: 'keycloak-jboss'
-            SERVICE_NAME: 'mosip-jboss-keycloak'
           - SERVICE_LOCATION: 'keycloak-init'
             SERVICE_NAME: 'keycloak-init'
           - SERVICE_LOCATION: 'keycloak-artemis'
