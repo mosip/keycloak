@@ -755,11 +755,21 @@ def main():
                 if 'sa_client_roles' in client:
                     sa_client_roles = client['sa_client_roles']
                     print('\tAssigning service account client roles for %s client ' % client['name'])
+
                     for cid_roles in sa_client_roles:
-                        sa_client = list(cid_roles)[0]
-                        sa_client_role_list = cid_roles[sa_client]
-                        print('\t\tService account client name :: "%s"' % list(cid_roles)[0])
-                        ks.assign_sa_client_roles(realm, client['name'], sa_client, sa_client_role_list)
+                        if not isinstance(cid_roles, dict):  # Ensure it's a dictionary
+                            print(f"\t\tSkipping invalid entry: {cid_roles}")
+                            continue
+
+                        sa_client = next(iter(cid_roles))  # More efficient extraction of key
+                        sa_client_role_list = cid_roles.get(sa_client, [])
+
+                        print('\t\tService account client name :: "%s"' % sa_client)
+
+                        try:
+                            ks.assign_sa_client_roles(realm, client['name'], sa_client, sa_client_role_list)
+                        except Exception as e:
+                            print(f"Error assigning roles to {sa_client}: {e}")
 
                 if 'assign_client_scopes' in client:
                     assign_client_scopes = client['assign_client_scopes']
