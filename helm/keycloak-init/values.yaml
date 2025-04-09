@@ -231,6 +231,7 @@ keycloak:
         - PUBLISH_AUTHENTICATION_ERRORS_GENERAL
         - PUBLISH_REMOVE_ID_STATUS_GENERAL
         - SUBSCRIBE_REMOVE_ID_STATUS_GENERAL
+        - ONLINE_REGISTRATION_CLIENT
       client_scopes:
         - name: add_oidc_client
           description: Scope required to create OIDC client
