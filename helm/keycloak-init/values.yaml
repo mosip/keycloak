@@ -737,6 +737,8 @@ clientSecrets:
     secret: ""
   - name: mpartner_default_template_secret
     secret: ""
-
 extraEnvVarsSecret: []
 extraEnvVarsCM: []
+# Keycloak may be accessed in-cluster or from outside
+keycloakInternalHost: keycloak.keycloak
+keycloakExternalHost: iam.sandbox.xyz.net
