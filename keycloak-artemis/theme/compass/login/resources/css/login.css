@@ -673,4 +673,9 @@ ul#kc-totp-supported-apps {
     max-width: 120px;
 }
 
+.custom-logo-mosip {
+    height: 60px;
+    max-width: 120px;
+}
+
 /* End Recovery codes */

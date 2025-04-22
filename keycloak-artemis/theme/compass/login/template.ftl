@@ -53,7 +53,9 @@
 
 <body class="${properties.kcBodyClass!}">
 <div class="custom-top-nav">
-    <div class="custom-top-left">mosip</div>
+    <div class="custom-top-left">
+        <img src="${url.resourcesPath}/img/mosip-logo.png" alt="mosip Logo" class="custom-logo-mosip" />
+    </div>
     <div class="custom-top-right">
        <img src="${url.resourcesPath}/img/compass-logo.png" alt="Compass Logo" class="custom-logo" />
     </div>
