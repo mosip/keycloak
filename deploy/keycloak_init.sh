@@ -71,8 +71,8 @@ function initialize_keycloak() {
   EXTERNAL_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-iam-external-host})
   echo Initializing keycloak-init
   helm -n $NS install keycloak-init mosip/keycloak-init   \
-  --set keycloakExternalHost=$EXTERNAL_HOST \ 
-  --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS \
+  --set keycloakExternalHost="$EXTERNAL_HOST" \
+  --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS" \
   --set keycloak.realms.mosip.realm_config.smtpServer.host="$SMTP_HOST"                     \
   --set keycloak.realms.mosip.realm_config.smtpServer.port="$SMTP_PORT"                     \
   --set keycloak.realms.mosip.realm_config.smtpServer.from="$SMTP_FROM_ADDR"                \
