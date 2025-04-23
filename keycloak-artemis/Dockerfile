@@ -19,6 +19,8 @@ COPY ./theme/base /opt/bitnami/keycloak/themes/base
 
 COPY ./theme/mosip /opt/bitnami/keycloak/themes/mosip
 
+COPY ./theme/compass /opt/bitnami/keycloak/themes/compass
+
 COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
 
 COPY rootfs /
