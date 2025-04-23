@@ -1,16 +1,15 @@
 /* Patternfly CSS places a "bg-login.jpg" as the background on this ".login-pf" class.
    This clashes with the "keycloak-bg.png' background defined on the body below.
    Therefore the Patternfly background must be set to none. */
-.login-pf {
+   .login-pf {
     background: none;
 }
 
 .login-pf body {
-    background-image: none !important;
-    /* background: url("../img/keycloak-bg.png") no-repeat center center fixed; */
-    background-color: #F3F0E8 !important;
+    background: url("../img/compass-bg.png") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
+    font-family: 'Inter', sans-serif;
 }
 
 textarea.pf-c-form-control {
@@ -27,6 +26,14 @@ p.instruction {
 
 .pf-c-button.pf-m-control {
     border-color: rgba(230, 230, 230, 0.5);
+}
+
+.login-btn{
+    background-color: #FF671F !important;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 18px;
+    height: 44px;
 }
 
 h1#kc-page-title {
@@ -384,8 +391,8 @@ ul#kc-totp-supported-apps {
 
 @media (max-width: 767px) {
 
-    .login-pf body {
-        background: white;
+    .card-pf {
+        width: auto !important;
     }
 
     #kc-header {
@@ -459,8 +466,10 @@ ul#kc-totp-supported-apps {
 .login-pf-page {
     display: flex !important;
     align-items: center !important;
+    flex-direction: column;
     justify-content: center;
-    height: 90% !important;
+    height: 85% !important;
+    gap: 10px;
 }
 
 .login-pf-page .login-pf-brand {
@@ -522,12 +531,10 @@ ul#kc-totp-supported-apps {
 
 .card-pf {
     margin: 0 auto;
-    box-shadow: var(--pf-global--BoxShadow--lg);
     padding: 0 20px;
-    width: 500px;
+    width: 632px;
     max-width: auto;
-    border-top: 4px solid;
-    border-color: var(--pf-global--primary-color--100);
+    border-radius: 30px;
 }
 
 /*phone*/
@@ -648,11 +655,12 @@ ul#kc-totp-supported-apps {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 60px 100px 0 100px;
+    padding: 0 90px;
     color: #ffffff;
     font-size: 18px;
     font-weight: bold;
-    height: 60px;
+    height: 90px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .custom-top-left,
@@ -669,13 +677,62 @@ ul#kc-totp-supported-apps {
 }
 
 .custom-logo {
-    height: 40px;
-    max-width: 120px;
+    height: 68px;
+    max-width: 223px;
 }
 
 .custom-logo-mosip {
-    height: 60px;
-    max-width: 120px;
+    height: 62px;
+    max-width: 136px;
+}
+
+.login-heading{
+    font-weight: 600;
+    color: #031640;
+    font-size: 34px;
+}
+
+.login-description{
+    font-weight: 400;
+    color: #3D4468;
+    font-size: 18px;
+}
+
+.user-name-label{
+    color: #031640;
+    font-size: 18px;
+    font-family: 400;
+}
+
+.input-field{
+    height: 60px !important;
+    border: 1px solid #707070 !important;
+    outline: none !important;
+    border-radius: 10px !important;
+    font-size: 18px;
+    padding: 4px 16px;
+}
+
+.password-input-card{
+    height: 60px !important;
+    border: 1px solid #707070 !important;
+    border-radius: 10px !important;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-field{
+    padding: 4px 16px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+.eye-icon-card{
+    background-color: transparent;
+    border: none;
+    padding-right: 16px;
 }
 
 /* End Recovery codes */

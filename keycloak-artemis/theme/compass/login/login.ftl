@@ -1,7 +1,10 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('username','password') displayInfo=realm.password && realm.registrationAllowed && !registrationDisabled??; section>
     <#if section = "header">
-        ${msg("loginAccountTitle")}
+        <div style="text-align: left;">
+           <h2 class="login-heading">${msg("login")}</h2>
+           <p class="login-description">${msg("loginDescription")}</p>
+        </div>
     <#elseif section = "form">
         <div id="kc-form">
           <div id="kc-form-wrapper">
@@ -9,9 +12,9 @@
                 <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">
                     <#if !usernameHidden??>
                         <div class="${properties.kcFormGroupClass!}">
-                            <label for="username" class="${properties.kcLabelClass!}"><#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if></label>
+                            <label for="username" class="user-name-label"><#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if></label>
 
-                            <input tabindex="2" id="username" class="${properties.kcInputClass!}" name="username" value="${(login.username!'')}"  type="text" autofocus autocomplete="username"
+                            <input tabindex="2" id="username" class="${properties.kcInputClass!} input-field" name="username" value="${(login.username!'')}" placeholder="${msg("emailPlaceholder")}"  type="text" autofocus autocomplete="username"
                                    aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>"
                             />
 
@@ -25,13 +28,13 @@
                     </#if>
 
                     <div class="${properties.kcFormGroupClass!}">
-                        <label for="password" class="${properties.kcLabelClass!}">${msg("password")}</label>
+                        <label for="password" class="user-name-label"><span>${msg("password")}</span></label>
 
-                        <div class="${properties.kcInputGroup!}">
-                            <input tabindex="3" id="password" class="${properties.kcInputClass!}" name="password" type="password" autocomplete="current-password"
+                        <div class="${properties.kcInputGroup!} password-input-card">
+                            <input placeholder="${msg("passwordPlaceholder")}" tabindex="3" id="password" class="${properties.kcInputClass!} password-input-field" name="password" type="password" autocomplete="current-password"
                                    aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>"
                             />
-                            <button class="${properties.kcFormPasswordVisibilityButtonClass!}" type="button" aria-label="${msg("showPassword")}"
+                            <button class="eye-icon-card" type="button" aria-label="${msg("showPassword")}"
                                     aria-controls="password" data-password-toggle tabindex="4"
                                     data-icon-show="${properties.kcFormPasswordVisibilityIconShow!}" data-icon-hide="${properties.kcFormPasswordVisibilityIconHide!}"
                                     data-label-show="${msg('showPassword')}" data-label-hide="${msg('hidePassword')}">
@@ -71,7 +74,7 @@
 
                       <div id="kc-form-buttons" class="${properties.kcFormGroupClass!}">
                           <input type="hidden" id="id-hidden-input" name="credentialId" <#if auth.selectedCredential?has_content>value="${auth.selectedCredential}"</#if>/>
-                          <input tabindex="7" class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" name="login" id="kc-login" type="submit" value="${msg("doLogIn")}"/>
+                          <input tabindex="7" class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!} login-btn" name="login" id="kc-login" type="submit" value="${msg("doLogIn")}"/>
                       </div>
                 </form>
             </#if>

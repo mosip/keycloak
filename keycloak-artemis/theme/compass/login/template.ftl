@@ -56,11 +56,11 @@
     <div class="custom-top-left">
         <img src="${url.resourcesPath}/img/mosip-logo.png" alt="mosip Logo" class="custom-logo-mosip" />
     </div>
-    <div class="custom-top-right">
-       <img src="${url.resourcesPath}/img/compass-logo.png" alt="Compass Logo" class="custom-logo" />
-    </div>
 </div>
 <div class="${properties.kcLoginClass!}">
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <img src="${url.resourcesPath}/img/compass-logo.png" alt="Compass Logo" class="custom-logo" />
+    </div>
     <div class="${properties.kcFormCardClass!}">
         <header class="${properties.kcFormHeaderClass!}">
             <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
@@ -170,6 +170,28 @@
 
     </div>
   </div>
+  <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.querySelector(".eye-icon-card");
+        const passwordField = document.querySelector(".password-input-field");
+
+        if (toggleBtn && passwordField) {
+            toggleBtn.addEventListener("click", function () {
+            const isPassword = passwordField.type === "password";
+            passwordField.type = isPassword ? "text" : "password";
+
+            // Optional: Swap eye icon classes if provided
+            const icon = toggleBtn.querySelector("i");
+            const showIcon = toggleBtn.getAttribute("data-icon-show");
+            const hideIcon = toggleBtn.getAttribute("data-icon-hide");
+
+            if (icon && showIcon && hideIcon) {
+                icon.className = isPassword ? hideIcon : showIcon;
+            }
+            });
+        }
+        });
+    </script>
 </body>
 </html>
 </#macro>
