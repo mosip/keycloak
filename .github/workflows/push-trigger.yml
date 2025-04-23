@@ -19,6 +19,7 @@ on:
       - 1.*
       - release*
       - MOSIP*
+      - Compass
   
 jobs:
   build-dockers:
