@@ -51,7 +51,7 @@
 
     <div class="${properties.kcLoginClass!}">
         <div style="text-align: center; margin-bottom: 1rem;">
-            <img src="${url.resourcesPath}/img/compass-logo.png" alt="Compass Logo" class="custom-logo" />
+            <img src="${url.resourcesPath}/img/Compass-logo.png" alt="Compass Logo" class="custom-logo" />
         </div>
 
         <div class="${properties.kcFormCardClass!}">
