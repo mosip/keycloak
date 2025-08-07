@@ -605,6 +605,11 @@ keycloak:
             - PARTNER_ADMIN
             - uma_authorization
             - offline_access
+          assign_client_scopes:
+            - update_oidc_client
+            - add_oidc_client
+            - get_certificate
+            - upload_certificate
 
         - name: mosip-digitalcard-client
           saroles:
