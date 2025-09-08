@@ -9,6 +9,9 @@ LABEL commit_hash=${COMMIT_HASH}
 LABEL commit_id=${COMMIT_ID}
 LABEL build_time=${BUILD_TIME}
 
+
+
+
 ADD --chown=jboss:root ./theme/ ./theme
 
 RUN cp -R ./theme/mosip /opt/jboss/keycloak/themes/mosip

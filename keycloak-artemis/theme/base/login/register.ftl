@@ -3,7 +3,9 @@
     <#if section = "header">
         ${msg("registerTitle")}
     <#elseif section = "form">
+
     <div <#if locale?exists && locale.currentLanguageTag == "ara">dir="rtl"</#if>>
+
         <form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}" method="post">
            
 			<div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('firstName',properties.kcFormGroupErrorClass!)}">
@@ -44,12 +46,21 @@
 						class="${properties.kcInputClass!}"
 						name="user.attributes.partnerType"
 						value="${(register.formData['user.attributes.partnerType']!'')}">
+
 							<option value="DEVICE_PROVIDER" selected>${msg("deviceProvider")}</option>
 							<option value="FTM_PROVIDER">${msg("ftmProvider")}</option>
 							<option value="AUTH_PARTNER">${msg("authenticationPartner")}</option>
 							<option value="CREDENTIAL_PARTNER">${msg("credentialPartner")}</option>
 							<option value="ABIS_PARTNER">${msg("abisPartner")}</option>
 							<option value="SDK_PARTNER">${msg("sdkPartner")}</option>
+
+							<option value="DEVICE_PROVIDER" selected>Device Provider</option>
+							<option value="FTM_PROVIDER">FTM Provider</option>
+							<option value="AUTH_PARTNER">Authentication Partner</option>
+							<option value="CREDENTIAL_PARTNER">Credential Partner or ISP</option>
+							<option value="ABIS_PARTNER">ABIS Partner</option>
+							<option value="SDK_PARTNER">SDK Partner</option>
+
 					</select>
 				</div>
 			</div>
@@ -92,8 +103,13 @@
 						name="user.attributes.langCode"
 						value="${(register.formData['user.attributes.langCode']!'')}">
 							<option value="eng" selected>English</option>
+
 							<option value="ara">عربي</option>
 							<option value="fra">Français</option>
+
+							<option value="ara">Arabic</option>
+							<option value="fra">French</option>
+
 					</select>
 				</div>
 			</div>
@@ -132,7 +148,11 @@
             <#if recaptchaRequired??>
             <div class="form-group">
                 <div class="${properties.kcInputWrapperClass!}">
+
                     <div class="g-recaptcha" data-theme="light" data-sitekey="${recaptchaSiteKey}" style="padding-left:30px;"></div>
+
+                    <div class="g-recaptcha" data-size="compact" data-sitekey="${recaptchaSiteKey}"></div>
+
                 </div>
             </div>
             </#if>
@@ -149,6 +169,8 @@
                 </div>
             </div>
         </form>
+
     </div>
+
     </#if>
 </@layout.registrationLayout>
