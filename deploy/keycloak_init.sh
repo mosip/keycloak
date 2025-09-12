@@ -38,11 +38,11 @@ read_user_input(){
 
 function initialize_keycloak() {
   NS=keycloak
-  CHART_VERSION=12.0.2-develop
+  CHART_VERSION=0.0.1-develop
 
   helm repo add mosip https://mosip.github.io/mosip-helm
   helm repo update
-  
+
   # Read Keycloak service name (default: keycloak)
   read_user_input KEYCLOAK_SERVICE_NAME "Provide the Keycloak service name [ Default: keycloak ]" keycloak
   read_user_input SMTP_HOST "'SMTP host' for keycloak"
@@ -68,6 +68,7 @@ function initialize_keycloak() {
   fi
 
   IAMHOST_URL=$(kubectl get cm global -o jsonpath={.data.mosip-iam-external-host})
+
   echo Initializing keycloak-init
   helm -n $NS install keycloak-init mosip/keycloak-init   \
   --set keycloakExternalHost="$IAMHOST_URL" \
