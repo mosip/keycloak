@@ -27,10 +27,13 @@ jobs:
         include:
           - SERVICE_LOCATION: 'keycloak-jboss'
             SERVICE_NAME: 'mosip-jboss-keycloak'
+            PLATFORMS: "linux/amd64"
           - SERVICE_LOCATION: 'keycloak-init'
             SERVICE_NAME: 'keycloak-init'
+            PLATFORMS: "linux/amd64"
           - SERVICE_LOCATION: 'keycloak-artemis'
             SERVICE_NAME: 'mosip-artemis-keycloak'
+            PLATFORMS: "linux/amd64"
       fail-fast: false
     name: ${{ matrix.SERVICE_NAME }}
     uses: mosip/kattu/.github/workflows/docker-build.yml@master
@@ -39,6 +42,7 @@ jobs:
       SERVICE_NAME: ${{ matrix.SERVICE_NAME }}
       BUILD_ARTIFACT: ${{ matrix.BUILD_ARTIFACT || false }}
       ONLY_DOCKER: ${{ matrix.ONLY_DOCKER || false }}
+      PLATFORMS: ${{ matrix.PLATFORMS }}
     secrets:
       DEV_NAMESPACE_DOCKER_HUB: ${{ secrets.DEV_NAMESPACE_DOCKER_HUB }}
       ACTOR_DOCKER_HUB: ${{ secrets.ACTOR_DOCKER_HUB }}
