@@ -22,9 +22,9 @@ function installing_keycloak() {
   echo Installing
   helm -n $NS install $SERVICE_NAME mosip/keycloak --version "7.1.18" \
   --set image.repository=mosipid/mosip-artemis-keycloak \
-  --set image.tag=1.2.0.1 \
+  --set image.tag=1.2.0.2 \
   --set image.pullPolicy=Always \
-  --set postgresql.image.repository="mosipint/postgresql" \
+  --set postgresql.image.repository="mosipid/postgresql" \
   --set postgresql.image.tag="14.2.0-debian-10-r70" \
   -f values.yaml \
   --wait
