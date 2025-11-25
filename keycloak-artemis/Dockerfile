@@ -1,4 +1,4 @@
-FROM docker.io/bitnami/keycloak:16.1.1
+FROM docker.io/mosipid/keycloak:16.1.1
 
 USER root
 
@@ -22,6 +22,11 @@ COPY ./theme/mosip /opt/bitnami/keycloak/themes/mosip
 COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
 
 COPY rootfs /
+
+# Patch Debian repo (stretch/buster are archived now)
+
+RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
+    sed -i '/security.debian.org/d' /etc/apt/sources.list
 
 RUN chmod +x /usr/sbin/install_packages && chmod g+rwX /opt/bitnami && \
     chmod +x /opt/bitnami/scripts/keycloak/entrypoint.sh /opt/bitnami/scripts/keycloak/setup.sh /opt/bitnami/scripts/keycloak/run.sh && \
