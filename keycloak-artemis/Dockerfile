@@ -16,15 +16,11 @@ LABEL maintainer="Bitnami <containers@bitnami.com>"
 COPY prebuildfs /
 
 COPY ./theme/base /opt/bitnami/keycloak/themes/base
-
 COPY ./theme/mosip /opt/bitnami/keycloak/themes/mosip
-
 COPY ./standalone/deployments/* /opt/bitnami/keycloak/standalone/deployments
-
 COPY rootfs /
 
 # Patch Debian repo (stretch/buster are archived now)
-
 RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
     sed -i '/security.debian.org/d' /etc/apt/sources.list
 
@@ -38,5 +34,4 @@ RUN . /usr/sbin/install_packages acl ca-certificates curl gzip libaio1 libc6 pro
 USER 1001
 
 ENTRYPOINT [ "/opt/bitnami/scripts/keycloak/entrypoint.sh" ]
-
 CMD [ "/opt/bitnami/scripts/keycloak/run.sh" ]
