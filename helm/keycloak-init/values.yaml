@@ -8,7 +8,7 @@ image:
   repository: mosipqa/keycloak-init
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.3.x
+  tag: develop
 
 imagePullSecrets: []
 nameOverride: ""
@@ -405,16 +405,17 @@ keycloak:
             - ZONAL_ADMIN
             - DEVICE_PROVIDER
             - PARTNER
-          assign_client_scopes:
-            - update_oidc_client
-            - add_oidc_client
-            - get_certificate
-            - upload_certificate
           sa_client_roles:
             ## realm-management client id
             - realm-management:
                 # realm-management client roles
                 - view-users
+                - view-realm
+          assign_client_scopes:
+            - update_oidc_client
+            - add_oidc_client
+            - get_certificate
+            - upload_certificate
 
         - name: mosip-policymanager-client
           mappers: []
@@ -736,6 +737,8 @@ clientSecrets:
     secret: ""
   - name: mpartner_default_template_secret
     secret: ""
-
 extraEnvVarsSecret: []
 extraEnvVarsCM: []
+# Keycloak may be accessed in-cluster or from outside
+keycloakInternalHost: keycloak.keycloak
+keycloakExternalHost: iam.sandbox.xyz.net
