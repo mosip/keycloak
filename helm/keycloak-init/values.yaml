@@ -3,17 +3,14 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
 image:
-  repository: mosipqa/keycloak-init
+  repository: mosipid/keycloak-init
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.3.x
-
+  tag: 1.3.0
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -22,28 +19,25 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-
 jobAnnotations: {}
-
 jobSecurityContext: {}
 # fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
+# capabilities:
+#   drop:
+#   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
 # runAsUser: 1000
 
 service:
   type: ClusterIP
   port: 80
-
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
@@ -52,26 +46,21 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
 #   memory: 128Mi
 
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
-
-
 ## It is assumed that these configmaps are created when Keycloak was installed and available in the same namespace
 ## as this chart
 keycloak:
@@ -85,7 +74,6 @@ keycloak:
     secret:
       existingSecret: keycloak
       key: admin-password
-
   realms:
     # realm
     mosip:
@@ -117,15 +105,15 @@ keycloak:
         "emailTheme": "mosip"
         "browserSecurityHeaders":
           "contentSecurityPolicy": "frame-src 'self' https://www.google.com; frame-ancestors 'self'; object-src 'none';"
-        # "smtpServer":
-        #   "password": ""
-        #   "starttls": "false"
-        #   "auth": "true"
-        #   "port": "465"
-        #   "host": "smtp.gmail.com"
-        #   "from": ""
-        #   "ssl": "true"
-        #   "user": ""
+          # "smtpServer":
+          #   "password": ""
+          #   "starttls": "false"
+          #   "auth": "true"
+          #   "port": "465"
+          #   "host": "smtp.gmail.com"
+          #   "from": ""
+          #   "ssl": "true"
+          #   "user": ""
       roles:
         - Default
         - ABIS_PARTNER
@@ -237,71 +225,46 @@ keycloak:
           description: Scope required to create OIDC client
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "false",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "false", include.in.token.scope: "true"}
         - name: update_oidc_client
           description: ''
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "false",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "false", include.in.token.scope: "true"}
         - name: get_certificate
           description: Scope required to create OIDC client
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "false",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "false", include.in.token.scope: "true"}
         - name: upload_certificate
           description: ''
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "false",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "false", include.in.token.scope: "true"}
         - name: individual_id
           description: Scope required to create resident client
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "true",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "true", include.in.token.scope: "true"}
         - name: ida_token
           description: ''
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "true",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "true", include.in.token.scope: "true"}
         - name: send_binding_otp
           description: Scope required to create mpartner-default-mobile client
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "false",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "false", include.in.token.scope: "true"}
         - name: wallet_binding
           description: Scope required to create mpartner-default-mobile client
           protocol: openid-connect
           "Include In Token Scope": on
-          attributes: {
-            display.on.consent.screen: "false",
-            include.in.token.scope: "true"
-          }
+          attributes: {display.on.consent.screen: "false", include.in.token.scope: "true"}
       clients:
         - name: mosip-abis-client
           mappers: []
           saroles: []
-
         - name: mosip-admin-client
           mappers: []
           saroles:
@@ -312,16 +275,13 @@ keycloak:
             - PUBLISH_MOSIP_HOTLIST_GENERAL
             - uma_authorization
             - PUBLISH_MASTERDATA_TITLES_GENERAL
-
         - name: mosip-admin-services-client
           mappers: []
           saroles: []
-
         - name: mosip-auth-client
           mappers: []
           saroles:
             - AUTH
-
         - name: mosip-crereq-client
           mappers: []
           saroles:
@@ -330,7 +290,6 @@ keycloak:
             - SUBSCRIBE_CREDENTIAL_STATUS_UPDATE_GENERAL
             - offline_access
             - uma_authorization
-
         - name: mosip-creser-client
           mappers: []
           saroles:
@@ -351,14 +310,12 @@ keycloak:
             - METADATA_READ
             - CREATE_SHARE
             - CREDENTIAL_REQUEST
-
         - name: mosip-datsha-client
           mappers: []
           saroles:
             - CREATE_SHARE
             - REGISTRATION_PROCESSOR
             - POLICYMANAGER
-
         - name: mosip-ida-client
           mappers: []
           saroles:
@@ -367,11 +324,9 @@ keycloak:
             - ID_AUTHENTICATION
             - SUBSCRIBE_OIDC_CLIENT_CREATED_GENERAL
             - SUBSCRIBE_OIDC_CLIENT_UPDATED_GENERAL
-
         - name: mosip-misp-client
           mappers: []
           saroles: []
-
         - name: mosip-pms-client
           mappers:
             - mapper_name: phoneNumber
@@ -416,11 +371,9 @@ keycloak:
             - add_oidc_client
             - get_certificate
             - upload_certificate
-
         - name: mosip-policymanager-client
           mappers: []
           saroles: []
-
         - name: mosip-reg-client
           mappers: []
           saroles:
@@ -429,7 +382,6 @@ keycloak:
             - REGISTRATION_OFFICER
             - REGISTRATION_OPERATOR
             - REGISTRATION_SUPERVISOR
-
         - name: mosip-regproc-client
           mappers: []
           saroles:
@@ -449,7 +401,6 @@ keycloak:
             - PUBLISH_REGISTRATION_PROCESSOR_WORKFLOW_PAUSED_FOR_ADDITIONAL_INFO_EVENT_GENERAL
             - SUBSCRIBE_REGISTRATION_PROCESSOR_WORKFLOW_COMPLETED_EVENT_GENERAL
             - SUBSCRIBE_REGISTRATION_PROCESSOR_WORKFLOW_PAUSED_FOR_ADDITIONAL_INFO_EVENT_GENERAL
-
         - name: mpartner-default-mobile
           mappers: []
           saroles:
@@ -464,7 +415,6 @@ keycloak:
           assign_client_scopes:
             - send_binding_otp
             - wallet_binding
-
         - name: mosip-resident-client
           mappers:
             - mapper_name: individual_id
@@ -486,14 +436,12 @@ keycloak:
           assign_client_scopes:
             - individual_id
             - ida_token
-
         - name: mosip-prereg-client
           mappers: []
           saroles:
             - PREREG
             - REGISTRATION_PROCESSOR
             - PRE_REGISTRATION_ADMIN
-
         - name: mosip-creser-idpass-client
           mappers: []
           saroles:
@@ -504,7 +452,6 @@ keycloak:
             - METADATA_READ
             - CREATE_SHARE
             - CREDENTIAL_REQUEST
-
         - name: mosip-syncdata-client
           mappers: []
           saroles:
@@ -513,7 +460,6 @@ keycloak:
             - SUBSCRIBE_CA_CERTIFICATE_UPLOADED_GENERAL
             - REGISTRATION_SUPERVISOR
             - REGISTRATION_OFFICER
-
         - name: mpartner-default-auth
           mappers:
             - mapper_name: langCode
@@ -549,7 +495,6 @@ keycloak:
             - SUBSCRIBE_OIDC_CLIENT_UPDATED_GENERAL
             - PUBLISH_AUTHENTICATION_ERRORS_GENERAL
             - PUBLISH_REMOVE_ID_STATUS_GENERAL
-
         - name: mosip-idrepo-client
           mappers: []
           saroles:
@@ -566,7 +511,6 @@ keycloak:
             - PUBLISH_IDENTITY_CREATED_GENERAL
             - PUBLISH_IDENTITY_UPDATED_GENERAL
             - SUBSCRIBE_REMOVE_ID_STATUS_GENERAL
-
         - name: mpartner-default-print
           mappers: []
           saroles:
@@ -574,7 +518,6 @@ keycloak:
             - PUBLISH_CREDENTIAL_STATUS_UPDATE_GENERAL
             - CREATE_SHARE
             - PRINT_PARTNER
-
         - name: mpartner-default-digitalcard
           mappers: []
           saroles:
@@ -596,7 +539,6 @@ keycloak:
             - uma_authorization
             - offline_access
             - PUBLISH_MOSIP_HOTLIST_GENERAL
-
         # Used only for initial deployment purposes. Maybe deleted from installation later.
         - name: mosip-deployment-client
           saroles:
@@ -605,7 +547,6 @@ keycloak:
             - PARTNER_ADMIN
             - uma_authorization
             - offline_access
-
         - name: mosip-digitalcard-client
           saroles:
             - CREATE_SHARE
@@ -613,7 +554,6 @@ keycloak:
             - SUBSCRIBE_CREDENTIAL_ISSUED_INDIVIDUAL
             - SUBSCRIBE_IDENTITY_CREATED_GENERAL
             - SUBSCRIBE_IDENTITY_UPDATED_GENERAL
-
         - name: mosip-testrig-client
           saroles:
             - ID_AUTHENTICATION
@@ -679,7 +619,6 @@ keycloak:
             - SUBSCRIBE_OIDC_CLIENT_UPDATED_GENERAL
             - PUBLISH_AUTHENTICATION_ERRORS_GENERAL
       users: []
-
 ## These will be passed as environments variables to keycloak-init docker. Note the expected naming convention is
 ## <clientname>_<secret>.  If empty secret is passed, it shall be randomly generated
 clientSecrets:
