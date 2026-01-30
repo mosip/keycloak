@@ -50,11 +50,11 @@
     </div>
 
     <div class="${properties.kcLoginClass!}">
-        <div style="text-align: center; margin-bottom: 1rem;">
-            <img src="${url.resourcesPath}/img/Compass-logo.png" alt="Compass Logo" class="custom-logo" />
+        <div class="compass-logo-wrap">
+            <img src="${url.resourcesPath}/img/GlobalID-Pass.png" alt="Compass Logo" class="custom-logo" />
         </div>
 
-        <div class="${properties.kcFormCardClass!}">
+        <div class="${properties.kcFormCardClass!} globalid-login-card">
             <header class="${properties.kcFormHeaderClass!}">
                 <#if realm.internationalizationEnabled && locale.supported?size gt 1>
                     <div class="${properties.kcLocaleMainClass!}" id="kc-locale">

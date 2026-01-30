@@ -28,7 +28,10 @@
                     </#if>
 
                     <div class="${properties.kcFormGroupClass!}">
-                        <label for="password" class="user-name-label"><span>${msg("password")}</span></label>
+                        <label for="password" class="user-name-label">
+                            <span>${msg("password")}</span>
+                            <img src="${url.resourcesPath}/img/info-icon.png" alt="${msg("passwordInfo")!msg("password")}" class="password-info-icon" title="${msg("passwordInfo")!msg("password")}" />
+                        </label>
 
                         <div class="${properties.kcInputGroup!} password-input-card">
                             <input placeholder="${msg("passwordPlaceholder")}" tabindex="3" id="password" style="width:100%;" class="${properties.kcInputClass!} password-input-field" name="password" type="password" autocomplete="current-password"
