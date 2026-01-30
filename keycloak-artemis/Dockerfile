@@ -1,4 +1,4 @@
-FROM docker.io/bitnami/keycloak:16.1.1
+FROM docker.io/mosipid/keycloak:16.1.1
 
 USER root
 
