@@ -1,15 +1,24 @@
 /* Patternfly CSS places a "bg-login.jpg" as the background on this ".login-pf" class.
    This clashes with the "keycloak-bg.png' background defined on the body below.
    Therefore the Patternfly background must be set to none. */
-   .login-pf {
+.login-pf {
     background: none;
 }
 
 .login-pf body {
+    margin: 0;
     background: url("../img/compass-bg.png") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
     font-family: 'Inter', sans-serif;
+}
+
+/* Login card only: GlobalID Pass style (white, rounded, shadow) */
+.globalid-login-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 2rem 2.5rem !important;
 }
 
 textarea.pf-c-form-control {
@@ -28,16 +37,23 @@ p.instruction {
     border-color: rgba(230, 230, 230, 0.5);
 }
 
-.login-btn{
-    background-color: #FF671F !important;
+.login-btn {
+    background-color: #e85c0f !important;
+    border: none !important;
     border-radius: 8px;
-    color: #ffffff;
-    font-size: 18px;
+    color: #ffffff !important;
+    font-size: 16px;
+    font-weight: 600;
     height: 44px;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #cc5209 !important;
 }
 
 h1#kc-page-title {
-    margin-top: 10px;
+    margin-top: 0;
 }
 
 #kc-locale ul {
@@ -460,7 +476,11 @@ ul#kc-totp-supported-apps {
 }
 
 #kc-form-buttons {
-    margin-top: 20px;
+    margin-top: 1.5rem;
+}
+
+.globalid-login-card .form-group {
+    margin-bottom: 1.25rem;
 }
 
 .login-pf-page {
@@ -531,10 +551,12 @@ ul#kc-totp-supported-apps {
 
 .card-pf {
     margin: 0 auto;
-    padding: 0 20px;
-    width: 632px;
-    max-width: auto;
-    border-radius: 30px;
+    padding: 0 2.5rem;
+    width: 420px;
+    max-width: 95%;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 /*phone*/
@@ -660,7 +682,9 @@ ul#kc-totp-supported-apps {
     font-size: 18px;
     font-weight: bold;
     height: 90px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
 }
 
 .custom-top-left,
@@ -676,57 +700,87 @@ ul#kc-totp-supported-apps {
     text-align: right;
 }
 
+.compass-logo-wrap {
+    text-align: center;
+    /* margin-bottom: 1rem; */
+    margin-top: 3rem;
+}
+
 .custom-logo {
-    height: 68px;
-    max-width: 223px;
+    height: 80px;
+    max-width: 303px;
 }
 
 .custom-logo-mosip {
-    height: 62px;
-    max-width: 136px;
+    height: 72px;
+    max-width: 155px;
 }
 
-.login-heading{
-    font-weight: 600;
-    color: #031640;
-    font-size: 34px;
+.login-heading {
+    font-weight: 700;
+    color: #2c2c2c;
+    font-size: 28px;
+    margin-bottom: 0.5rem;
 }
 
-.login-description{
+.login-description {
     font-weight: 400;
-    color: #3D4468;
-    font-size: 18px;
+    color: #6c6c6c;
+    font-size: 15px;
+    margin-bottom: 1.5rem;
 }
 
-.user-name-label{
-    color: #031640;
-    font-size: 18px;
-    font-family: 400;
+.user-name-label {
+    color: #2c2c2c;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-.input-field{
-    height: 60px !important;
-    border: 1px solid #707070 !important;
+.password-info-icon {
+    width: 18px;
+    height: 18px;
+    margin-left: 6px;
+    vertical-align: middle;
+    cursor: help;
+}
+
+.input-field {
+    height: 48px !important;
+    border: 1px solid #d0d0d0 !important;
     outline: none !important;
-    border-radius: 10px !important;
-    font-size: 18px;
-    padding: 4px 16px;
+    border-radius: 8px !important;
+    font-size: 15px;
+    padding: 0 16px;
+    background: #fff;
 }
 
-.password-input-card{
-    height: 60px !important;
-    border: 1px solid #707070 !important;
-    border-radius: 10px !important;
-    font-size: 18px;
+.input-field::placeholder {
+    color: #9e9e9e;
+}
+
+.password-input-card {
+    height: 48px !important;
+    border: 1px solid #d0d0d0 !important;
+    border-radius: 8px !important;
+    font-size: 15px;
     display: flex;
     align-items: center;
+    background: #fff;
 }
 
-.password-input-field{
-    padding: 4px 16px;
+.password-input-field {
+    padding: 0 16px;
     border: none;
     outline: none;
-    font-size: 18px;
+    font-size: 15px;
+    flex: 1;
+    background: transparent;
+}
+
+.password-input-field::placeholder {
+    color: #9e9e9e;
 }
 
 .eye-icon-card{
