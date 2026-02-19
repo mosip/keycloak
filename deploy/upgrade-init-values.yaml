@@ -1,5 +1,5 @@
 keycloak:
-  realms: |-
+  realms:
     del_realms:
       - preregistration
     mosip: # realm
@@ -340,11 +340,65 @@ keycloak:
            - PMS_USER
            - uma_authorization
            - offline_access
-          sa_client_roles:
-            - realm-management:  ## realm-management client id
-                - view-users     # realm-management client roles
-                - view-clients
-                - view-realms
-                - manage-users
     
       users: []
+## These will be passed as environments variables to keycloak-init docker. Note the expected naming convention is
+## <clientname>_<secret>.  If empty secret is passed, it shall be randomly generated
+## IMPORTANT: When running import or upgrade:
+##   - To preserve existing secrets: Update 'secret' field with the current secret value from your Keycloak
+##   - To generate new random secrets: Leave 'secret' field as empty string ("")
+clientSecrets:
+  - name: mosip_abis_client_secret
+    secret: ""
+  - name: mosip_admin_client_secret
+    secret: ""
+  - name: mosip_admin_services_client_secret
+    secret: ""
+  - name: mosip_auth_client_secret
+    secret: ""
+  - name: mosip_crereq_client_secret
+    secret: ""
+  - name: mosip_creser_client_secret
+    secret: ""
+  - name: mosip_datsha_client_secret
+    secret: ""
+  - name: mosip_ida_client_secret
+    secret: ""
+  - name: mosip_misp_client_secret
+    secret: ""
+  - name: mosip_pms_client_secret
+    secret: ""
+  - name: mosip_policymanager_client_secret
+    secret: ""
+  - name: mosip_reg_client_secret
+    secret: ""
+  - name: mosip_regproc_client_secret
+    secret: ""
+  - name: mosip_resident_client_secret
+    secret: ""
+  - name: mosip_prereg_client_secret
+    secret: ""
+  - name: mosip_creser_idpass_client_secret
+    secret: ""
+  - name: mosip_syncdata_client_secret
+    secret: ""
+  - name: mosip_deployment_client_secret
+    secret: ""
+  - name: mpartner_default_auth_secret
+    secret: ""
+  - name: mosip_idrepo_client_secret
+    secret: ""
+  - name: mpartner_default_print_secret
+    secret: ""
+  - name: mosip_hotlist_client_secret
+    secret: ""
+  - name: mpartner_default_mobile_secret
+    secret: ""
+  - name: mosip_digitalcard_client_secret
+    secret: ""
+  - name: mpartner_default_digitalcard_secret
+    secret: ""
+  - name: mosip_testrig_client_secret
+    secret: ""
+  - name: mpartner_default_template_secret
+    secret: ""
