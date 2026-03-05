@@ -1,8 +1,7 @@
 keycloak:
   realms:
     del_realms:
-      realms_to_delete:
-        - preregistration
+      - preregistration
     mosip:
       roles:
         - Default
@@ -534,6 +533,10 @@ clientSecrets:
     secret: ""
   - name: mosip_misp_client_secret
     secret: ""
+  - name: mosip_partner_client_secret
+    secret: ""
+  - name: mosip_partnermanager_client_secret
+    secret: ""
   - name: mosip_pms_client_secret
     secret: ""
   - name: mosip_policymanager_client_secret
@@ -567,6 +570,4 @@ clientSecrets:
   - name: mpartner_default_digitalcard_secret
     secret: ""
   - name: mosip_testrig_client_secret
-    secret: ""
-  - name: mpartner_default_template_secret
     secret: ""

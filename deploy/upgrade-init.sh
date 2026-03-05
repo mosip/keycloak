@@ -25,7 +25,10 @@ function upgrade_init() {
     -f upgrade-init-values.yaml --version $CHART_VERSION --wait
   
   echo Waiting for upgrade job to complete...
-  kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=keycloak-init-upgrade || true
+  if ! kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=keycloak-init-upgrade; then
+    echo "$(tput setaf 1)ERROR: Keycloak upgrade job failed to complete. Aborting import process.$(tput sgr0)"
+    exit 1
+  fi
   
   echo Cleaning up upgrade release
   helm -n $NS uninstall keycloak-init-upgrade
