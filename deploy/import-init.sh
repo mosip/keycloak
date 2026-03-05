@@ -15,7 +15,7 @@ function import_init() {
   helm repo add mosip https://mosip.github.io/mosip-helm
   helm repo update
 
-  IAM_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-iam-external-host})
+  IAM_HOST=$(kubectl get cm global -o jsonpath='{.data.mosip-iam-external-host}')
 
   echo Initializing keycloak
   helm -n $NS install keycloak-import mosip/keycloak-init \
