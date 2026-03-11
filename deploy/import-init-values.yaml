@@ -1,7 +1,8 @@
 keycloak:
   realms:
     del_realms:
-      - preregistration
+      realms_to_delete:
+        - preregistration
     mosip:
       roles:
         - Default
