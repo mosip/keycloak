@@ -725,7 +725,7 @@ def main():
                 secret_env_name = '%s_secret' % client['name']
                 secret_env_name = secret_env_name.replace('-', '_') # Compatible with environment variables
                 secret = os.environ.get(secret_env_name)
-                if secret is None:  # Env variable not found
+                if not secret or not secret.strip():  # Env variable not found or empty
                     print('\n\tSecret environment variable %s not found, generating' % secret_env_name)
                     secret = secrets.token_urlsafe(16)
 
