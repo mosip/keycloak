@@ -243,16 +243,6 @@ mosip: # realm
         - PREREG
         - REGISTRATION_PROCESSOR
         - PRE_REGISTRATION_ADMIN
-    - name: mosip-creser-idpass-client
-      mappers: []
-      saroles: 
-        - REGISTRATION_PROCESSOR
-        - DATA_READ
-        - DOCUMENT_READ
-        - BIOMETRIC_READ
-        - METADATA_READ
-        - CREATE_SHARE
-        - CREDENTIAL_REQUEST
     - name: mosip-syncdata-client
       mappers: []
       saroles: 
