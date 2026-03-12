@@ -10,16 +10,35 @@ fi
 function upgrade_init() {
   NS=keycloak
   CHART_VERSION=0.0.1-develop
+  KEYCLOAK_SERVICE_NAME=keycloak
 
   helm repo add mosip https://mosip.github.io/mosip-helm
   helm repo update
 
-  IAM_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-iam-external-host})
+  IAM_HOST=$(kubectl get cm global -o jsonpath='{.data.mosip-iam-external-host}')
 
-  echo Initializing keycloak
-  helm -n $NS install keycloak-init mosip/keycloak-init --set frontend=https://$IAM_HOST/auth -f upgrade-init-values.yaml --version $CHART_VERSION
-  echo Initializing keycloak
-  helm -n $NS install keycloak-init mosip/keycloak-init --set frontend=https://$IAM_HOST/auth -f import-init-values.yaml --version $CHART_VERSION
+  echo Initializing keycloak with upgrade values
+  helm -n $NS upgrade --install keycloak-init-upgrade mosip/keycloak-init \
+    --set keycloakExternalHost="$IAM_HOST" \
+    --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS" \
+    --set keycloak.realms.mosip.realm_config.attributes.frontendUrl="https://$IAM_HOST/auth" \
+    -f upgrade-init-values.yaml --version $CHART_VERSION --wait
+  
+  echo Waiting for upgrade job to complete...
+  if ! kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=keycloak-init-upgrade; then
+    echo "$(tput setaf 1)ERROR: Keycloak upgrade job failed to complete. Aborting import process.$(tput sgr0)"
+    exit 1
+  fi
+  
+  echo Cleaning up upgrade release
+  helm -n $NS uninstall keycloak-init-upgrade
+  
+  echo Initializing keycloak with import values
+  helm -n $NS upgrade --install keycloak-init-import mosip/keycloak-init \
+    --set keycloakExternalHost="$IAM_HOST" \
+    --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS" \
+    --set keycloak.realms.mosip.realm_config.attributes.frontendUrl="https://$IAM_HOST/auth" \
+    -f import-init-values.yaml --version $CHART_VERSION --wait
   return 0
 }
 
@@ -29,4 +48,4 @@ set -o errexit   ## set -e : exit the script if any statement returns a non-true
 set -o nounset   ## set -u : exit the script if you try to use an uninitialised variable
 set -o errtrace  # trace ERR through 'time command' and other functions
 set -o pipefail  # trace ERR through pipes
-import_init   # calling function
+upgrade_init   # calling function
