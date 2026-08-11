@@ -7,8 +7,9 @@ customizations on top of upstream Keycloak / Bitnami Keycloak container images,
 plus the tooling needed to deploy and initialize Keycloak as MOSIP's default
 Identity and Access Management (IAM) provider. Concretely it contains:
 
-- Two Docker build contexts that layer MOSIP themes (and, for the JBoss
-  variant, a custom SPI jar) onto a pre-built upstream Keycloak base image.
+- Two Docker build contexts (`keycloak-jboss/`, `keycloak-artemis/`) that
+  layer MOSIP themes and prebuilt deployment jars (including a custom SPI
+  jar in both) onto a pre-built upstream Keycloak base image.
 - A Python-based "init" job that logs into a running Keycloak instance via its
   admin REST API and creates the realm, clients, roles, and users MOSIP needs.
 - A Helm chart that runs the init job as a Kubernetes Job.
@@ -16,8 +17,8 @@ Identity and Access Management (IAM) provider. Concretely it contains:
   Bitnami Keycloak Helm release on a MOSIP cluster.
 
 There is no application source code (no Maven/Gradle/Node build) beyond the
-prebuilt `spi-keycloak*.jar` files checked into the theme trees and the
-`keycloak_init.py` script.
+prebuilt deployment jars under each context's `standalone/deployments/`
+directory and the `keycloak_init.py` script.
 
 ## Technology Stack
 
@@ -64,13 +65,25 @@ Run the init script directly (outside Docker), from `keycloak-init/`:
 ```shell
 pip3 install -r requirements.txt
 python3 keycloak_init.py --help
-python3 keycloak_init.py https://iam.example.net admin_user admin_password input.yaml
 ```
 
-Helm chart dependency update and local install/lint, from `helm/keycloak-init/`:
+`args_parse()` makes `server_url`, `user`, `password`, and `input_yaml` required
+positional arguments — there is no environment-variable fallback when running
+the script directly (that only exists in the Docker entrypoint, which reads
+`KEYCLOAK_ADMIN_PASSWORD` etc. and passes them through). Passing a real
+password as a literal CLI argument exposes it in shell history and process
+listings — populate it from your own local environment variable instead of
+typing it inline:
+
+```shell
+python3 keycloak_init.py https://iam.example.net admin_user "$KEYCLOAK_ADMIN_PASSWORD" input.yaml
+```
+
+Helm chart dependency update, lint, and local install, from `helm/keycloak-init/`:
 
 ```shell
 helm dependency update
+helm lint .
 helm install keycloak-init .
 ```
 
@@ -224,8 +237,8 @@ tooling for it, plus the separate `helm/keycloak-init` chart for the init Job.
 ### Do not
 
 1. Do not describe this repo as building Keycloak from source — it packages
-   themes, a prebuilt SPI jar, and an init script on top of prebuilt upstream
-   images.
+   themes, prebuilt deployment jars, and an init script on top of prebuilt
+   upstream images.
 2. Do not add or commit real credentials, live hostnames, or filled-in
    secrets to `deploy/*.sh`, `deploy/values.yaml`,
    `deploy/istio-addons-values.yaml`, or `keycloak-init/input.yaml`.
