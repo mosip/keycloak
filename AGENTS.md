@@ -69,14 +69,21 @@ python3 keycloak_init.py --help
 
 `args_parse()` makes `server_url`, `user`, `password`, and `input_yaml` required
 positional arguments — there is no environment-variable fallback when running
-the script directly (that only exists in the Docker entrypoint, which reads
-`KEYCLOAK_ADMIN_PASSWORD` etc. and passes them through). Passing a real
-password as a literal CLI argument exposes it in shell history and process
-listings — populate it from your own local environment variable instead of
-typing it inline:
+the script directly, and the Docker entrypoint has the same shape: it also
+passes `$KEYCLOAK_ADMIN_PASSWORD` as a positional `argv` to `python3`
+(`ENTRYPOINT ["/bin/bash", "-c", "python3 keycloak_init.py $KEYCLOAK_SERVER_URL
+$KEYCLOAK_ADMIN_USER $KEYCLOAK_ADMIN_PASSWORD $INPUT_DIR/$INPUT_FILE"]`).
+Populating the argument from a shell variable (`"$KEYCLOAK_ADMIN_PASSWORD"`)
+avoids shell-history exposure but **does not** prevent the password from
+appearing in process listings (`ps`) in either mode — this is a real,
+pre-existing gap in `keycloak_init.py`, not something documentation can
+fully mitigate. Use a placeholder when writing examples, and if you're
+adding a genuine credential-handling improvement, add stdin/file-descriptor
+input support to `keycloak_init.py` (and update the Docker entrypoint to
+match) rather than relying on `argv`:
 
 ```shell
-python3 keycloak_init.py https://iam.example.net admin_user "$KEYCLOAK_ADMIN_PASSWORD" input.yaml
+python3 keycloak_init.py https://iam.example.net admin_user '<password>' input.yaml
 ```
 
 Helm chart dependency update, lint, and local install, from `helm/keycloak-init/`:
