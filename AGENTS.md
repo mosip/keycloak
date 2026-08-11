@@ -134,12 +134,16 @@ change; there is no equivalent verification for the theme or Docker changes.
 
 ```text
 keycloak/
-├── keycloak-jboss/     # Legacy JBoss-based Keycloak image + theme (mosip-jboss-keycloak)
-├── keycloak-artemis/   # Bitnami-based Keycloak image + theme + scripts (mosip-artemis-keycloak)
-├── keycloak-init/      # Python admin-API init job + Dockerfile (keycloak-init image)
-├── helm/keycloak-init/ # Helm chart that runs keycloak-init as a Kubernetes Job
-└── deploy/             # Bash scripts + values.yaml to install/upgrade the Bitnami keycloak Helm chart
+├── keycloak-jboss/     # Legacy JBoss-based Keycloak image + theme (mosip-jboss-keycloak) — keycloak-jboss/AGENTS.md
+├── keycloak-artemis/   # Bitnami-based Keycloak image + theme + scripts (mosip-artemis-keycloak) — keycloak-artemis/AGENTS.md
+├── keycloak-init/      # Python admin-API init job + Dockerfile (keycloak-init image) — keycloak-init/AGENTS.md
+├── helm/keycloak-init/ # Helm chart that runs keycloak-init as a Kubernetes Job — helm/keycloak-init/AGENTS.md
+└── deploy/             # Bash scripts + values.yaml to install/upgrade the Bitnami keycloak Helm chart — deploy/AGENTS.md
 ```
+
+Each subfolder above has its own `AGENTS.md` with module-specific detail
+(exact file layout, script/template internals, configuration knobs);
+this root file covers what's shared across all of them.
 
 `keycloak-jboss` and `keycloak-artemis` are two separately built and published
 images (`mosip-jboss-keycloak` and `mosip-artemis-keycloak`, per
