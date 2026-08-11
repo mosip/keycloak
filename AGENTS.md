@@ -72,15 +72,20 @@ positional arguments — there is no environment-variable fallback when running
 the script directly, and the Docker entrypoint has the same shape: it also
 passes `$KEYCLOAK_ADMIN_PASSWORD` as a positional `argv` to `python3`
 (`ENTRYPOINT ["/bin/bash", "-c", "python3 keycloak_init.py $KEYCLOAK_SERVER_URL
-$KEYCLOAK_ADMIN_USER $KEYCLOAK_ADMIN_PASSWORD $INPUT_DIR/$INPUT_FILE"]`).
-Populating the argument from a shell variable (`"$KEYCLOAK_ADMIN_PASSWORD"`)
-avoids shell-history exposure but **does not** prevent the password from
-appearing in process listings (`ps`) in either mode — this is a real,
-pre-existing gap in `keycloak_init.py`, not something documentation can
-fully mitigate. Use a placeholder when writing examples, and if you're
-adding a genuine credential-handling improvement, add stdin/file-descriptor
-input support to `keycloak_init.py` (and update the Docker entrypoint to
-match) rather than relying on `argv`:
+$KEYCLOAK_ADMIN_USER $KEYCLOAK_ADMIN_PASSWORD $INPUT_DIR/$INPUT_FILE"]`). Note
+the entrypoint's variable expansions are **unquoted** — a value containing
+whitespace, a glob character, or an empty value changes how many `argv`
+elements `keycloak_init.py` actually receives and can break initialization;
+quoting each expansion (`"$KEYCLOAK_SERVER_URL"`, etc.) would fix that, but
+does not by itself remove the password from `argv`/process listings, so it's
+a correctness fix, not a security fix. Populating the argument from a shell
+variable (`"$KEYCLOAK_ADMIN_PASSWORD"`) avoids shell-history exposure but
+**does not** prevent the password from appearing in process listings (`ps`)
+in either mode — this is a real, pre-existing gap in `keycloak_init.py`, not
+something documentation can fully mitigate. Use a placeholder when writing
+examples, and if you're adding a genuine credential-handling improvement, add
+stdin/file-descriptor input support to `keycloak_init.py` (and update the
+Docker entrypoint to match) rather than relying on `argv`:
 
 ```shell
 python3 keycloak_init.py https://iam.example.net admin_user '<password>' input.yaml
