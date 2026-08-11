@@ -49,9 +49,18 @@ helm/keycloak-init/
   just a standalone-run example).
 - `clientSecrets:` — a list of `{name, secret}` pairs (28 entries as of
   this writing). Leave `secret: ""` to have `templates/client-secrets.yaml`
-  generate a random 16-char value; set a real value to pin a specific
-  secret. Keep this list in sync with the client names actually defined
-  under `keycloak.realms.mosip.clients`.
+  generate a random 16-char value. **Do not set a real secret value
+  here** — this is a tracked file, and a real value would be committed
+  in plaintext. To pin a specific secret value instead of a generated
+  one, create a Kubernetes Secret out-of-band (keys matching the client
+  env-var names) and list its name under `extraEnvVarsSecret:` — the
+  Job's `envFrom` lists `extraEnvVarsSecret` entries after the generated
+  `keycloak-client-secrets` Secret, so per Kubernetes `envFrom` precedence
+  (last source wins on a key collision) it overrides the generated value
+  for any matching key without ever writing the real value into a
+  tracked file. Keep the `clientSecrets` name list in sync with the
+  client names actually defined under `keycloak.realms.mosip.clients`
+  regardless of which path you use.
 - `keycloakInternalHost: keycloak.keycloak`,
   `keycloakExternalHost: iam.sandbox.xyz.net` (placeholder) — overridden
   at install time via `--set` by `../../deploy/*.sh` scripts, not by

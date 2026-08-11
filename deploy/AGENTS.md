@@ -75,8 +75,10 @@ deploy/
   (Y/n)"; if confirmed, `helm delete`s the `keycloak`, `keycloak-init`,
   and `istio-addons` releases in the `keycloak` namespace. No
   non-interactive/CI-safe flag exists.
-- **`update_secret.sh`** — usage `./update_secrets.sh <new_admin_password>
-  [kubeconfig]`; recreates the `keycloak` Secret's `admin-password` key
+- **`update_secret.sh`** — usage `./update_secret.sh <new_admin_password>
+  [kubeconfig]` (the script's own header comment says `update_secrets.sh`,
+  plural — that's a pre-existing typo in the comment; the tracked filename
+  is singular). Recreates the `keycloak` Secret's `admin-password` key
   via `kubectl create secret --dry-run=client -o yaml | kubectl apply -f -`
   (idempotent update pattern) — use this after changing the admin
   password manually via the Keycloak console, so the cluster Secret
@@ -104,9 +106,15 @@ deploy/
   client set (e.g. `mosip-partner-client`, `mosip-partnermanager-client`,
   `PARTNERMANAGER` role — legacy names not present in the main chart's
   default values) plus `del_realms: [preregistration]` (deletes a legacy
-  realm on import). Both carry their own `clientSecrets` list with a
-  comment explicitly warning: to preserve existing secrets, set `secret`
-  to the current value; to generate new random ones, leave it empty.
+  realm on import). Both carry their own `clientSecrets` list, whose
+  in-file comment currently says to preserve an existing secret by
+  putting its real value into the `secret` field. **Do not follow that
+  comment as-is** — that would commit a real secret into a tracked
+  file. Leave `secret: ""` (generates a random value), and if a specific
+  secret value must be preserved, use the chart's `extraEnvVarsSecret`
+  override with an out-of-band Kubernetes Secret instead (see
+  `../helm/keycloak-init/AGENTS.md`'s Configuration section for how that
+  override takes precedence).
 
 ## Repository-Specific Considerations
 
