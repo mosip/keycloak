@@ -11,6 +11,8 @@ function upgrade_init() {
   NS=keycloak
   CHART_VERSION=0.0.1-develop
   KEYCLOAK_SERVICE_NAME=keycloak
+  EXISTING_UPGRADE_RELEASE_NAME=keycloak-init-upgrade
+  NEW_UPGRADE_RELEASE_NAME=keycloak-init-import
 
   helm repo add mosip https://mosip.github.io/mosip-helm
   helm repo update
@@ -25,16 +27,16 @@ function upgrade_init() {
     -f upgrade-init-values.yaml --version $CHART_VERSION --wait
   
   echo Waiting for upgrade job to complete...
-  if ! kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=keycloak-init-upgrade; then
+  if ! kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=$EXISTING_UPGRADE_RELEASE_NAME; then
     echo "$(tput setaf 1)ERROR: Keycloak upgrade job failed to complete. Aborting import process.$(tput sgr0)"
     exit 1
   fi
   
   echo Cleaning up upgrade release
-  helm -n $NS uninstall keycloak-init-upgrade
+  helm -n $NS uninstall $EXISTING_UPGRADE_RELEASE_NAME
   
   echo Initializing keycloak with import values
-  helm -n $NS upgrade --install keycloak-init-import mosip/keycloak-init \
+  helm -n $NS upgrade --install $NEW_UPGRADE_RELEASE_NAME mosip/keycloak-init \
     --set keycloakExternalHost="$IAM_HOST" \
     --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS" \
     --set keycloak.realms.mosip.realm_config.attributes.frontendUrl="https://$IAM_HOST/auth" \
