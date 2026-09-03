@@ -19,19 +19,6 @@ function upgrade_init() {
 
   IAM_HOST=$(kubectl get cm global -o jsonpath='{.data.mosip-iam-external-host}')
 
-  echo Initializing keycloak with upgrade values
-  helm -n $NS upgrade --install keycloak-init-upgrade mosip/keycloak-init \
-    --set keycloakExternalHost="$IAM_HOST" \
-    --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS" \
-    --set keycloak.realms.mosip.realm_config.attributes.frontendUrl="https://$IAM_HOST/auth" \
-    -f upgrade-init-values.yaml --version $CHART_VERSION --wait
-  
-  echo Waiting for upgrade job to complete...
-  if ! kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=$EXISTING_UPGRADE_RELEASE_NAME; then
-    echo "$(tput setaf 1)ERROR: Keycloak upgrade job failed to complete. Aborting import process.$(tput sgr0)"
-    exit 1
-  fi
-  
   echo Cleaning up upgrade release
   helm -n $NS uninstall $EXISTING_UPGRADE_RELEASE_NAME
   
@@ -41,6 +28,12 @@ function upgrade_init() {
     --set keycloakInternalHost="$KEYCLOAK_SERVICE_NAME.$NS" \
     --set keycloak.realms.mosip.realm_config.attributes.frontendUrl="https://$IAM_HOST/auth" \
     -f import-init-values.yaml --version $CHART_VERSION --wait
+
+  echo Waiting for upgrade job to complete...
+  if ! kubectl wait --for=condition=complete --timeout=600s -n $NS job -l app.kubernetes.io/instance=$NEW_UPGRADE_RELEASE_NAME; then
+    echo "$(tput setaf 1)ERROR: Keycloak upgrade job failed to complete. Aborting import process.$(tput sgr0)"
+    exit 1
+  fi
   return 0
 }
 
