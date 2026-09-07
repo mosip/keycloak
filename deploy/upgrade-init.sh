@@ -15,9 +15,15 @@ function upgrade_init() {
   helm repo update
 
   IAM_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-iam-external-host})
+  KEYCLOAK_EXTERNAL_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-iam-external-host})
+  KEYCLOAK_INTERNAL_HOST="keycloak.keycloak"
 
   echo Initializing keycloak
-  helm -n $NS install keycloak-init mosip/keycloak-init --set frontend=https://$IAM_HOST/auth -f upgrade-init-values.yaml --version $CHART_VERSION
+  helm -n $NS install keycloak-init mosip/keycloak-init \
+    --set frontend=https://$IAM_HOST/auth \
+    --set keycloakExternalHost="$KEYCLOAK_EXTERNAL_HOST" \
+    --set keycloakInternalHost="$KEYCLOAK_INTERNAL_HOST" \
+    -f upgrade-init-values.yaml --version $CHART_VERSION
   return 0
 }
 

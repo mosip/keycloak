@@ -1,5 +1,5 @@
 keycloak:
-  realms: |-
+  realms:
     del_realms:
       - preregistration
     mosip: # realm
@@ -500,10 +500,10 @@ keycloak:
            - PMS_USER
            - uma_authorization
            - offline_access
-          sa_client_roles:
-            - realm-management:  ## realm-management client id
-                - view-users     # realm-management client roles
-                - view-clients
-                - view-realms
-                - manage-users
+         sa_client_roles:
+           - realm-management:  ## realm-management client id
+               - view-users     # realm-management client roles
+               - view-clients
+               - view-realm
+               - manage-users
       users: []
