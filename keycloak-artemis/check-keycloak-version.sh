@@ -2,14 +2,15 @@
 #
 # Builds the keycloak-artemis image from this directory's Dockerfile, then
 # starts a throwaway container (entrypoint overridden to `sleep infinity` so
-# it never tries to actually boot Keycloak / needs DB config) and reads the
-# installed Keycloak version straight from the image contents.
+# it never tries to actually boot Keycloak / needs DB config), reads the
+# installed Keycloak version straight from the image contents, and asserts
+# it matches the expected version.
 #
 # Usage:
-#   ./check-keycloak-version.sh [image_tag]
+#   ./check-keycloak-version.sh [image_tag] [expected_version]
 #
-#   ./check-keycloak-version.sh                          # tags keycloak-artemis-test:local
-#   ./check-keycloak-version.sh keycloak-artemis-test:v2
+#   ./check-keycloak-version.sh                                  # tags keycloak-artemis-test:local, expects 16.1.1
+#   ./check-keycloak-version.sh keycloak-artemis-test:v2 16.1.1
 #
 # Requires docker access (run with sudo if your user isn't in the docker
 # group).
@@ -18,25 +19,37 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IMAGE="${1:-keycloak-artemis-test:local}"
-CONTAINER_NAME="keycloak-artemis-version-check"
+EXPECTED_VERSION="${2:-16.1.1}"
+CONTAINER_ID=""
 
 cleanup() {
-  docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
+  if [[ -n "$CONTAINER_ID" ]]; then
+    docker rm -f "$CONTAINER_ID" >/dev/null 2>&1 || true
+  fi
 }
 trap cleanup EXIT
 
 echo "Building image '$IMAGE' from $SCRIPT_DIR ..."
 docker build -t "$IMAGE" "$SCRIPT_DIR"
 
-echo "Starting throwaway container '$CONTAINER_NAME' (entrypoint overridden, does not boot Keycloak)..."
-docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
-docker run -d --name "$CONTAINER_NAME" --entrypoint sleep "$IMAGE" infinity >/dev/null
+echo "Starting throwaway container (entrypoint overridden, does not boot Keycloak)..."
+CONTAINER_ID="$(docker run -d --entrypoint sleep "$IMAGE" infinity)"
 
 echo ""
 echo "==================== KEYCLOAK VERSION ===================="
-docker exec "$CONTAINER_NAME" cat /opt/bitnami/keycloak/version.txt
+version_line="$(docker exec "$CONTAINER_ID" cat /opt/bitnami/keycloak/version.txt)"
+echo "$version_line"
 
 echo ""
-echo "Matching jars under keycloak-core / keycloak-server-spi:"
-docker exec "$CONTAINER_NAME" bash -c \
-  "find /opt/bitnami/keycloak -iname '*keycloak-server*' -o -iname 'keycloak-core*' 2>/dev/null | sort"
+echo "Matching jars (keycloak-core*.jar / keycloak-server-spi*.jar):"
+docker exec "$CONTAINER_ID" bash -c \
+  "find /opt/bitnami/keycloak -type f \( -iname 'keycloak-core*.jar' -o -iname 'keycloak-server-spi*.jar' \) 2>/dev/null | sort"
+
+if [[ "$version_line" != *"$EXPECTED_VERSION"* ]]; then
+  echo ""
+  echo "ERROR: expected Keycloak version '$EXPECTED_VERSION', got: $version_line" >&2
+  exit 1
+fi
+
+echo ""
+echo "Keycloak version matches expected '$EXPECTED_VERSION'."
