@@ -18,6 +18,26 @@ $ ./install.sh <kubeconfig file for this cluster>
 ```
 * Bitnami keycloak chart here installs postgres too.  If you already have an external postgres DB, point to the same while installing.
 * For postgres persistence the chart uses default storage class available with the cluster.
+
+## External PostgreSQL Database
+`install.sh` prompts for the database to use before installing the chart:
+1. **Bundled in-cluster PostgreSQL** (default) -- unchanged behavior, installed as part of the `mosip/keycloak` chart.
+2. **Existing shared external PostgreSQL server** -- points Keycloak at an external Postgres server (e.g. the same one the rest of a MOSIP cluster's modules use, in a `postgres` namespace) instead of running a dedicated in-cluster Postgres pod for Keycloak.
+
+If you choose option 2, you're then asked whether to reuse the cluster's existing DB host/port config and superuser credential (`postgres-setup-config` ConfigMap / `postgres-postgresql` Secret, copied from the `postgres` namespace via `copy_cm.sh`/`copy_secrets.sh`), or provide your own host/port/superuser details plus an existing Secret already present in the `keycloak` namespace.
+
+Either way, the Keycloak database user gets a **dedicated password** -- it is never reused from any other module's database credentials. This is generated only once, the first time `install.sh` runs and finds no `keycloak-db-credentials` Secret in the `keycloak` namespace; every later run reuses whatever password is already in that Secret rather than regenerating it. There is no automatic credential rotation -- to rotate the password, delete the `keycloak-db-credentials` Secret yourself (the next `install.sh` run will then generate a new one and sync it to the database role via `keycloak-db-init`).
+
+The database, role, and grants are then created via a one-shot Job (`keycloak-db-init-job.yaml`), which checks whether the database/role already exist and skips creating them if so (safe to re-run). If this Job fails, it is left as `Failed` for inspection (`kubectl logs -n keycloak job/keycloak-db-init`) rather than the install script attempting to recover automatically.
+
+The Job only creates an empty database, role, and grants -- it does not copy any existing data from the bundled PostgreSQL PVC.
+
+### Migration from bundled PostgreSQL
+Before selecting external PostgreSQL for an existing Keycloak installation:
+1. Export the bundled Keycloak PostgreSQL database.
+2. Restore the export into the target external `bitnami_keycloak` database.
+3. Validate the restored Keycloak schema and required realm data.
+4. Run `install.sh` with external PostgreSQL only after validation succeeds.
 * While deleting helm chart note that PVC, PV do not get removed for Statefulset. This also means that passwords will be same as before. Delete them explicity if you need to. CAUTION: all persistent data will be erased if you delete PV.
 * To retain data even after PV deletion use a storage class that supports "Retain".  On AWS, you may install `gp2-retain` storage class given here and specify the same while installing Keycloak helm chart.
 
