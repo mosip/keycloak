@@ -12,6 +12,46 @@ from keycloak import KeycloakAdmin
 from keycloak.exceptions import raise_error_from_response, KeycloakError, KeycloakGetError
 from keycloak.urls_patterns import URL_ADMIN_USER_REALM_ROLES
 
+USER_ATTRIBUTE_MAPPER = "oidc-usermodel-attribute-mapper"
+AUDIENCE_MAPPER = "oidc-audience-mapper"
+
+def mapper_payload(mapper):
+    """Build the Keycloak protocol-mapper body for one realm YAML mapper entry.
+
+    Entries without protocol_mapper stay user-attribute mappers. An
+    oidc-audience-mapper entry reads included_client_audience and/or
+    included_custom_audience and adds that value to the access token aud.
+    """
+    protocol_mapper = mapper.get("protocol_mapper", USER_ATTRIBUTE_MAPPER)
+    if protocol_mapper == AUDIENCE_MAPPER:
+        config = {"access.token.claim": "true"}
+        if mapper.get("included_client_audience"):
+            config["included.client.audience"] = mapper["included_client_audience"]
+        if mapper.get("included_custom_audience"):
+            config["included.custom.audience"] = mapper["included_custom_audience"]
+        if "included.client.audience" not in config and "included.custom.audience" not in config:
+            raise ValueError(
+                'audience mapper "%s" needs included_client_audience or included_custom_audience'
+                % mapper.get("mapper_name")
+            )
+    else:
+        config = {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "multivalued": "",
+            "aggregate.attrs": "",
+            "user.attribute": mapper["mapper_user_attribute"],
+            "claim.name": mapper["token_claim_name"],
+            "jsonType.label": "String",
+        }
+    return {
+        "protocol": "openid-connect",
+        "config": config,
+        "name": mapper["mapper_name"],
+        "protocolMapper": protocol_mapper,
+    }
+
 class KeycloakSession:
     def __init__(self, realm, server_url, user, pwd, ssl_verify):
         self.keycloak_admin = KeycloakAdmin(server_url=server_url,
@@ -427,21 +467,7 @@ class KeycloakSession:
         self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
         client_id = self.keycloak_admin.get_client_id(client)
         mapper_url = 'admin/realms/'+realm+'/clients/'+client_id+'/protocol-mappers/models'
-        payload = {
-                        "protocol":"openid-connect",
-                        "config": {
-                            "id.token.claim":"true",
-                            "access.token.claim":"true",
-                            "userinfo.token.claim":"true",
-                            "multivalued":"",
-                            "aggregate.attrs":"",
-                            "user.attribute":mapper['mapper_user_attribute'],
-                            "claim.name":mapper['token_claim_name'],
-                            "jsonType.label":"String"
-                        },
-                        "name":mapper['mapper_name'],
-                        "protocolMapper":"oidc-usermodel-attribute-mapper"
-                  }
+        payload = mapper_payload(mapper)
         try:
             print('\t\tCreating Mapper %s' % mapper['mapper_name'])
             data_raw = self.keycloak_admin.connection.raw_post(mapper_url, data=json.dumps(payload))

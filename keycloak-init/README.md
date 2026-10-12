@@ -45,6 +45,28 @@ Keycloak will feature the Mosip theme as the default theme. To apply a customize
 
 Note: We are adding theme as a part of keycloak_init
 
+# Protocol mappers
+
+A client `mappers` entry creates a protocol mapper. `protocol_mapper` selects the type. When it is omitted, the mapper stays `oidc-usermodel-attribute-mapper` and uses `mapper_user_attribute` plus `token_claim_name`.
+
+An `oidc-audience-mapper` entry adds an audience to the access token `aud` claim. Set `included_client_audience` (another client's client id in the same realm), `included_custom_audience` (a literal audience), or both. The script sets `access.token.claim=true`.
+
+```yaml
+clients:
+  - name: mosip-pms-client
+    mappers:
+      - mapper_name: partnerType
+        mapper_user_attribute: partnerType
+        token_claim_name: partnerType
+      - mapper_name: esignet-audience
+        protocol_mapper: oidc-audience-mapper
+        included_client_audience: mosip-esignet-client
+      - mapper_name: custom-audience
+        protocol_mapper: oidc-audience-mapper
+        included_custom_audience: https://api.example.org
+    saroles: []
+```
+
 # Keycloak Roles Assignment to Client 
 This "assign_client_roles" method within the script is used to assign roles to clients within a specified realm in Keycloak using keycloak admin API. This method handles retrieving the roles from the values.yaml file, fetching the client ID, and assigning the specified roles within the values.yaml file to the client directly.
 
