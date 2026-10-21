@@ -12,6 +12,70 @@ from keycloak import KeycloakAdmin
 from keycloak.exceptions import raise_error_from_response, KeycloakError, KeycloakGetError
 from keycloak.urls_patterns import URL_ADMIN_USER_REALM_ROLES
 
+USER_ATTRIBUTE_MAPPER = "oidc-usermodel-attribute-mapper"
+AUDIENCE_MAPPER = "oidc-audience-mapper"
+
+def mapper_payload(mapper):
+    """Build the Keycloak protocol-mapper body for one realm YAML mapper entry.
+
+    Entries without protocol_mapper stay user-attribute mappers. An
+    oidc-audience-mapper entry sets exactly one of included_client_audience
+    or included_custom_audience on the access token aud.
+    """
+    protocol_mapper = mapper.get("protocol_mapper") or USER_ATTRIBUTE_MAPPER
+    if protocol_mapper not in (USER_ATTRIBUTE_MAPPER, AUDIENCE_MAPPER):
+        raise ValueError(
+            'mapper "%s" has unknown protocol_mapper "%s"'
+            % (mapper.get("mapper_name"), protocol_mapper)
+        )
+    if protocol_mapper == AUDIENCE_MAPPER:
+        client_audience = str(mapper.get("included_client_audience") or "").strip()
+        custom_audience = str(mapper.get("included_custom_audience") or "").strip()
+        if client_audience and custom_audience:
+            raise ValueError(
+                'audience mapper "%s" must set only one of included_client_audience or included_custom_audience'
+                % mapper.get("mapper_name")
+            )
+        config = {"access.token.claim": "true"}
+        if client_audience:
+            config["included.client.audience"] = client_audience
+        elif custom_audience:
+            config["included.custom.audience"] = custom_audience
+        else:
+            raise ValueError(
+                'audience mapper "%s" needs included_client_audience or included_custom_audience'
+                % mapper.get("mapper_name")
+            )
+    else:
+        config = {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "multivalued": "",
+            "aggregate.attrs": "",
+            "user.attribute": mapper["mapper_user_attribute"],
+            "claim.name": mapper["token_claim_name"],
+            "jsonType.label": "String",
+        }
+    return {
+        "protocol": "openid-connect",
+        "config": config,
+        "name": mapper["mapper_name"],
+        "protocolMapper": protocol_mapper,
+    }
+
+def validate_configured_mappers(values):
+    """Fail before any realm or client is created when a mapper entry is invalid."""
+    for realm, body in values.items():
+        if realm == "del_realms" or not isinstance(body, dict):
+            continue
+        for client in body.get("clients") or []:
+            if not isinstance(client, dict):
+                continue
+            for mapper in client.get("mappers") or []:
+                if mapper:
+                    mapper_payload(mapper)
+
 class KeycloakSession:
     def __init__(self, realm, server_url, user, pwd, ssl_verify):
         self.keycloak_admin = KeycloakAdmin(server_url=server_url,
@@ -425,35 +489,20 @@ class KeycloakSession:
 
     def create_mapper(self, realm, client, mapper, skip_exists=False):
         self.keycloak_admin.realm_name = realm  # work around because otherwise client was getting created in master
-        client_id = self.keycloak_admin.get_client_id(client)
-        mapper_url = 'admin/realms/'+realm+'/clients/'+client_id+'/protocol-mappers/models'
-        payload = {
-                        "protocol":"openid-connect",
-                        "config": {
-                            "id.token.claim":"true",
-                            "access.token.claim":"true",
-                            "userinfo.token.claim":"true",
-                            "multivalued":"",
-                            "aggregate.attrs":"",
-                            "user.attribute":mapper['mapper_user_attribute'],
-                            "claim.name":mapper['token_claim_name'],
-                            "jsonType.label":"String"
-                        },
-                        "name":mapper['mapper_name'],
-                        "protocolMapper":"oidc-usermodel-attribute-mapper"
-                  }
         try:
+            client_id = self.keycloak_admin.get_client_id(client)
+            mapper_url = 'admin/realms/'+realm+'/clients/'+client_id+'/protocol-mappers/models'
+            payload = mapper_payload(mapper)
             print('\t\tCreating Mapper %s' % mapper['mapper_name'])
             data_raw = self.keycloak_admin.connection.raw_post(mapper_url, data=json.dumps(payload))
             return raise_error_from_response(data_raw, KeycloakGetError, skip_exists=skip_exists)
-
         except KeycloakError as e:
             if e.response_code == 409:
                 print('\t\tMapper %s Exists already exists; SKIPPING;' % mapper['mapper_name'])
-
-        except:
-            self.keycloak_admin.realm_name = 'master' # restore
+                return
             raise
+        finally:
+            self.keycloak_admin.realm_name = 'master' # restore
 
     def create_user(self, realm, uname, email, fname, lname, password, temp_flag, attributes={}):
         self.keycloak_admin.realm_name = realm
@@ -656,6 +705,7 @@ def main():
 
     fp = open(input_yaml, 'rt')
     values = yaml.load(fp, Loader=yaml.FullLoader)
+    validate_configured_mappers(values)
 
     server_url = server_url # Full url to access api
 
