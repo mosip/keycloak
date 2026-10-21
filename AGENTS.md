@@ -1,57 +1,13 @@
 # AGENTS.md
 
-Guidance for coding agents working in this repository: `mosip/esignet`, an
-Open ID Connect identity provider. This is a **monorepo of independent
-subprojects** in different stacks — pick the right one below and prefer its
-own `README.md`/`AGENTS.md` over guessing conventions from a sibling.
-
-## Layout
-
-| Path | Stack | Purpose |
-|------|-------|---------|
-| `esignet-service/` | Go 1.26, `make.sh` | The OIDC/OAuth2 provider itself. Has its own [`AGENTS.md`](esignet-service/AGENTS.md) — read that before working here. |
-| `oidc-ui/` | React + TypeScript + Vite (`package.json`) | Login/consent UI. |
-| `postman-collection/` | Postman collection + environment (JSON) | Manual/scripted API checks against `esignet-service`. |
-| `docker-compose/` | Docker Compose | Local Postgres + Redis for `esignet-service`. |
-| `deploy/`, `helm/` | Kubernetes manifests, Helm charts | Deployment. |
-| `db_scripts/`, `db_upgrade_script/` | SQL | Schema creation and version-named migrations. |
-| `partner-onboarder/` | Shell + config | MISP partner certificate exchange. |
-| `api-test/` | Go (two modules: stdlib-only parent + nested `api/` on godog) | Black-box API test harness for a *running* deployment — conformance, api (client-mgmt + flow/execute), e2e. Config-file driven; has its own [`README.md`](api-test/README.md). |
-| `ui-test/` | Java (Maven, Selenium + Cucumber/TestNG) | UI automation suite. |
-| `performance-test/` | JMeter | Load/performance scripts. |
-
-## Working across subprojects
-
-- Most day-to-day feature work happens in `esignet-service/` (the provider)
-  and `oidc-ui/` (the UI it redirects to for login/consent). Check both
-  `.env.example`/`README.md` files for how they're wired together
-  (`MOSIP_ESIGNET_HOST`, `OIDC_UI_*`).
-- Two API test paths, for different jobs: `postman-collection/` is the manual
-  one (see its [README](postman-collection/README.md)); `api-test/` is the
-  automated one, driven by a per-plugin config file rather than a wall of env
-  vars. `./run-all.sh -c data/config/config.mock.json --check` prints what a run would do
-  and what is still missing, without running anything or needing a deployment
-  up. On a fresh clone it reports the unmounted private plan config and exits
-  non-zero — that output is the setup checklist.
-- Don't assume a convention from one subproject applies to another (e.g. Go's
-  `internal/` package boundaries have no equivalent in `oidc-ui/`). Each
-  subproject is built, tested, and versioned independently.
-- SQL changes belong in `db_scripts/` (base schema) or `db_upgrade_script/`
-  (versioned migrations) — `esignet-service/internal/clientmgmt/db/schema.sql`
-  is the sqlc-facing source of truth for the `client_detail` table
-  specifically; keep it in sync if you change that table elsewhere.
+Guidance for coding agents working in `mosip/keycloak`.
 
 ## Keycloak init mappers
 
-Protocol mappers are created by `mosip/keycloak` `keycloak-init/keycloak_init.py`. `deploy/keycloak/keycloak-init.sh` installs that chart. `deploy/keycloak/keycloak-init-values.yaml` is the eSignet realm input. Do not copy `keycloak_init.py` into this repo.
+`keycloak-init/keycloak_init.py` creates protocol mappers. Each client `mappers` entry is passed to `create_mapper`, which calls `mapper_payload`. Add a new audience through that list. Do not add another mapper implementation.
 
-A client `mappers` entry without `protocol_mapper` stays `oidc-usermodel-attribute-mapper` (`mapper_name`, `mapper_user_attribute`, `token_claim_name`). Set `protocol_mapper: oidc-audience-mapper` and `included_client_audience` or `included_custom_audience` to add that value to the access token `aud`. Add that entry only on the client that needs it. A re-run skips a mapper name that already exists.
-
-## Conventions
-
-- Only commit generated/build artifacts if a subproject's own docs say to;
-  default to treating `out/`, `target/`, `node_modules/`, coverage files, etc.
-  as build output.
-- Match the license header style already present in a file's package/module
-  before adding new files (e.g. the MPL 2.0 header used throughout
-  `esignet-service`).
+- Leave `protocol_mapper` unset, or set `oidc-usermodel-attribute-mapper`, for a user-attribute mapper. Those entries use `mapper_name`, `mapper_user_attribute`, and `token_claim_name`.
+- Set `protocol_mapper: oidc-audience-mapper` to add one value to the access token `aud`. Set exactly one of `included_client_audience` (a client id in the same realm) or `included_custom_audience` (a literal audience). The script sets `access.token.claim` to `true`. An entry with both fields is rejected, because Keycloak keeps `included.client.audience` and ignores `included.custom.audience`.
+- Any other `protocol_mapper` is rejected. `validate_configured_mappers` checks every entry before a realm or client is created or updated. One bad entry stops the run before Keycloak is changed.
+- A re-run skips a mapper name that already exists (HTTP 409). The stored mapper is left as it is. To change an audience, delete that mapper in Keycloak and run init again. Any other Keycloak error is raised.
+- Chart mapper lists live in `helm/keycloak-init/values.yaml`. Add an audience entry only on the client that needs it. Existing user-attribute mappers stay unchanged.
