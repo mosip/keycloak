@@ -67,6 +67,8 @@ clients:
     saroles: []
 ```
 
+A re-run does not change a mapper whose name already exists. Keycloak returns 409 and the script skips it. To change `included_client_audience` or `included_custom_audience` on a mapper that is already in the realm, delete that mapper in Keycloak and run init again.
+
 # Keycloak Roles Assignment to Client 
 This "assign_client_roles" method within the script is used to assign roles to clients within a specified realm in Keycloak using keycloak admin API. This method handles retrieving the roles from the values.yaml file, fetching the client ID, and assigning the specified roles within the values.yaml file to the client directly.
 
