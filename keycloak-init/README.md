@@ -47,9 +47,11 @@ Note: We are adding theme as a part of keycloak_init
 
 # Protocol mappers
 
-A client `mappers` entry creates a protocol mapper. `protocol_mapper` selects the type. When it is omitted, or set to `oidc-usermodel-attribute-mapper`, the mapper stays a user-attribute mapper and uses `mapper_user_attribute` plus `token_claim_name`. Any other value stops init before Keycloak is changed.
+A client `mappers` entry creates a protocol mapper. `protocol_mapper` selects the type. When it is omitted, or set to `oidc-usermodel-attribute-mapper`, the mapper stays a user-attribute mapper and uses `mapper_user_attribute` plus `token_claim_name`.
 
 An `oidc-audience-mapper` entry adds one audience to the access token `aud` claim. Set either `included_client_audience` (another client's client id in the same realm) or `included_custom_audience` (a literal audience), not both. Keycloak keeps `included.client.audience` and ignores `included.custom.audience` when both are present, so the script rejects that combination. The script sets `access.token.claim=true`.
+
+`protocol_mapper` must be omitted, `oidc-usermodel-attribute-mapper`, or `oidc-audience-mapper`. Any other value stops init before Keycloak is changed.
 
 Every mapper entry is checked before a realm or client is created or updated. One bad entry stops that run without applying it.
 
