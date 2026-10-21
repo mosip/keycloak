@@ -268,7 +268,8 @@ keycloak:
         # - mapper_name: esignet-audience
         #   protocol_mapper: oidc-audience-mapper
         #   included_client_audience: target-client-id
-        #   # or included_custom_audience: https://api.example.org
+        # Use included_custom_audience instead when the audience is not a client id.
+        # Set only one of those fields.
         - name: mosip-abis-client
           mappers: []
           saroles: []
