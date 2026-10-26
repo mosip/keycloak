@@ -56,6 +56,19 @@ raises partway through, the code resets the Keycloak admin client's
 realm to `master` before re-raising — this prevents a failure from
 leaving the admin client pointed at a non-master realm for subsequent
 calls. Preserve this behavior if you refactor error handling here.
+`create_mapper` restores `realm_name` in a `finally` block.
+
+`mapper_payload` builds one protocol mapper. Leave `protocol_mapper`
+unset, or set `oidc-usermodel-attribute-mapper`, for a user-attribute
+mapper (`mapper_name`, `mapper_user_attribute`, `token_claim_name`).
+Set `protocol_mapper: oidc-audience-mapper` and exactly one of
+`included_client_audience` or `included_custom_audience` to add that
+value to the access token `aud`. The script sets `access.token.claim`
+to `true`. Any other `protocol_mapper`, or an audience entry with both
+fields, raises `ValueError`. `validate_configured_mappers` runs that
+check for every entry before a realm or client is created. A re-run
+skips a mapper name that already exists (HTTP 409) and raises any other
+Keycloak error. Add a new audience through the existing `mappers` list.
 
 `args_parse()` (module-level) makes `server_url`, `user`, `password`,
 `input_yaml` required positional CLI arguments, plus an optional
